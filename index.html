@@ -739,138 +739,287 @@
      ═══════════════════════════════════════════════════════════ -->
 <section id="panel-insights" class="panel" role="tabpanel" aria-labelledby="tab-insights" hidden>
 
-  <header class="tab-head">
+  <header class="tab-head" id="insights-head">
     <h1>Three readings, <em>one ledger.</em></h1>
-    <p class="deck">Long-form essays drawn from the dataset — each card is a question we asked the eight and a half million rows.</p>
+    <p class="deck">Three stories the 8.5 million rows tell on their own. Pick a card to read it.</p>
   </header>
 
-  <div class="insights">
+  <div id="insights-grid" class="insights-grid">
 
-    <!-- COVID -->
-    <article class="insight" id="insight-covid">
-      <div class="insight-text">
-        <span class="insight-tag"><span class="dot" aria-hidden="true"></span> Structural shift</span>
-        <h3>How the pandemic <em>redrew</em> Chicago's crime map</h3>
-        <div class="meta-row">
-          <span>Essay 01</span><span class="sep" aria-hidden="true"></span>
-          <span>2019 → 2023</span><span class="sep" aria-hidden="true"></span>
-          <span>9 min read</span>
-        </div>
-        <p>Lockdowns moved offences off the street and behind closed doors — a displacement that survived reopening. Apartment incidents climbed by two-fifths, sidewalk reports collapsed by a third, and the city's 2024 baseline now sits in a different place than its 2019 one.</p>
-        <a class="cta" href="#" aria-label="Read more about the pandemic story">Read the essay <span class="arr">→</span></a>
-      </div>
-      <div class="insight-viz">
-        <div class="viz-label"><span>Δ vs 2019</span><span>by location type</span></div>
-        <div class="metric-grid">
-          <div class="metric">
-            <span class="metric-name">Street</span>
-            <span class="metric-val up">+37.5%</span>
-            <div class="metric-bar pos"><span style="width:75%"></span></div>
-          </div>
-          <div class="metric">
-            <span class="metric-name">Apartment</span>
-            <span class="metric-val up">+40.6%</span>
-            <div class="metric-bar pos"><span style="width:81%"></span></div>
-          </div>
-          <div class="metric">
-            <span class="metric-name">Residence</span>
-            <span class="metric-val down">−26.7%</span>
-            <div class="metric-bar neg"><span style="width:53%"></span></div>
-          </div>
-          <div class="metric">
-            <span class="metric-name">Sidewalk</span>
-            <span class="metric-val down">−35.8%</span>
-            <div class="metric-bar neg"><span style="width:71%"></span></div>
-          </div>
-        </div>
-      </div>
-    </article>
+    <button type="button" class="insight-card" data-insight="covid">
+      <span class="insight-card__tag">Card 01 · COVID + Floyd</span>
+      <h3 class="insight-card__title">The city went quiet under lockdown, then erupted for three days.</h3>
+      <p class="insight-card__teaser">Spring 2020 hollowed out the daily volume. A week later, late May, the same streets recorded their loudest stretch of the year.</p>
+      <span class="insight-card__stat">
+        <span class="insight-card__statval" data-headline="covid">—</span>
+        <span class="insight-card__statlabel">vs 2018–19 baseline, lockdown window</span>
+      </span>
+      <span class="insight-card__cta">Read the card <span class="arr">→</span></span>
+    </button>
 
-    <!-- Elections -->
-    <article class="insight" id="insight-elections">
-      <div class="insight-text">
-        <span class="insight-tag"><span class="dot" aria-hidden="true"></span> Democracy &amp; safety</span>
-        <h3>Crime rhythms during <em>U.S. election</em> cycles</h3>
-        <div class="meta-row">
-          <span>Essay 02</span><span class="sep" aria-hidden="true"></span>
-          <span>2008 · 2012 · 2016 · 2020 · 2024</span><span class="sep" aria-hidden="true"></span>
-          <span>11 min read</span>
-        </div>
-        <p>Weekly volumes during election windows compared against matched control periods, cycle by cycle. The peaks are smaller than the headlines suggest, and the dips in the days immediately after a vote tell their own story about civic attention.</p>
-        <a class="cta" href="#" aria-label="Read more about election cycles">Read the essay <span class="arr">→</span></a>
-      </div>
-      <div class="insight-viz">
-        <div class="viz-label"><span>Election week vs control</span><span>indexed</span></div>
-        <div class="tl">
-          <div class="tl-col">
-            <div class="tl-bar"        style="height:88px; animation-delay:60ms;"></div>
-            <div class="tl-bar muted"  style="height:64px; animation-delay:90ms;"></div>
-            <span class="tl-label">'08</span>
-          </div>
-          <div class="tl-col">
-            <div class="tl-bar"        style="height:72px; animation-delay:140ms;"></div>
-            <div class="tl-bar muted"  style="height:58px; animation-delay:170ms;"></div>
-            <span class="tl-label">'12</span>
-          </div>
-          <div class="tl-col">
-            <div class="tl-bar"        style="height:96px; animation-delay:220ms;"></div>
-            <div class="tl-bar muted"  style="height:60px; animation-delay:250ms;"></div>
-            <span class="tl-label">'16</span>
-          </div>
-          <div class="tl-col">
-            <div class="tl-bar"        style="height:104px; animation-delay:300ms;"></div>
-            <div class="tl-bar muted"  style="height:54px; animation-delay:330ms;"></div>
-            <span class="tl-label">'20</span>
-          </div>
-          <div class="tl-col">
-            <div class="tl-bar"        style="height:84px; animation-delay:380ms;"></div>
-            <div class="tl-bar muted"  style="height:62px; animation-delay:410ms;"></div>
-            <span class="tl-label">'24</span>
-          </div>
-        </div>
-        <div class="viz-label" style="border-top:1px dashed var(--rule); padding-top:14px;">
-          <span><span class="dot" style="background:var(--accent); display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:6px;"></span>Election week</span>
-          <span><span class="dot" style="background:var(--ink-4); display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:6px;"></span>Control window</span>
-        </div>
-      </div>
-    </article>
+    <button type="button" class="insight-card" data-insight="laquan">
+      <span class="insight-card__tag">Card 02 · Headline</span>
+      <h3 class="insight-card__title">Crime didn't change. The response to it did.</h3>
+      <p class="insight-card__teaser">Through the mid-2010s the monthly volume barely moves. The arrest rate breaks, and keeps falling.</p>
+      <span class="insight-card__stat">
+        <span class="insight-card__statval" data-headline="laquan">—</span>
+        <span class="insight-card__statlabel">arrest rate, 24 months before vs after the dashcam release</span>
+      </span>
+      <span class="insight-card__cta">Read the card <span class="arr">→</span></span>
+    </button>
 
-    <!-- Events -->
-    <article class="insight" id="insight-events">
-      <div class="insight-text">
-        <span class="insight-tag"><span class="dot" aria-hidden="true"></span> City under the spotlight</span>
-        <h3>When Chicago <em>hosts</em> the world</h3>
-        <div class="meta-row">
-          <span>Essay 03</span><span class="sep" aria-hidden="true"></span>
-          <span>NATO 2012 · marathons · championships</span><span class="sep" aria-hidden="true"></span>
-          <span>8 min read</span>
-        </div>
-        <p>Major summits, marathons, and championship runs draw cordons of officers into the Loop and along the lakefront. The dataset records what happens to incident rates in those zones — and, more quietly, what happens in the neighbourhoods left behind.</p>
-        <a class="cta" href="#" aria-label="Read more about Chicago events">Read the essay <span class="arr">→</span></a>
-      </div>
-      <div class="insight-viz">
-        <div class="viz-label"><span>Tourist-zone incidents</span><span>days from event</span></div>
-        <div class="scatter" aria-hidden="true">
-          <span class="pt"       style="left:8%;  top:62%;"></span>
-          <span class="pt muted" style="left:16%; top:58%;"></span>
-          <span class="pt muted" style="left:24%; top:64%;"></span>
-          <span class="pt"       style="left:32%; top:48%;"></span>
-          <span class="pt"       style="left:40%; top:30%;"><span class="pt-label">NATO summit</span></span>
-          <span class="pt"       style="left:48%; top:22%;"></span>
-          <span class="pt muted" style="left:56%; top:46%;"></span>
-          <span class="pt muted" style="left:64%; top:54%;"></span>
-          <span class="pt"       style="left:72%; top:36%;"><span class="pt-label">Marathon</span></span>
-          <span class="pt muted" style="left:80%; top:58%;"></span>
-          <span class="pt muted" style="left:88%; top:60%;"></span>
-        </div>
-        <div class="viz-label" style="border-top:1px dashed var(--rule); padding-top:14px;">
-          <span><span class="dot" style="background:var(--accent); display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:6px;"></span>Event window</span>
-          <span><span class="dot" style="background:var(--ink-4); display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:6px;"></span>Baseline week</span>
-        </div>
-      </div>
-    </article>
+    <button type="button" class="insight-card" data-insight="blizzards">
+      <span class="insight-card__tag">Card 03 · Blizzards</span>
+      <h3 class="insight-card__title">When extreme cold empties the streets, crime follows.</h3>
+      <p class="insight-card__teaser">Three winter events, each measured against the same calendar window in adjacent years. The dip is sharp and short.</p>
+      <span class="insight-card__stat">
+        <span class="insight-card__statval" data-headline="blizzards">—</span>
+        <span class="insight-card__statlabel">deepest single-day drop, 2011 Snowmageddon</span>
+      </span>
+      <span class="insight-card__cta">Read the card <span class="arr">→</span></span>
+    </button>
 
   </div>
+
+  <!-- ───────── Detail views (one per card) ─────────
+       Shown by toggling the `hidden` attribute, same pattern as the Map's
+       #area-panel. The chart mount in each is an empty <div> labelled with a
+       comment — D3 is wired up in a later pass. -->
+
+  <article id="insight-detail-covid" class="insight-detail" hidden aria-labelledby="insight-detail-covid-title">
+    <button type="button" class="back-to-insights btn-ghost" data-back-to-insights>
+      <span>← Back to Insights</span>
+    </button>
+    <header class="insight-detail__head">
+      <span class="insight-detail__tag">Card 01 · COVID + Floyd</span>
+      <h2 id="insight-detail-covid-title">The city went <em>quiet</em>, then <em>erupted</em>.</h2>
+      <p class="insight-detail__deck">Spring 2020 collapsed Chicago's daily incident count well below the 2018 and 2019 baseline. The lockdown trough lasts roughly six weeks. A short spike follows in late May, driven by a different story.</p>
+    </header>
+
+    <!-- chart mount: COVID — daily 2020 series overlaid on the 2018/2019 baseline curve -->
+    <div class="insight-chart" id="insight-chart-covid" data-mount="covid">
+      <span class="chart-placeholder">Chart goes here · 2020 daily volume vs 2018–19 baseline (D3 wiring pending)</span>
+    </div>
+
+    <section class="beats">
+      <div class="beat">
+        <h4>Lead</h4>
+        <p>Between <span data-covid="lockdown-start">—</span> and <span data-covid="lockdown-end">—</span>, daily reported incidents in Chicago averaged <span data-covid="lockdown-actual">—</span> per day, against <span data-covid="lockdown-baseline">—</span> per day for the same calendar weeks in 2018 and 2019. That is a drop of <span data-covid="lockdown-drop" class="num-accent">—</span>.</p>
+      </div>
+      <div class="beat">
+        <h4>Turn</h4>
+        <p>The trough is not a slow slide. The line steps down within a week of the Illinois stay-at-home order and holds there. By June the daily volume has rejoined the baseline curve.</p>
+      </div>
+      <div class="beat">
+        <h4>Context</h4>
+        <p>Riding inside the lockdown story, the peak day of the year arrives on <span data-covid="floyd-peak-date">—</span>: <span data-covid="floyd-peak-n">—</span> incidents recorded in a single day, <span data-covid="floyd-peak-pct" class="num-accent">—</span> above the surrounding two-week baseline. This is the Chicago response to George Floyd's killing in Minneapolis on May 25, 2020 — a three-day spike, then back to lockdown levels.</p>
+      </div>
+      <div class="beat">
+        <h4>So what</h4>
+        <p>Two effects happen at once in the same dataset: a structural, multi-week suppression of routine activity, and a sharp, isolated burst of property reports. The shape of 2020 is both at the same time.</p>
+      </div>
+    </section>
+  </article>
+
+  <article id="insight-detail-laquan" class="insight-detail insight-article" hidden aria-labelledby="insight-detail-laquan-title">
+    <button type="button" class="back-to-insights btn-ghost" data-back-to-insights>
+      <span>← Back to Insights</span>
+    </button>
+    <header class="insight-detail__head insight-article__head">
+      <span class="insight-detail__tag">Card 02 · A regime change in policing</span>
+      <h2 id="insight-detail-laquan-title">After Laquan McDonald, the <em>arrest line</em> broke.</h2>
+      <p class="insight-detail__deck">Across the mid-2010s, the monthly volume of reported incidents in Chicago barely moved. The share of those incidents that ended in an arrest fell off a cliff — and never recovered.</p>
+      <p class="insight-article__byline">A reading of 8.5 million records · Chicago Data Portal</p>
+    </header>
+
+    <!-- BLOCK A — opening narrative; floats two figures inside.
+         image slot 1: archival news photograph from the Nov 24 2015 protests
+         (Michigan Ave march or federal-courthouse rally). Wide 3:2. Store under
+         photos/laquan/ (e.g. photos/laquan/protest-nov2015.jpg).
+         image slot 2: GENERIC DASHCAM DEVICE or abstract/contextual treatment —
+         NOT a still from the shooting video. Portrait 4:5. Store under
+         photos/laquan/ (e.g. photos/laquan/dashcam.jpg). -->
+    <section class="insight-block">
+      <figure class="insight-figure insight-figure--left" data-img-slot="1" aria-hidden="true">
+        <div class="insight-figure__frame">
+          <span class="insight-figure__placeholder">photo 01 · protest, November 2015</span>
+        </div>
+        <figcaption class="insight-figure__caption">
+          <span class="insight-figure__cap-text">Caption to come — set when the photograph is in place.</span>
+          <span class="insight-figure__credit">Credit · TBD</span>
+        </figcaption>
+      </figure>
+
+      <p class="insight-prose insight-prose--lede">On the night of October 20, 2014, an officer named Jason Van Dyke fired sixteen rounds at seventeen-year-old Laquan McDonald on South Pulaski Road. A dashcam in a nearby cruiser recorded the whole thing. For thirteen months the city kept the file out of public view.</p>
+
+      <figure class="insight-figure insight-figure--right" data-img-slot="2" aria-hidden="true">
+        <div class="insight-figure__frame insight-figure__frame--portrait">
+          <span class="insight-figure__placeholder">photo 02 · dashcam (generic device)</span>
+        </div>
+        <figcaption class="insight-figure__caption">
+          <span class="insight-figure__cap-text">Caption to come.</span>
+          <span class="insight-figure__credit">Credit · TBD</span>
+        </figcaption>
+      </figure>
+
+      <p class="insight-prose">A freelance journalist named Brandon Smith spent most of 2015 trying to pry the file loose, first under the Illinois Freedom of Information Act and then through Cook County court. The city's lawyers fought him at every step, arguing that release would prejudice an open investigation. On November 19, 2015, Judge Franklin Valderrama ordered the city to produce the video within five days. Hours before that deadline expired on November 24, the Cook County State's Attorney charged Van Dyke with first-degree murder. The video — six minutes long, almost silent — went out over the wires the same evening.</p>
+
+      <p class="insight-prose">The release detonated a week of demonstrations. Crowds shut down Michigan Avenue on Black Friday and returned downtown through most of December. Mayor Rahm Emanuel asked for and accepted the resignation of Superintendent Garry McCarthy on December 1. Within days, the head of the city's police-oversight body had also stepped aside; the Cook County State's Attorney was facing public calls to do the same. For a stretch of weeks, the city operated in open political crisis.</p>
+
+      <p class="insight-prose">The case was a scandal; the city went through a year of political fire over it. The question is whether anything actually changed in how the Chicago Police Department does its job.</p>
+    </section>
+
+    <!-- chart A — zoomed dual-axis 2013–2018. Caption block removed; the four
+         headline stats now live in the margin aside next to block B below. -->
+    <div class="insight-charts insight-charts--single" id="insight-chart-laquan">
+      <figure class="insight-chartcard">
+        <figcaption class="insight-chartcard__head">
+          <span class="insight-chartcard__kicker">Chart A · 2013–2018</span>
+          <h4 class="insight-chartcard__title">The divergence</h4>
+          <p class="insight-chartcard__deck">Crime volume holds its range — the arrest rate breaks. Hover (or tap) the chart to read any month.</p>
+        </figcaption>
+        <div class="insight-chart" id="insight-chart-laquan-zoom"></div>
+      </figure>
+    </div>
+
+    <!-- BLOCK B — reveal, de-policing analysis, cascade bridge.
+         Margin B anchors: the four headline stats (moved from chart caption),
+         a de-policing definition, and a pull-quote. -->
+    <section class="insight-block">
+      <p class="insight-prose">Yes, and sharply. The crime did not change. Across the 48 months centred on November 2015, the monthly volume of reported incidents drifts by only <span data-laquan="volume-change" class="num-accent">—</span>. The response did. In the 24 months before the marker, roughly <span data-laquan="rate-before" class="num-accent">—</span> of incidents ended in an arrest. In the 24 months after, <span data-laquan="rate-after" class="num-accent">—</span>. A gap of <span data-laquan="rate-drop" class="num-accent">—</span> opened in about a year, and the line settled into a new groove well below the old one. Same incidents. Different department.</p>
+
+      <p class="insight-prose">Why the response changed is harder to say. The most-discussed explanation — debated among critics, researchers, and inside the department for years afterward — is what some call de-policing, or the Ferguson effect. The mechanism is plausible. Proof is harder. A second factor lands inside the same window: an ACLU stop-report agreement, signed in August 2015, that added paperwork to every investigative street stop and reshaped how those encounters were recorded. The chart cannot separate these threads from each other. It can show when the line broke, not which thread broke it.</p>
+
+      <p class="insight-prose">The break was not a single shock. It was a cascade that ran for years, through City Hall, the police department, and the federal government.</p>
+    </section>
+    <aside class="insight-margin" aria-label="Sidebar notes for the divergence section">
+      <div class="insight-aside insight-aside--numbers">
+        <span class="aside-kicker">The split · ±24 mo</span>
+        <div class="aside-row">
+          <span class="aside-lbl">Volume change</span>
+          <span class="aside-val" data-laquan="volume-change">—</span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-lbl">Arrest rate · before</span>
+          <span class="aside-val" data-laquan="rate-before">—</span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-lbl">Arrest rate · after</span>
+          <span class="aside-val" data-laquan="rate-after">—</span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-lbl">Drop</span>
+          <span class="aside-val" data-laquan="rate-drop">—</span>
+        </div>
+      </div>
+      <div class="insight-aside insight-aside--definition">
+        <span class="aside-kicker">De-policing</span>
+        <p>Officers pulling back from discretionary stops and arrests they aren't obliged to make, especially after public scrutiny intensifies. Also called the Ferguson effect.</p>
+      </div>
+    </aside>
+
+    <!-- TIMELINE viz — events are defined in assets/js/insights/laquan_timeline.js -->
+    <section class="insight-timeline-section" aria-labelledby="laquan-timeline-title">
+      <header class="insight-timeline-section__head">
+        <span class="insight-chartcard__kicker">Timeline · 2014 → 2019</span>
+        <h4 id="laquan-timeline-title" class="insight-chartcard__title">The institutional cascade</h4>
+        <p class="insight-chartcard__deck">Each event below is dated from the public record. They are presented as context for the data shift, not as a chain of causes.</p>
+      </header>
+      <ol class="insight-timeline" id="insight-timeline-laquan" aria-live="polite"></ol>
+    </section>
+
+    <!-- BLOCK C — case-to-decree chain + bridge to chart B.
+         image slot 3: press conference announcing the federal consent decree
+         (officials at a podium, court steps, or signing photograph). 3:2 wide.
+         Store under photos/laquan/ (e.g. photos/laquan/consent-decree-podium.jpg).
+         Margin C anchors: the consent-decree definition (moved out of body). -->
+    <section class="insight-block">
+      <figure class="insight-figure insight-figure--left" data-img-slot="3" aria-hidden="true">
+        <div class="insight-figure__frame">
+          <span class="insight-figure__placeholder">photo 03 · consent decree press conference</span>
+        </div>
+        <figcaption class="insight-figure__caption">
+          <span class="insight-figure__cap-text">Caption to come.</span>
+          <span class="insight-figure__credit">Credit · TBD</span>
+        </figcaption>
+      </figure>
+
+      <p class="insight-prose">The case did not end there. The DOJ probe opened on December 7 became, by January 2017, a 164-page report finding a pattern of excessive force and constitutional violations by the Chicago Police Department. When the incoming Trump administration declined to pursue reforms, Illinois Attorney General Lisa Madigan sued the city in August 2017 to force them anyway. That suit produced a settlement and, on January 31, 2019, a federal consent decree.</p>
+
+      <p class="insight-prose">Scandals fade. The next question is whether this one did. Was the break a brief reaction — the kind of dip that follows political fire and then resets — or did the new level hold?</p>
+    </section>
+    <aside class="insight-margin" aria-label="Sidebar definition for the decree section">
+      <div class="insight-aside insight-aside--definition">
+        <span class="aside-kicker">Consent decree</span>
+        <p>A court-enforced reform agreement. A federal judge oversees compliance, an independent monitor reports on it, and the department is required to revise its practices on use of force, training, and accountability.</p>
+      </div>
+    </aside>
+
+    <!-- chart B — full-range arrest rate with neutral milestones -->
+    <div class="insight-charts insight-charts--single">
+      <figure class="insight-chartcard">
+        <figcaption class="insight-chartcard__head">
+          <span class="insight-chartcard__kicker">Chart B · 2001 → today</span>
+          <h4 class="insight-chartcard__title">It never came back</h4>
+          <p class="insight-chartcard__deck">The arrest rate falls to a new level and stays there. Milestones are timeline context, not causes.</p>
+        </figcaption>
+        <div class="insight-chart" id="insight-chart-laquan-full"></div>
+        <div class="insight-chartcard__caption" id="insight-caption-laquan-full"></div>
+      </figure>
+    </div>
+
+    <!-- BLOCK D — reveal, decree analysis, honesty close.
+         Margin D anchors: a pull-quote ("A step, not a dip."). -->
+    <section class="insight-block">
+      <p class="insight-prose">It held. A decade on, the line has not climbed back. The arrest rate fell off a cliff in late 2015 and stayed down. A step, not a dip.</p>
+
+      <p class="insight-prose">It is tempting to read the decree onto this picture — the reform that kept the new level in place. The dates make that hard. The drop began in late 2015. The decree was entered in January 2019, more than three years later. Whatever cemented the change was cemented before the decree existed. Reading any post-2019 decree effect is harder still: the pandemic arrives in 2020 and disrupts every series in Chicago's records for the years that follow. What the timing on this chart points to is the case itself — the moment something visible happened inside the department — not the legal mechanism that arrived years later. That is not a verdict on whether the decree worked. It is a reading of when the line moved.</p>
+
+      <p class="insight-prose">The data on this page fixes the <em>when</em>, sharply. The <em>why</em> is contested, and this article does not try to settle it. Any of these threads — the case itself, de-policing, the stop-report paperwork, federal scrutiny — can be pulled. None of them can be claimed.</p>
+    </section>
+    <aside class="insight-margin" aria-label="Sidebar coda for the persistence section">
+      <div class="insight-aside insight-aside--definition">
+        <span class="aside-kicker">Ten years on</span>
+        <p>Several institutional changes followed. In 2016 the city replaced its police-oversight body with the Civilian Office of Police Accountability, or COPA. A separate policy, adopted the same year, requires the city to release video and other records from police shootings and similar serious incidents within sixty days.</p>
+      </div>
+    </aside>
+  </article>
+
+  <article id="insight-detail-blizzards" class="insight-detail" hidden aria-labelledby="insight-detail-blizzards-title">
+    <button type="button" class="back-to-insights btn-ghost" data-back-to-insights>
+      <span>← Back to Insights</span>
+    </button>
+    <header class="insight-detail__head">
+      <span class="insight-detail__tag">Card 03 · Blizzards</span>
+      <h2 id="insight-detail-blizzards-title">When the city <em>freezes</em>, the ledger <em>thins</em>.</h2>
+      <p class="insight-detail__deck">Three extreme winter events, each compared to the same calendar window in the years immediately before and after.</p>
+    </header>
+
+    <!-- chart mount: Blizzards — three small multiples, event window vs adjacent-year baseline -->
+    <div class="insight-chart" id="insight-chart-blizzards" data-mount="blizzards">
+      <span class="chart-placeholder">Chart goes here · small multiples for 2011, 2014, 2019 (D3 wiring pending)</span>
+    </div>
+
+    <section class="beats">
+      <div class="beat">
+        <h4>Lead</h4>
+        <p>Cold weather suppresses outdoor crime. The question is by how much, and for how long.</p>
+      </div>
+      <div class="beat">
+        <h4>Turn</h4>
+        <p>The 2011 Groundhog Day blizzard drops the daily count to its lowest point of the surrounding month, <span data-blizz="2011-pct" class="num-accent">—</span> below the adjacent-year baseline for the same days. The 2019 polar vortex shows <span data-blizz="2019-pct" class="num-accent">—</span>. The 2014 cold spell shows <span data-blizz="2014-pct" class="num-accent">—</span>.</p>
+      </div>
+      <div class="beat">
+        <h4>Context</h4>
+        <p>The dips are sharp and short. Within a week the count is back at its seasonal floor. The 2014 window also contains the New Year spike of January 1 — that bump is the holiday, not the weather.</p>
+      </div>
+      <div class="beat">
+        <h4>So what</h4>
+        <p>The pattern recurs. Extreme cold is a reliable, if minor, brake on the daily ledger.</p>
+      </div>
+    </section>
+  </article>
+
 </section>
 
 </main>

@@ -980,3 +980,638 @@ input[type="range"]:focus { outline: none; }
 }
 .tab-strip .ed .live-dot{ width:6px; height:6px; }
 
+
+/* ─────────────────────────────────────────────────────────────
+   INSIGHTS — card grid + in-page detail views
+   ───────────────────────────────────────────────────────────── */
+.insights-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 32px 0 clamp(64px, 9vw, 120px);
+}
+@media (max-width: 960px){
+  .insights-grid{ grid-template-columns: 1fr; }
+}
+
+.insight-card{
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  padding: 28px 28px 24px;
+  text-align: left;
+  display: grid;
+  grid-template-rows: auto auto auto auto auto;
+  gap: 16px;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  transition: background var(--t-med) var(--ease), border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+}
+.insight-card:hover{
+  background: var(--paper);
+  border-color: var(--ink-3);
+  transform: translateY(-2px);
+}
+.insight-card:focus-visible{
+  outline: 2px solid var(--accent-ring);
+  outline-offset: 4px;
+}
+
+.insight-card--feature{
+  border-color: var(--ink);
+  background: var(--paper);
+}
+.insight-card--feature .insight-card__tag{ color: var(--accent); }
+
+.insight-card__tag{
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.insight-card__title{
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(24px, 2.3vw, 32px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.insight-card__teaser{
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0;
+  text-wrap: pretty;
+}
+.insight-card__stat{
+  display: grid;
+  gap: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+}
+.insight-card__statval{
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+}
+.insight-card__statlabel{
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.insight-card__cta{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.insight-card__cta .arr{ transition: transform var(--t-med) var(--ease); }
+.insight-card:hover .insight-card__cta{ color: var(--accent); }
+.insight-card:hover .insight-card__cta .arr{ transform: translateX(6px); }
+
+/* ─────────── Detail view ─────────── */
+.insight-detail{
+  display: grid;
+  gap: 36px;
+  margin: 24px 0 clamp(64px, 9vw, 120px);
+}
+.insight-detail[hidden]{ display: none; }
+
+.back-to-insights{
+  width: fit-content;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color var(--t-med) var(--ease), color var(--t-med) var(--ease);
+}
+.back-to-insights:hover{ border-color: var(--ink); color: var(--accent); }
+.back-to-insights:focus-visible{ outline: 2px solid var(--accent-ring); outline-offset: 4px; }
+
+.insight-detail__head{ display: grid; gap: 18px; max-width: 78ch; }
+.insight-detail__tag{
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.insight-detail h2{
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(42px, 5.4vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.insight-detail h2 em{ font-style: italic; color: var(--ink-2); }
+.insight-detail__deck{
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.insight-chart{
+  position: relative;
+  min-height: 360px;
+  padding: 28px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  display: grid;
+  place-items: center;
+}
+.insight-chart svg{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.chart-placeholder{
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-align: center;
+}
+
+.beats{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  border-top: 1px solid var(--rule);
+  padding-top: 32px;
+}
+@media (max-width: 760px){ .beats{ grid-template-columns: 1fr; } }
+
+.beat{ display: grid; gap: 10px; }
+.beat h4{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0;
+}
+.beat p{
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0;
+  text-wrap: pretty;
+}
+.beat p em{ font-style: italic; color: var(--ink-2); }
+.num-accent{ color: var(--accent); font-family: var(--mono); font-weight: 500; }
+
+/* Stacked figure pair used by the Laquan detail (Chart A + Chart B). */
+.insight-charts{ display: grid; gap: 32px; }
+.insight-chartcard{
+  margin: 0;
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+}
+.insight-chartcard__head{ display: grid; gap: 6px; }
+.insight-chartcard__kicker{
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.insight-chartcard__title{
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(22px, 2vw, 28px);
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--ink);
+}
+.insight-chartcard__deck{
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0;
+  max-width: 64ch;
+}
+.insight-chartcard .insight-chart{
+  background: var(--paper);
+  min-height: 320px;
+  padding: 18px 12px 14px;
+}
+.insight-chartcard__caption{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 36px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+}
+.insight-chartcard__caption .cap{ display: grid; gap: 4px; }
+.insight-chartcard__caption .cap .lbl{
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.insight-chartcard__caption .cap .val{
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.insight-chartcard__caption .cap .val.accent{ color: var(--accent); }
+
+/* ─────────── Long-form article layout (Laquan detail) ─────────── */
+/* Two-column magazine grid: main reading column + right-side editorial margin.
+   Body chunks live in .insight-block (block-flow, so floated figures still wrap
+   with their paragraphs). Margin chunks live in .insight-margin and hold one or
+   more .insight-aside items. Charts, header, and timeline span both columns. */
+.insight-article{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(200px, 22vw, 260px);
+  column-gap: clamp(32px, 4vw, 64px);
+  row-gap: clamp(28px, 3.5vw, 44px);
+}
+.insight-article > .insight-article__head,
+.insight-article > .insight-charts,
+.insight-article > .insight-timeline-section,
+.insight-article > .back-to-insights{
+  grid-column: 1 / -1;
+}
+.insight-article > .insight-block{ grid-column: 1; }
+.insight-article > .insight-margin{ grid-column: 2; }
+/* A block with no margin aside following it has no reason to sit in column 1
+   leaving the right side blank — let it span both columns instead. */
+.insight-article > .insight-block:not(:has(+ .insight-margin)){
+  grid-column: 1 / -1;
+}
+.insight-article > .insight-block:not(:has(+ .insight-margin)) .insight-prose{
+  max-width: 80ch;
+}
+.insight-article__head{
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 24px;
+}
+
+/* Block: block-flow container so figures can float and prose can wrap around. */
+.insight-block{ display: block; }
+.insight-block > * + *{ margin-top: 24px; }
+.insight-block > .insight-figure + *{ margin-top: 16px; }
+.insight-block::after{
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* Margin: vertical stack of asides anchored to the top of its grid row. */
+.insight-margin{
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-self: start;
+  padding-top: 6px;
+}
+
+/* Generic aside — base look (newsroom rule + tight column).
+   Variants override colour, font, and structure. */
+.insight-aside{
+  margin: 0;
+  padding: 12px 0 0;
+  border-top: 2px solid var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.aside-kicker{
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 12px;
+}
+
+/* Numbers aside: stat strip, one row per metric. Values come from data-laquan
+   spans so they stay JSON-driven (same source as the body inline numbers). */
+.insight-aside--numbers .aside-kicker{ margin-bottom: 4px; }
+.insight-aside--numbers .aside-row{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px dotted var(--rule);
+}
+.insight-aside--numbers .aside-row:last-child{ border-bottom: 0; }
+.insight-aside--numbers .aside-lbl{
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.insight-aside--numbers .aside-val{
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* Definition aside: short prose gloss, serif. */
+.insight-aside--definition p{
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* Pull-quote aside: accent rule, large italic serif. Marked aria-hidden in
+   markup because the same sentence appears in the body. */
+.insight-aside--quote{
+  border-top-color: var(--accent);
+}
+.insight-aside--quote p{
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(22px, 1.8vw, 28px);
+  line-height: 1.25;
+  color: var(--ink);
+  font-style: italic;
+  text-wrap: balance;
+}
+
+/* Mobile re-flow: no margin column. Each .insight-margin falls into the main
+   reading column right after its block; asides become full-width inline notes. */
+@media (max-width: 880px){
+  .insight-article{
+    display: block;
+  }
+  .insight-article > * + *{ margin-top: 28px; }
+  .insight-margin{
+    padding-top: 0;
+    gap: 18px;
+  }
+  .insight-aside{
+    padding: 16px 18px 18px;
+    border: 1px solid var(--rule);
+    border-top: 2px solid var(--ink);
+    background: var(--paper-2);
+  }
+  .insight-aside--quote{
+    border-top-color: var(--accent);
+  }
+}
+.insight-article__byline{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+.insight-prose{
+  font-family: var(--serif);
+  font-size: clamp(19px, 1.55vw, 22px);
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0;
+  max-width: 70ch;
+  text-wrap: pretty;
+}
+.insight-prose em{ font-style: italic; color: var(--ink-2); }
+.insight-prose--lede{
+  font-size: clamp(22px, 1.95vw, 28px);
+  line-height: 1.45;
+  color: var(--ink);
+}
+.insight-prose--lede::first-letter{
+  font-family: var(--serif);
+  float: left;
+  font-size: 4.4em;
+  line-height: 0.86;
+  padding: 6px 12px 0 0;
+  color: var(--ink);
+}
+
+.insight-charts--single{ margin: 8px 0; }
+
+/* Image slots — empty placeholders. Float to one side so body prose wraps beside
+   them on wide screens. Collapse to full-width on narrow screens so they stay
+   readable. Chart and timeline blocks clear the float (see below). */
+.insight-figure{
+  display: block;
+  width: clamp(260px, 42%, 440px);
+  margin: 6px 0 16px;
+}
+.insight-figure--left{
+  float: left;
+  margin-right: 32px;
+  clear: left;
+}
+.insight-figure--right{
+  float: right;
+  margin-left: 32px;
+  clear: right;
+}
+@media (max-width: 760px){
+  .insight-figure,
+  .insight-figure--left,
+  .insight-figure--right{
+    float: none;
+    clear: both;
+    width: 100%;
+    margin: 18px 0;
+  }
+}
+
+/* Break floats so charts, timeline, and the closing structure are not wrapped
+   by a still-active figure float above. */
+.insight-charts,
+.insight-timeline-section,
+.insight-article__head{
+  clear: both;
+}
+
+.insight-figure__frame{
+  position: relative;
+  aspect-ratio: 3 / 2;
+  background:
+    repeating-linear-gradient(135deg,
+      var(--paper-2) 0 8px,
+      var(--paper-3) 8px 9px);
+  border: 1px solid var(--rule);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.insight-figure__frame--portrait{ aspect-ratio: 4 / 5; }
+.insight-figure__placeholder{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding: 8px 12px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+.insight-figure__caption{
+  display: grid;
+  gap: 8px;
+  padding-bottom: 4px;
+}
+.insight-figure__cap-text{
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--ink-2);
+  font-style: italic;
+}
+.insight-figure__credit{
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ─────────── Event timeline (third viz) ─────────── */
+.insight-timeline-section{
+  display: grid;
+  gap: 18px;
+  margin: 16px 0;
+  padding: 28px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+}
+.insight-timeline-section__head{ display: grid; gap: 6px; max-width: 64ch; }
+
+.insight-timeline{
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  position: relative;
+}
+.insight-timeline::before{
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--rule);
+}
+.insight-timeline__item{
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px minmax(140px, 180px) 1fr;
+  gap: 12px 24px;
+  padding: 14px 0 14px 0;
+  align-items: baseline;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease);
+}
+.insight-timeline__item.is-revealed{ opacity: 1; transform: none; }
+.insight-timeline__dot{
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  margin: 6px 0 0 6px;
+  transition: background var(--t-med) var(--ease), border-color var(--t-med) var(--ease);
+}
+.insight-timeline__item.is-revealed .insight-timeline__dot{
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.insight-timeline__date{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.insight-timeline__body h5{
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(18px, 1.4vw, 22px);
+  margin: 0 0 4px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.insight-timeline__body p{
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0;
+  max-width: 60ch;
+}
+@media (max-width: 640px){
+  .insight-timeline__item{ grid-template-columns: 28px 1fr; }
+  .insight-timeline__date{ grid-column: 2; }
+  .insight-timeline__body{ grid-column: 2; }
+}
+@media (prefers-reduced-motion: reduce){
+  .insight-timeline__item{ opacity: 1; transform: none; transition: none; }
+  .insight-timeline__item .insight-timeline__dot{ background: var(--accent); border-color: var(--accent); }
+}
+
+/* ─────────── Chart A hover readout ─────────── */
+.insight-chart__hover-guide{ pointer-events: none; }
+.insight-chart__hover-dot{ pointer-events: none; }
+.insight-chart__hover-readout{
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: none;
+  padding: 8px 12px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 2;
+}
+.insight-chart__hover-readout.is-visible{ display: block; }
+.insight-chart__hover-readout b{ font-weight: 600; }
+.insight-chart__hover-readout .ro-row{ display: flex; justify-content: space-between; gap: 18px; }
+.insight-chart__hover-readout .ro-row + .ro-row{ margin-top: 3px; }
+.insight-chart__hover-readout .ro-lbl{ color: var(--ink-3); }
+.insight-chart__hover-readout .ro-accent{ color: var(--accent); }

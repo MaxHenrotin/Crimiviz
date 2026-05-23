@@ -3,6 +3,7 @@ import * as topojson from 'topojson-client';
 import { loadJSON } from './data.js';
 import { state, setType, setHour, setYears, onChange } from './filters.js';
 import { mountMap } from './map/map.js';
+import { mountInsights } from './insights.js';
 
 window.__crimiviz = { d3, topojson, state };
 
@@ -35,6 +36,7 @@ onChange(s => {
 });
 
 mountMap();
+mountInsights();
 
 loadJSON('meta').then(meta => {
   console.info(`crimiviz · ${meta.total_rows.toLocaleString()} rows · ${meta.min_date.slice(0,10)} → ${meta.max_date.slice(0,10)}`);

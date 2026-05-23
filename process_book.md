@@ -81,6 +81,14 @@ Five hypotheses, five outcomes. The COVID lockdown drove daily volume roughly 38
 
 The hypothesis that didn't survive was a pre-election effect under incumbent mayors. Incumbent-year windows around February 2015 and February 2023 did sit below the non-election January–February baseline, but so did the open-race control around February 2019; the dip wasn't concentrated in the pre-vote weeks, the long-term downward trend confounds the comparison, and with only two test cases against two controls the result was statistically thin. We dropped it as a claim, and document it here as a hypothesis we tested and rejected rather than hide.
 
+### Insights: design and construction
+
+Once we knew which stories the data could support, the question became how to tell them. The first detail-view layout was data-led: it opened with the chart and used prose to explain what the chart was showing. Reading order kept stalling there — the reader saw the picture before having a reason to care about it. We flipped it into what we started calling journalist mode. The story leads, paragraph by paragraph, and each chart arrives as the revelation that answers a question the story has just raised. Around that we built a magazine layout: full-width prose blocks, figures floating beside the text, and a structured right margin holding key numbers, short definitions, and pull-quotes. The throughline we held across every card was an editorial discipline: be strong on the finding (what the data shows) and restrained on the cause (where competing explanations exist, we name them rather than pick one).
+
+The Laquan McDonald card was where we worked this out. The first attempt was a single full-range dual-axis chart — monthly volume and arrest rate on a shared time axis, 2001 to today. That chart misled the eye: the volume line follows the national downward slope across 25 years and at that scale drowns the local "flat volume" point that the finding turns on, leaving a reader to conclude that arrests fell because crime fell. We split it in two — a zoomed view of 2013-2018 that places both series on a shared time axis and makes the divergence visible, followed by a full-range view of the arrest rate alone that shows the new level held for a decade. The honesty problem was distinguishing two things the dates make easy to confuse. The case did set off an institutional cascade that led to a federal consent decree in January 2019 — a real consequence of the scandal, which the article states plainly. But the arrest-rate drop began in late 2015, more than three years before the decree existed, and any post-2019 reading is further confounded by the pandemic disrupting Chicago's records from 2020 onward. We present de-policing (the Ferguson-effect hypothesis) and the August 2015 ACLU stop-report agreement as competing explanations debated for years, and frame the chart as fixing the *when* sharply while the *why* stays contested.
+
+*[COVID and blizzards: build notes to be added once those cards land.]*
+
 *[To be expanded with screenshots of the editorial direction next to the original skeleton, plus the colour-scale discussion for the choropleth (sequential reds vs diverging) once Phase 3 lands.]*
 
 ## 5. Technical implementation
@@ -123,7 +131,7 @@ State is held in a plain `state` object exported by `assets/js/filters.js` (`{ t
 
 | Member | Main contributions | Estimated share |
 |---|---|---|
-| Julien Erbland | UI / layout integration from Claude Design output, choropleth rendering and tooltip, mobile and accessibility passes | *to be filled* |
+| Julien Erbland | UI / layout design and integration, choropleth rendering and tooltip, mobile and accessibility passes | *to be filled* |
 | Mathis Richard | Data pipeline (Socrata aggregations), temporal charts (time-of-day, COVID comparison), data documentation | *to be filled* |
 | Max Henrotin | Project orchestration, choropleth coloring, filters and cross-filtering, seasonality and arrest-rate charts, README and process book | *to be filled* |
 

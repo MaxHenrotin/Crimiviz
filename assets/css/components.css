@@ -1262,8 +1262,30 @@ input[type="range"]:focus { outline: none; }
 .insight-article > .insight-article__head,
 .insight-article > .insight-charts,
 .insight-article > .insight-timeline-section,
+.insight-article > .insight-section-title,
 .insight-article > .back-to-insights{
   grid-column: 1 / -1;
+}
+
+/* Section intertitle — newspaper-style signpost between blocks.
+   Top rule + short mono caps + small accent numeral. Spans both columns
+   of the article grid so it reads across the full measure. */
+.insight-section-title{
+  margin: 12px 0 0;
+  padding-top: 16px;
+  border-top: 2px solid var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.insight-section-title .num{
+  color: var(--accent);
+  margin-right: 14px;
+  font-weight: 700;
 }
 .insight-article > .insight-block{ grid-column: 1; }
 .insight-article > .insight-margin{ grid-column: 2; }
@@ -1615,3 +1637,148 @@ input[type="range"]:focus { outline: none; }
 .insight-chart__hover-readout .ro-row + .ro-row{ margin-top: 3px; }
 .insight-chart__hover-readout .ro-lbl{ color: var(--ink-3); }
 .insight-chart__hover-readout .ro-accent{ color: var(--accent); }
+
+/* ─────────── Blizzards prototypes (review view; not the final layout) ─────────── */
+.proto-stack{
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-top: 24px;
+}
+.proto-card__head{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 2px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: 8px;
+}
+.proto-tag{
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.proto-card__head h3{
+  font-family: var(--serif);
+  font-size: 22px;
+  margin: 0;
+  color: var(--ink);
+}
+.proto-card__head p{
+  font-size: 13px;
+  color: var(--ink-2);
+  max-width: 70ch;
+  margin: 0;
+}
+.proto-mount{
+  width: 100%;
+  background: var(--paper-2, var(--paper));
+  border: 1px solid var(--rule);
+  padding: 12px 16px;
+}
+.proto-mount svg{ width: 100%; height: auto; display: block; }
+
+/* ─────────── Blizzards chart palette (scoped) ───────────
+   Cold/blue scale used by data marks inside blizzards charts only.
+   These vars do NOT live on :root and never reach the card chrome,
+   the editorial typography, or any other tab. Anything outside an
+   ancestor with .bliz-charts keeps the site identity.
+   Hues stay in the 235–255 range; lightness picked for AA contrast
+   on the warm paper background. */
+.bliz-charts{
+  --bliz-1:        oklch(0.93 0.025 240);
+  --bliz-2:        oklch(0.82 0.060 240);
+  --bliz-3:        oklch(0.66 0.110 245);
+  --bliz-4:        oklch(0.50 0.140 250);
+  --bliz-5:        oklch(0.34 0.120 252);
+  --bliz-accent:   oklch(0.46 0.150 245);
+  --bliz-line:     oklch(0.40 0.110 248);
+  --bliz-soft:     oklch(0.46 0.150 245 / 0.10);
+}
+
+.proto-controls{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  flex-wrap: wrap;
+}
+.proto-btn{
+  appearance: none;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 6px 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: 0;
+  transition: background var(--t-fast) var(--ease);
+}
+.proto-btn:hover{ background: var(--paper-2); }
+.proto-btn[aria-pressed="true"]{
+  background: var(--bliz-accent);
+  color: var(--paper);
+  border-color: var(--bliz-accent);
+}
+.proto-progress{
+  flex: 1 1 120px;
+  height: 2px;
+  background: var(--rule);
+  position: relative;
+  min-width: 80px;
+}
+.proto-progress__fill{
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: var(--bliz-accent);
+  transition: width 60ms linear;
+}
+
+/* Calendar heatmap tooltip */
+.proto-tooltip{
+  position: absolute;
+  pointer-events: none;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 8px 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink);
+  z-index: 4;
+  display: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px oklch(0 0 0 / 0.08);
+}
+.proto-tooltip.is-visible{ display: block; }
+.proto-tooltip b{ font-weight: 600; }
+.proto-tooltip .tt-row{ display: flex; justify-content: space-between; gap: 16px; }
+.proto-tooltip .tt-lbl{ color: var(--ink-3); margin-right: 8px; }
+.proto-tooltip .tt-delta{ font-weight: 600; }
+
+.proto-mount{ position: relative; }
+
+/* ─────────── Blizzards article — chart mount specifics ───────────
+   The scatter chart has play/event controls above the SVG. Override the
+   .insight-chart grid centering so the controls strip stacks on top of
+   the SVG instead of being centered as a separate grid item. */
+#insight-chart-bliz-scatter{
+  display: block;
+  padding: 14px 14px 8px;
+  text-align: left;
+}
+#insight-chart-bliz-scatter [data-scatter-svg] svg{
+  width: 100%;
+  height: auto;
+  display: block;
+}

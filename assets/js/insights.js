@@ -1,6 +1,7 @@
 import { loadJSON } from './data.js';
 import { renderLaquanChart } from './insights/laquan_chart.js';
 import { renderLaquanTimeline } from './insights/laquan_timeline.js';
+import { renderBlizzardsPrototypes } from './insights/blizzards_prototypes.js';
 
 const STORIES = ['covid', 'laquan', 'blizzards'];
 
@@ -133,6 +134,14 @@ function populateBlizzardsDetail(d) {
     if (!ev) return;
     fillText(root, `[data-blizz="${y}-pct"]`, fmtPct(ev.drop_pct));
   });
+
+  Promise.all([
+    loadJSON('blizzards_by_type'),
+    loadJSON('blizzards_wide'),
+    loadJSON('blizzards_temperature'),
+  ]).then(([byType, wide, temperature]) => {
+    renderBlizzardsPrototypes({ blizzards: d, byType, wide, temperature });
+  }).catch(err => console.error('blizzards prototypes: data load failed', err));
 }
 
 function wireCards() {

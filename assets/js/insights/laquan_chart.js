@@ -8,12 +8,41 @@ function tokens() {
   const cs = getComputedStyle(document.documentElement);
   const v = (name) => cs.getPropertyValue(name).trim();
   return {
-    ink:    v('--ink'),
-    ink2:   v('--ink-2'),
-    ink3:   v('--ink-3'),
-    rule:   v('--rule'),
-    accent: v('--accent'),
+    ink:        v('--ink'),
+    ink2:       v('--ink-2'),
+    ink3:       v('--ink-3'),
+    rule:       v('--rule'),
+    ruleSoft:   v('--rule-soft') || v('--rule'),
+    paper:      v('--paper'),
+    accent:     v('--accent'),
+    accentSoft: v('--accent-soft') || v('--accent'),
   };
+}
+
+const REDUCED_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Subtle stroke-dashoffset draw-in for line paths. Bails out under
+// prefers-reduced-motion so motion-sensitive readers see the resolved
+// line immediately.
+function animateLine(pathSel, duration = 900, delay = 0) {
+  if (REDUCED_MOTION) return;
+  const node = pathSel.node();
+  if (!node || typeof node.getTotalLength !== 'function') return;
+  const len = node.getTotalLength();
+  if (!Number.isFinite(len) || len <= 0) return;
+  pathSel
+    .attr('stroke-dasharray', `${len} ${len}`)
+    .attr('stroke-dashoffset', len)
+    .transition()
+      .delay(delay)
+      .duration(duration)
+      .ease(d3.easeCubicOut)
+      .attr('stroke-dashoffset', 0)
+      .on('end', function () {
+        // Clear the dasharray so future overlays (hover guides etc.)
+        // don't inherit a phantom dash pattern on this path.
+        d3.select(this).attr('stroke-dasharray', null);
+      });
 }
 
 function clear(el) {
@@ -52,8 +81,10 @@ function renderZoomChart(rootEl, data, captionEl) {
   const xMax = new Date('2018-12-31');
   const series = all.filter(d => d.date >= xMin && d.date <= xMax);
 
-  const VIEW_W = 960, VIEW_H = 380;
-  const M = { top: 24, right: 64, bottom: 36, left: 64 };
+  const VIEW_W = 960, VIEW_H = 400;
+  // Generous top margin so the post-video band's label can sit above the
+  // plot without competing with the volume curve.
+  const M = { top: 56, right: 68, bottom: 40, left: 68 };
   const innerW = VIEW_W - M.left - M.right;
   const innerH = VIEW_H - M.top - M.bottom;
 
@@ -74,11 +105,28 @@ function renderZoomChart(rootEl, data, captionEl) {
     .attr('viewBox', `0 0 ${VIEW_W} ${VIEW_H}`)
     .attr('preserveAspectRatio', 'xMidYMid meet')
     .attr('role', 'img')
-    .attr('aria-label', 'Monthly volume and 12-month arrest rate, 2013 to 2018, with a marker at the November 2015 dashcam release');
+    .attr('aria-label', 'Monthly volume and 12-month arrest rate, 2013 to 2018. After the November 2015 video release, the volume line stays flat while the arrest-rate line breaks downward.');
 
   const g = svg.append('g').attr('transform', `translate(${M.left},${M.top})`);
 
-  g.append('g').selectAll('line')
+  // Post-video accent band — quiet tint over the months after Nov 2015,
+  // grounding the "what changes after the marker" reading. Sits behind
+  // every other plot element so axes and lines stay legible above it.
+  const eventDate = new Date(`${data.video_date}T12:00:00`);
+  const hasEvent = !Number.isNaN(eventDate.getTime());
+  if (hasEvent) {
+    const xe = x(eventDate);
+    g.append('rect')
+      .attr('x', xe).attr('y', 0)
+      .attr('width', Math.max(0, innerW - xe)).attr('height', innerH)
+      .attr('fill', t.accent)
+      .attr('opacity', 0.06);
+  }
+
+  // Horizontal gridlines — anchored to the volume scale so they're spaced
+  // evenly with the left ticks. Light, dashed, and never crossing the axis
+  // baselines.
+  g.append('g').attr('class', 'grid').selectAll('line')
     .data(yVol.ticks(5))
     .join('line')
       .attr('x1', 0).attr('x2', innerW)
@@ -121,35 +169,82 @@ function renderZoomChart(rootEl, data, captionEl) {
   const lineVol = d3.line()
     .defined(d => d.volume != null)
     .x(d => x(d.date))
-    .y(d => yVol(d.volume));
+    .y(d => yVol(d.volume))
+    .curve(d3.curveMonotoneX);
 
   const lineRate12 = d3.line()
     .defined(d => d.rate12 != null)
     .x(d => x(d.date))
-    .y(d => yRate(d.rate12));
+    .y(d => yRate(d.rate12))
+    .curve(d3.curveMonotoneX);
 
-  g.append('path').datum(series)
+  const volPath = g.append('path').datum(series)
     .attr('fill', 'none').attr('stroke', t.ink)
-    .attr('stroke-width', 1.6).attr('d', lineVol);
+    .attr('stroke-width', 1.4)
+    .attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+    .attr('d', lineVol);
 
-  g.append('path').datum(series)
+  const ratePath = g.append('path').datum(series)
     .attr('fill', 'none').attr('stroke', t.accent)
-    .attr('stroke-width', 2).attr('d', lineRate12);
+    .attr('stroke-width', 2.2)
+    .attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+    .attr('d', lineRate12);
 
-  const eventDate = new Date(`${data.video_date}T12:00:00`);
-  if (!Number.isNaN(eventDate.getTime())) {
+  // Inflection point — the nearest monthly sample to the video date.
+  // Highlight it on the rate line, then echo the same x on the volume
+  // line to show the rate breaks while the volume holds.
+  if (hasEvent) {
     const xe = x(eventDate);
+    let inflect = null;
+    for (const pt of series) {
+      if (pt.rate12 == null) continue;
+      if (!inflect || Math.abs(pt.date - eventDate) < Math.abs(inflect.date - eventDate)) inflect = pt;
+    }
+    if (inflect) {
+      g.append('circle')
+        .attr('cx', x(inflect.date)).attr('cy', yRate(inflect.rate12))
+        .attr('r', 4.5).attr('fill', t.accent)
+        .attr('stroke', t.paper).attr('stroke-width', 1.5);
+      g.append('circle')
+        .attr('cx', x(inflect.date)).attr('cy', yVol(inflect.volume))
+        .attr('r', 4).attr('fill', t.ink)
+        .attr('stroke', t.paper).attr('stroke-width', 1.5);
+    }
+
+    // Marker line at the video release date.
     g.append('line')
       .attr('x1', xe).attr('x2', xe).attr('y1', 0).attr('y2', innerH)
       .attr('stroke', t.ink).attr('stroke-width', 1)
       .attr('stroke-dasharray', '4 4');
+
+    // Top-margin event title with a tiny rule under it (mirrors the
+    // COVID-zoom title treatment so the cards feel like a matched set).
     g.append('text')
-      .attr('x', xe + 6).attr('y', 14)
+      .attr('x', xe + 8).attr('y', -28)
       .attr('fill', t.ink)
       .attr('font-family', 'var(--mono)').attr('font-size', 10)
-      .attr('letter-spacing', '0.12em')
-      .text('Nov 2015 — video released');
+      .attr('font-weight', 700).attr('letter-spacing', '0.12em')
+      .text('NOV 2015 · VIDEO RELEASED');
+
+    // Two integrated annotations carrying the core finding. Anchored to
+    // their respective series colors so the eye associates each phrase
+    // with its line.
+    g.append('text')
+      .attr('x', xe + 8).attr('y', yVol(d3.max(series, d => d.volume)) + 16)
+      .attr('fill', t.ink)
+      .attr('font-family', 'var(--mono)').attr('font-size', 10)
+      .attr('letter-spacing', '0.10em')
+      .text('volume holds');
+    g.append('text')
+      .attr('x', xe + 8).attr('y', yRate(0.34))
+      .attr('fill', t.accent)
+      .attr('font-family', 'var(--mono)').attr('font-size', 10)
+      .attr('letter-spacing', '0.10em')
+      .text('rate breaks');
   }
+
+  animateLine(volPath, 900, 100);
+  animateLine(ratePath, 1100, 240);
 
   if (captionEl) {
     const volSign = data.volume_change_pct > 0 ? '+' : data.volume_change_pct < 0 ? '−' : '';
@@ -269,8 +364,10 @@ function renderFullChart(rootEl, data, captionEl) {
   if (captionEl) clear(captionEl);
 
   const series = parseSeries(data.series);
-  const VIEW_W = 960, VIEW_H = 320;
-  const M = { top: 36, right: 24, bottom: 36, left: 56 };
+  const VIEW_W = 960, VIEW_H = 340;
+  // Top margin holds the two centered milestone labels stacked vertically;
+  // right margin gives the latest year tick room to breathe.
+  const M = { top: 50, right: 32, bottom: 40, left: 60 };
   const innerW = VIEW_W - M.left - M.right;
   const innerH = VIEW_H - M.top - M.bottom;
 
@@ -290,7 +387,21 @@ function renderFullChart(rootEl, data, captionEl) {
 
   const g = svg.append('g').attr('transform', `translate(${M.left},${M.top})`);
 
-  g.append('g').selectAll('line')
+  // Post-video band — same idiom as Chart A so the eye reads them as a
+  // pair: tinted region after Nov 2015 visually flags "this is when the
+  // line settled at its new level". Behind everything else.
+  const videoDate = new Date(`${data.video_date}T12:00:00`);
+  const hasVideo = !Number.isNaN(videoDate.getTime());
+  if (hasVideo) {
+    const xv = x(videoDate);
+    g.append('rect')
+      .attr('x', xv).attr('y', 0)
+      .attr('width', Math.max(0, innerW - xv)).attr('height', innerH)
+      .attr('fill', t.accent)
+      .attr('opacity', 0.05);
+  }
+
+  g.append('g').attr('class', 'grid').selectAll('line')
     .data(yRate.ticks(5))
     .join('line')
       .attr('x1', 0).attr('x2', innerW)
@@ -309,42 +420,59 @@ function renderFullChart(rootEl, data, captionEl) {
 
   g.append('text')
     .attr('transform', 'rotate(-90)')
-    .attr('y', -42).attr('x', -innerH / 2)
+    .attr('y', -46).attr('x', -innerH / 2)
     .attr('text-anchor', 'middle')
     .attr('fill', t.accent)
     .attr('font-family', 'var(--mono)').attr('font-size', 10)
     .attr('letter-spacing', '0.14em')
-    .text('ARREST RATE');
+    .text('ARREST RATE · 12 MO');
+
+  // Soft area fill under the rate line gives the curve weight and helps
+  // the persistence read at a glance (low and steady = a wide low band).
+  const areaRate12 = d3.area()
+    .defined(d => d.rate12 != null)
+    .x(d => x(d.date))
+    .y0(innerH)
+    .y1(d => yRate(d.rate12))
+    .curve(d3.curveMonotoneX);
+
+  g.append('path').datum(series)
+    .attr('fill', t.accent).attr('opacity', 0.08)
+    .attr('d', areaRate12);
 
   const lineRate12 = d3.line()
     .defined(d => d.rate12 != null)
     .x(d => x(d.date))
-    .y(d => yRate(d.rate12));
+    .y(d => yRate(d.rate12))
+    .curve(d3.curveMonotoneX);
 
-  g.append('path').datum(series)
+  const ratePath = g.append('path').datum(series)
     .attr('fill', 'none').attr('stroke', t.accent)
-    .attr('stroke-width', 2).attr('d', lineRate12);
+    .attr('stroke-width', 2)
+    .attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+    .attr('d', lineRate12);
+  animateLine(ratePath, 1100, 120);
 
   const milestones = [
-    { date: data.video_date,        label: 'Nov 2015 — Laquan McDonald video' },
-    { date: data.consent_decree_date, label: 'Jan 2019 — Consent decree entered' },
+    { date: data.video_date,          label: 'Nov 2015 · video released' },
+    { date: data.consent_decree_date, label: 'Jan 2019 · consent decree' },
   ];
 
-  // Anchor each label at a height that does not overlap the curve at that x.
-  const rateAt = (d) => {
-    const target = d;
+  // Each label is centered over its OWN dashed line and stacked vertically
+  // when the two labels are close enough in x to overlap horizontally.
+  // Centring removes the side-anchored ambiguity that earlier read as the
+  // 2019 label hanging over the 2015 line.
+  // Find the nearest series sample to a given date — used to anchor each
+  // milestone dot onto the actual rate line at that month.
+  const nearestSample = (target) => {
     let best = null;
     for (const pt of series) {
       if (pt.rate12 == null) continue;
       if (!best || Math.abs(pt.date - target) < Math.abs(best.date - target)) best = pt;
     }
-    return best ? best.rate12 : null;
+    return best;
   };
 
-  // Each label sits next to its own marker line. If the line is in the right
-  // portion of the plot, the label flips to the left of the line so it can't
-  // clip the right edge. The two labels stagger in y only when they're close
-  // enough in x to risk collision.
   const placed = [];
   milestones.forEach((m) => {
     const d = new Date(`${m.date}T12:00:00`);
@@ -355,14 +483,24 @@ function renderFullChart(rootEl, data, captionEl) {
       .attr('stroke', t.ink).attr('stroke-width', 1)
       .attr('stroke-dasharray', '4 4');
 
-    const flipLeft = xe > innerW * 0.6;
-    const collidesPrev = placed.some(p => Math.abs(p.xe - xe) < 180);
+    // Small dot on the rate line at the milestone's nearest month —
+    // attaches the label to the curve visually, not just to the vertical
+    // line floating in empty space.
+    const sample = nearestSample(d);
+    if (sample) {
+      g.append('circle')
+        .attr('cx', x(sample.date)).attr('cy', yRate(sample.rate12))
+        .attr('r', 4).attr('fill', t.accent)
+        .attr('stroke', t.paper).attr('stroke-width', 1.5);
+    }
+
+    const collidesPrev = placed.some(p => Math.abs(p.xe - xe) < 220);
     const y = collidesPrev ? -8 : -22;
 
     g.append('text')
-      .attr('x', flipLeft ? xe - 6 : xe + 6)
+      .attr('x', xe)
       .attr('y', y)
-      .attr('text-anchor', flipLeft ? 'end' : 'start')
+      .attr('text-anchor', 'middle')
       .attr('fill', t.ink)
       .attr('font-family', 'var(--mono)').attr('font-size', 10)
       .attr('letter-spacing', '0.12em')
@@ -375,8 +513,95 @@ function renderFullChart(rootEl, data, captionEl) {
     captionEl.append(...makeCaption([
       ['Reading',         'The drop starts ~3 years before the consent decree.', 'ink'],
       ['Milestones',      'Timeline context, not causes.',                       'ink'],
+      ['Interaction',     'Hover any month to read its exact 12-month rate.',    'ink'],
     ]));
   }
+
+  attachFullHover({ rootEl, svg, g, x, yRate, series, innerW, innerH, t });
+}
+
+// Hover-readout for Chart B. Chose hover over brush+zoom because the
+// chart's argument — "the rate fell, then stayed low for years" — is
+// already legible from the line shape; hover lets the reader verify
+// exact monthly values without changing the framing or adding a
+// brush-and-reset gesture that competes with the milestone markers.
+function attachFullHover({ rootEl, svg, g, x, yRate, series, innerW, innerH, t }) {
+  const points = series.filter(d => d.rate12 != null);
+  if (!points.length) return;
+
+  const readout = document.createElement('div');
+  readout.className = 'insight-chart__hover-readout';
+  rootEl.appendChild(readout);
+
+  const guide = g.append('line')
+    .attr('class', 'insight-chart__hover-guide')
+    .attr('y1', 0).attr('y2', innerH)
+    .attr('stroke', t.ink2)
+    .attr('stroke-width', 1)
+    .attr('stroke-dasharray', '2 3')
+    .attr('opacity', 0);
+
+  const dot = g.append('circle')
+    .attr('class', 'insight-chart__hover-dot')
+    .attr('r', 4)
+    .attr('fill', t.accent)
+    .attr('opacity', 0);
+
+  const bisect = d3.bisector(d => d.date).left;
+  const fmtMonth = d3.timeFormat('%b %Y');
+
+  // Hit rect sits over the plot; cursor swap signals interactivity.
+  const hit = g.append('rect')
+    .attr('width', innerW).attr('height', innerH)
+    .attr('fill', 'transparent')
+    .style('cursor', 'crosshair');
+
+  const move = (event) => {
+    const [mx] = d3.pointer(event, g.node());
+    const date = x.invert(mx);
+    const i = bisect(points, date);
+    const a = points[Math.max(0, i - 1)];
+    const b = points[Math.min(points.length - 1, i)];
+    const pt = !a ? b : !b ? a : (date - a.date < b.date - date ? a : b);
+    if (!pt) return;
+
+    const px = x(pt.date);
+    guide.attr('x1', px).attr('x2', px).attr('opacity', 1);
+    dot.attr('cx', px).attr('cy', yRate(pt.rate12)).attr('opacity', 1);
+
+    // Mirror the positioning math from attachZoomHover so the readout
+    // never clips the right edge: flip to the left of the cursor past
+    // 60% of the chart width.
+    const svgRect = svg.node().getBoundingClientRect();
+    const rootRect = rootEl.getBoundingClientRect();
+    const scale = svgRect.width / 960;
+    const pxAbs = (px + 56) * scale + (svgRect.left - rootRect.left);
+    const flip = pxAbs > rootRect.width * 0.6;
+    readout.style.left = flip ? 'auto' : `${pxAbs + 14}px`;
+    readout.style.right = flip ? `${rootRect.width - pxAbs + 14}px` : 'auto';
+    readout.classList.add('is-visible');
+    readout.innerHTML = '';
+    const head = document.createElement('div');
+    head.style.marginBottom = '4px';
+    head.innerHTML = `<b>${fmtMonth(pt.date)}</b>`;
+    readout.appendChild(head);
+    const r = document.createElement('div');
+    r.className = 'ro-row';
+    r.innerHTML = `<span class="ro-lbl">Arrest rate · 12 mo</span><span class="ro-accent">${(pt.rate12 * 100).toFixed(1)}%</span>`;
+    readout.appendChild(r);
+  };
+
+  const leave = () => {
+    guide.attr('opacity', 0);
+    dot.attr('opacity', 0);
+    readout.classList.remove('is-visible');
+  };
+
+  hit.on('mousemove', move)
+     .on('mouseleave', leave)
+     .on('touchstart', (e) => { e.preventDefault(); move(e.touches[0]); }, { passive: false })
+     .on('touchmove',  (e) => { e.preventDefault(); move(e.touches[0]); }, { passive: false })
+     .on('touchend', leave);
 }
 
 function makeCaption(rows) {

@@ -781,8 +781,8 @@ function renderByType(rootEl, byType) {
     };
   }).sort((a, b) => a.avg - b.avg);  // most negative first → top of chart
 
-  const W = 960, H = 360;
-  const M = { top: 24, right: 120, bottom: 44, left: 170 };
+  const W = 960, H = 380;
+  const M = { top: 24, right: 120, bottom: 64, left: 170 };
   const innerW = W - M.left - M.right;
   const innerH = H - M.top - M.bottom;
 
@@ -797,7 +797,7 @@ function renderByType(rootEl, byType) {
     .attr('viewBox', `0 0 ${W} ${H}`)
     .attr('preserveAspectRatio', 'xMidYMid meet')
     .attr('role', 'img')
-    .attr('aria-label', 'Average percent change versus baseline by primary crime type, averaged across the three blizzard events; sorted from biggest drop to smallest');
+    .attr('aria-label', 'Average percent change versus baseline by primary crime type, averaged across the three blizzard events (Feb 2011, Jan 2014, Jan 2019), each compared with the mean of the two adjacent years; sorted from biggest drop to smallest');
   const g = svg.append('g').attr('transform', `translate(${M.left},${M.top})`);
 
   // Vertical grid at every 10%, with the zero line strongest.
@@ -848,14 +848,21 @@ function renderByType(rootEl, byType) {
     .attr('font-weight', 600)
     .text(d => FMT_PCT(d.avg));
 
-  // Footer note: clarifies the aggregation so the reader doesn't conflate
-  // "one bar" with "one event".
+  // Footer note: spells out the three events by name and date and how the
+  // baseline is built, so readers don't conflate "one bar" with "one event"
+  // or wonder what "baseline" refers to.
   g.append('text')
     .attr('x', 0).attr('y', innerH + 28)
     .attr('fill', t.ink3)
     .attr('font-family', 'var(--mono)').attr('font-size', 10)
     .attr('letter-spacing', '0.08em')
-    .text('Average of the three event deltas vs adjacent-year baseline · robust types only (baseline ≥ ~100 / yr)');
+    .text('Average of three event deltas — Feb 2011 (Snowmageddon) · Jan 2014 (polar vortex) · Jan 2019 (polar vortex).');
+  g.append('text')
+    .attr('x', 0).attr('y', innerH + 46)
+    .attr('fill', t.ink3)
+    .attr('font-family', 'var(--mono)').attr('font-size', 10)
+    .attr('letter-spacing', '0.08em')
+    .text('Each event = same calendar dates vs the mean of the two adjacent years (e.g. 2014 vs avg of 2013 + 2015). Robust types only (baseline ≥ ~100 / yr).');
 }
 
 // ─────────────────────────────────────────────────────────────────────────

@@ -1025,12 +1025,58 @@ input[type="range"]:focus { outline: none; }
 }
 .insight-card--feature .insight-card__tag{ color: var(--accent); }
 
+/* Per-card accent — each card echoes the temperature of its header image
+   via one variable that downstream rules consume. Apply subtly: eyebrow,
+   divider rule, key figure, CTA hover. Cards keep the same layout and
+   typographic system — only the accent hue shifts. */
+.insight-card[data-insight="covid"]{
+  --card-accent: oklch(0.48 0.030 240);
+  --card-accent-soft: oklch(0.48 0.030 240 / 0.20);
+}
+.insight-card[data-insight="laquan"]{
+  --card-accent: var(--accent);
+  --card-accent-soft: var(--accent-soft);
+}
+.insight-card[data-insight="blizzards"]{
+  --card-accent: oklch(0.46 0.150 245);
+  --card-accent-soft: oklch(0.46 0.150 245 / 0.18);
+}
+.insight-card[data-insight] .insight-card__tag{ color: var(--card-accent); }
+.insight-card[data-insight] .insight-card__statval{ color: var(--card-accent); }
+.insight-card[data-insight] .insight-card__stat{ border-top-color: var(--card-accent-soft); }
+.insight-card[data-insight]:hover .insight-card__cta{ color: var(--card-accent); }
+.insight-card[data-insight]:focus-visible{
+  outline-color: var(--card-accent);
+}
+
+/* Banner sits at the top of the card, edge-to-edge: negative margins
+   undo the card's 28px-top / 28px-side padding so the image flushes the
+   inside of the 1px border. A fixed 16/6 aspect-ratio guarantees all
+   three banners crop to the same shape regardless of source dimensions. */
+.insight-card__banner{
+  display: block;
+  margin: -28px -28px 4px;
+  aspect-ratio: 16 / 6;
+  overflow: hidden;
+  background: var(--ink-4, var(--ink-3));
+  border-bottom: 1px solid var(--rule);
+}
+.insight-card__banner img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .insight-card__tag{
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: clamp(15px, 1.55vw, 21px);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-3);
+  font-weight: 500;
+  line-height: 1.1;
 }
 .insight-card__title{
   font-family: var(--serif);
@@ -1507,6 +1553,13 @@ input[type="range"]:focus { outline: none; }
   background: var(--paper);
   border: 1px solid var(--rule);
 }
+.insight-figure__frame img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 .insight-figure__caption{
   display: grid;
   gap: 8px;
@@ -1526,6 +1579,13 @@ input[type="range"]:focus { outline: none; }
   text-transform: uppercase;
   color: var(--ink-3);
 }
+.insight-figure__credit a{
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  transition: color var(--t-med) var(--ease);
+}
+.insight-figure__credit a:hover{ color: var(--ink); }
 
 /* ─────────── Event timeline (third viz) ─────────── */
 .insight-timeline-section{
@@ -1544,39 +1604,62 @@ input[type="range"]:focus { outline: none; }
   padding: 0;
   position: relative;
 }
-.insight-timeline::before{
-  content: "";
+/* The drawn axis — a 2px vertical rule the events attach to. The fill
+   overlays it from the top down as the reader scrolls past each event,
+   so the line itself shows reading progress. */
+.insight-timeline__axis{
   position: absolute;
-  left: 11px;
-  top: 6px;
-  bottom: 6px;
-  width: 1px;
+  left: 10px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
   background: var(--rule);
+  pointer-events: none;
+}
+.insight-timeline__axis-fill{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0;
+  background: var(--accent);
+  transition: height var(--t-med) var(--ease);
+  transform-origin: top;
 }
 .insight-timeline__item{
   position: relative;
   display: grid;
-  grid-template-columns: 28px minmax(140px, 180px) 1fr;
-  gap: 12px 24px;
-  padding: 14px 0 14px 0;
+  grid-template-columns: 28px minmax(150px, 180px) 1fr;
+  gap: 10px 28px;
+  padding: 16px 0;
   align-items: baseline;
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease);
+  transform: translateY(10px);
+  transition: opacity 520ms var(--ease), transform 520ms var(--ease);
 }
 .insight-timeline__item.is-revealed{ opacity: 1; transform: none; }
 .insight-timeline__dot{
-  width: 11px;
-  height: 11px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--paper);
-  border: 1.5px solid var(--ink);
-  margin: 6px 0 0 6px;
-  transition: background var(--t-med) var(--ease), border-color var(--t-med) var(--ease);
+  border: 1.5px solid var(--ink-3);
+  margin: 7px 0 0 5px;
+  position: relative;
+  z-index: 1;
+  transition:
+    background var(--t-med) var(--ease),
+    border-color var(--t-med) var(--ease),
+    box-shadow var(--t-med) var(--ease);
 }
-.insight-timeline__item.is-revealed .insight-timeline__dot{
+/* Active dot — once the event's row has crossed the reading line, the
+   dot fills with accent and a soft ring blooms around it. Quiet enough
+   that it isn't a "completed checkbox", but unmistakable as a moved-past
+   waypoint. */
+.insight-timeline__item.is-active .insight-timeline__dot{
   background: var(--accent);
   border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 .insight-timeline__date{
   font-family: var(--mono);
@@ -1585,31 +1668,81 @@ input[type="range"]:focus { outline: none; }
   text-transform: uppercase;
   color: var(--ink-3);
   white-space: nowrap;
+  transition: color var(--t-med) var(--ease);
+}
+.insight-timeline__item.is-active .insight-timeline__date{
+  color: var(--accent);
 }
 .insight-timeline__body h5{
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(18px, 1.4vw, 22px);
-  margin: 0 0 4px;
+  font-size: clamp(19px, 1.5vw, 23px);
+  margin: 0 0 6px;
   color: var(--ink);
   letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 .insight-timeline__body p{
   font-family: var(--serif);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--ink-2);
   margin: 0;
   max-width: 60ch;
 }
+/* Per-event verified stat — small mono label below the body. Hidden until
+   its parent item is revealed, then fades in with a short delay so it
+   reads as a footnote landing after the event rather than a competing
+   headline. Stats are facts about the event itself (counts, durations
+   between verified dates), never anything that could imply causation
+   with the arrest-rate line. */
+.insight-timeline__stat{
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 8px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 480ms var(--ease) 160ms, transform 480ms var(--ease) 160ms,
+              color var(--t-med) var(--ease), border-color var(--t-med) var(--ease);
+}
+.insight-timeline__item.is-revealed .insight-timeline__stat{
+  opacity: 1;
+  transform: none;
+}
+.insight-timeline__item.is-active .insight-timeline__stat{
+  color: var(--accent);
+  border-color: var(--accent);
+}
+@media (prefers-reduced-motion: reduce){
+  .insight-timeline__stat{
+    opacity: 1;
+    transform: none;
+    transition: none;
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+}
 @media (max-width: 640px){
-  .insight-timeline__item{ grid-template-columns: 28px 1fr; }
-  .insight-timeline__date{ grid-column: 2; }
+  .insight-timeline__item{ grid-template-columns: 28px 1fr; gap: 6px 18px; }
+  .insight-timeline__date{ grid-column: 2; margin-bottom: 2px; }
   .insight-timeline__body{ grid-column: 2; }
 }
 @media (prefers-reduced-motion: reduce){
   .insight-timeline__item{ opacity: 1; transform: none; transition: none; }
-  .insight-timeline__item .insight-timeline__dot{ background: var(--accent); border-color: var(--accent); }
+  .insight-timeline__item .insight-timeline__dot{
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .insight-timeline__item .insight-timeline__date{ color: var(--accent); }
+  .insight-timeline__axis-fill{ height: 100% !important; transition: none; }
 }
 
 /* ─────────── Chart A hover readout ─────────── */
@@ -1938,9 +2071,41 @@ input[type="range"]:focus { outline: none; }
   padding: 16px 14px 8px;
   text-align: left;
 }
-#insight-chart-covid-floyd-zoom > *,
-#insight-chart-covid-small-multiples > *{
+/* Stretch only the structural children (controls strip + svg wrapper) to
+   full container width. Avoid `> *` because that also catches the
+   .proto-tooltip div appended to the same root, blowing up its layout
+   box and breaking its on-hover positioning. */
+#insight-chart-covid-floyd-zoom > .proto-controls,
+#insight-chart-covid-floyd-zoom > div:not(.proto-tooltip):not(.proto-controls),
+#insight-chart-covid-small-multiples > .proto-controls,
+#insight-chart-covid-small-multiples > div:not(.proto-tooltip):not(.proto-controls){
   width: 100%;
+}
+/* Belt-and-braces: the tooltip is the only floating node in these mounts
+   and must keep its own sizing regardless of any layout rule above.
+   `!important` defends against any other rule (cached or otherwise)
+   stretching the box; `white-space: normal` lets long headers like
+   "CRIMINAL DAMAGE · week of Mon May 25, 2020" wrap inside max-width
+   instead of overflowing as a single nowrap line. */
+#insight-chart-covid-floyd-zoom > .proto-tooltip,
+#insight-chart-covid-small-multiples > .proto-tooltip{
+  width: auto !important;
+  max-width: 240px !important;
+  min-width: 0 !important;
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+  white-space: normal !important;
+  padding: 8px 10px !important;
+  box-sizing: border-box !important;
+}
+#insight-chart-covid-floyd-zoom > .proto-tooltip b,
+#insight-chart-covid-small-multiples > .proto-tooltip b{
+  font-size: 11px !important;
+  font-weight: 600;
+}
+#insight-chart-covid-floyd-zoom > .proto-tooltip .tt-row,
+#insight-chart-covid-small-multiples > .proto-tooltip .tt-row{
+  font-size: 11px !important;
 }
 #insight-chart-covid-floyd-zoom svg,
 #insight-chart-covid-small-multiples svg,

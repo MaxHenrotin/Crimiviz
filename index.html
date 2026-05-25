@@ -747,7 +747,10 @@
   <div id="insights-grid" class="insights-grid">
 
     <button type="button" class="insight-card" data-insight="covid">
-      <span class="insight-card__tag">Card 01 · COVID + Floyd</span>
+      <span class="insight-card__banner">
+        <img src="assets/images/insights/covid_header.jpg" alt="A deserted daytime Chicago street" loading="lazy">
+      </span>
+      <span class="insight-card__tag">Year 2020</span>
       <h3 class="insight-card__title">The city went quiet under lockdown, then erupted for three days.</h3>
       <p class="insight-card__teaser">Spring 2020 hollowed out the daily volume. A week later, late May, the same streets recorded their loudest stretch of the year.</p>
       <span class="insight-card__stat">
@@ -758,7 +761,10 @@
     </button>
 
     <button type="button" class="insight-card" data-insight="laquan">
-      <span class="insight-card__tag">Card 02 · Headline</span>
+      <span class="insight-card__banner">
+        <img src="assets/images/insights/laquan_header.jpg" alt="A Chicago street at night with distant police lights" loading="lazy">
+      </span>
+      <span class="insight-card__tag">Laquan McDonald</span>
       <h3 class="insight-card__title">Crime didn't change. The response to it did.</h3>
       <p class="insight-card__teaser">Through the mid-2010s the monthly volume barely moves. The arrest rate breaks, and keeps falling.</p>
       <span class="insight-card__stat">
@@ -769,7 +775,10 @@
     </button>
 
     <button type="button" class="insight-card" data-insight="blizzards">
-      <span class="insight-card__tag">Card 03 · Blizzards</span>
+      <span class="insight-card__banner">
+        <img src="assets/images/insights/blizzard_header.jpg" alt="A snow-covered deserted Chicago street" loading="lazy">
+      </span>
+      <span class="insight-card__tag">Blizzards</span>
       <h3 class="insight-card__title">When extreme cold empties the streets, crime follows.</h3>
       <p class="insight-card__teaser">Three winter events, each measured against the same calendar window in adjacent years. The dip is sharp and short.</p>
       <span class="insight-card__stat">
@@ -803,13 +812,13 @@
          image slot 1: empty Chicago street / quiet urban scene from spring 2020.
          Wide 3:2. Store under photos/covid/ (e.g. photos/covid/quiet-loop-2020.jpg). -->
     <section class="insight-block">
-      <figure class="insight-figure insight-figure--left" data-img-slot="1" aria-hidden="true">
+      <figure class="insight-figure insight-figure--left" data-img-slot="1">
         <div class="insight-figure__frame">
-          <span class="insight-figure__placeholder">photo 01 · empty Chicago street, spring 2020</span>
+          <img src="assets/images/insights/covid_lockdown.jpg" alt="Empty storefronts in Chicago during the spring 2020 stay-at-home order" loading="lazy">
         </div>
         <figcaption class="insight-figure__caption">
-          <span class="insight-figure__cap-text">Caption to come — set when the photograph is in place.</span>
-          <span class="insight-figure__credit">Credit · TBD</span>
+          <span class="insight-figure__cap-text">Chicago storefronts during the spring 2020 stay-at-home order.</span>
+          <span class="insight-figure__credit">Source · <a href="https://publichealth.uic.edu/news-stories/the-pandemic-on-main-street/" target="_blank" rel="noopener noreferrer">publichealth.uic.edu</a></span>
         </figcaption>
       </figure>
 
@@ -876,13 +885,13 @@
            Portrait 4:5. NO recognizable people. Store under photos/covid/
            (e.g. photos/covid/downtown-late-may-2020.jpg). -->
       <section class="insight-block">
-        <figure class="insight-figure insight-figure--right" data-img-slot="2" aria-hidden="true">
+        <figure class="insight-figure insight-figure--right" data-img-slot="2">
           <div class="insight-figure__frame insight-figure__frame--portrait">
-            <span class="insight-figure__placeholder">photo 02 · downtown Chicago, late May 2020</span>
+            <img src="assets/images/insights/covid_floyd.jpg" alt="A Black Lives Matter protest in Chicago, summer 2020" loading="lazy">
           </div>
           <figcaption class="insight-figure__caption">
-            <span class="insight-figure__cap-text">Caption to come — kept short; see the disclaimer below for the data-framing note.</span>
-            <span class="insight-figure__credit">Credit · TBD</span>
+            <span class="insight-figure__cap-text">A Black Lives Matter protest in Chicago, summer 2020. See the note below on what the data does and does not capture.</span>
+            <span class="insight-figure__credit">Source · <a href="https://www.chicagobooth.edu/review/how-should-companies-respond-black-lives-matter" target="_blank" rel="noopener noreferrer">chicagobooth.edu</a></span>
           </figcaption>
         </figure>
 
@@ -1002,25 +1011,25 @@
          NOT a still from the shooting video. Portrait 4:5. Store under
          photos/laquan/ (e.g. photos/laquan/dashcam.jpg). -->
     <section class="insight-block">
-      <figure class="insight-figure insight-figure--left" data-img-slot="1" aria-hidden="true">
+      <figure class="insight-figure insight-figure--left" data-img-slot="1">
         <div class="insight-figure__frame">
-          <span class="insight-figure__placeholder">photo 01 · protest, November 2015</span>
+          <img src="assets/images/insights/laquan_protest.jpg" alt="Protesters in Chicago after the release of the Laquan McDonald dashcam video, November 2015" loading="lazy">
         </div>
         <figcaption class="insight-figure__caption">
-          <span class="insight-figure__cap-text">Caption to come — set when the photograph is in place.</span>
-          <span class="insight-figure__credit">Credit · TBD</span>
+          <span class="insight-figure__cap-text">Protesters in Chicago following the release of the dashcam video, November 2015.</span>
+          <span class="insight-figure__credit">Source · <a href="https://www.tvazteca.com/aztecanoticias/notas/expolicia-laquan-mcdonald-rcs" target="_blank" rel="noopener noreferrer">tvazteca.com</a></span>
         </figcaption>
       </figure>
 
       <p class="insight-prose insight-prose--lede">On the night of October 20, 2014, an officer named Jason Van Dyke fired sixteen rounds at seventeen-year-old Laquan McDonald on South Pulaski Road. A dashcam in a nearby cruiser recorded the whole thing. For thirteen months the city kept the file out of public view.</p>
 
-      <figure class="insight-figure insight-figure--right" data-img-slot="2" aria-hidden="true">
+      <figure class="insight-figure insight-figure--right" data-img-slot="2">
         <div class="insight-figure__frame insight-figure__frame--portrait">
-          <span class="insight-figure__placeholder">photo 02 · dashcam (generic device)</span>
+          <img src="assets/images/insights/laquan_dashcam.jpg" alt="Still from the Chicago Police Department dashcam video released in November 2015" loading="lazy">
         </div>
         <figcaption class="insight-figure__caption">
-          <span class="insight-figure__cap-text">Caption to come.</span>
-          <span class="insight-figure__credit">Credit · TBD</span>
+          <span class="insight-figure__cap-text">Still from the police dashcam video, released by court order in November 2015.</span>
+          <span class="insight-figure__credit">Source · <a href="https://www.bbc.com/news/magazine-34977807" target="_blank" rel="noopener noreferrer">bbc.com</a></span>
         </figcaption>
       </figure>
 
@@ -1095,21 +1104,8 @@
     <h3 class="insight-section-title"><span class="num">III</span>Case to decree</h3>
 
     <!-- BLOCK C — case-to-decree chain + bridge to chart B.
-         image slot 3: press conference announcing the federal consent decree
-         (officials at a podium, court steps, or signing photograph). 3:2 wide.
-         Store under photos/laquan/ (e.g. photos/laquan/consent-decree-podium.jpg).
          Margin C anchors: the consent-decree definition (moved out of body). -->
     <section class="insight-block">
-      <figure class="insight-figure insight-figure--left" data-img-slot="3" aria-hidden="true">
-        <div class="insight-figure__frame">
-          <span class="insight-figure__placeholder">photo 03 · consent decree press conference</span>
-        </div>
-        <figcaption class="insight-figure__caption">
-          <span class="insight-figure__cap-text">Caption to come.</span>
-          <span class="insight-figure__credit">Credit · TBD</span>
-        </figcaption>
-      </figure>
-
       <p class="insight-prose">The case did not end there. The DOJ probe opened on December 7 became, by January 2017, a 164-page report finding a pattern of excessive force and constitutional violations by the Chicago Police Department. When the incoming Trump administration declined to pursue reforms, Illinois Attorney General Lisa Madigan sued the city in August 2017 to force them anyway. That suit produced a settlement and, on January 31, 2019, a federal consent decree.</p>
 
       <p class="insight-prose">Scandals fade. The next question is whether this one did. Was the break a brief reaction — the kind of dip that follows political fire and then resets — or did the new level hold?</p>
@@ -1173,13 +1169,13 @@
          (Lake Shore Drive buried, cars abandoned, etc.). Wide 3:2.
          Store under photos/blizzards/ (e.g. photos/blizzards/snowmageddon-2011.jpg). -->
     <section class="insight-block">
-      <figure class="insight-figure insight-figure--left" data-img-slot="1" aria-hidden="true">
+      <figure class="insight-figure insight-figure--left" data-img-slot="1">
         <div class="insight-figure__frame">
-          <span class="insight-figure__placeholder">photo 01 · Snowmageddon, February 2011</span>
+          <img src="assets/images/insights/blizzards_snowmageddon.jpg" alt="Chicago streets buried under snow after the February 2011 blizzard" loading="lazy">
         </div>
         <figcaption class="insight-figure__caption">
-          <span class="insight-figure__cap-text">Caption to come — set when the photograph is in place.</span>
-          <span class="insight-figure__credit">Credit · TBD</span>
+          <span class="insight-figure__cap-text">Chicago after the February 2011 blizzard, locally remembered as Snowmageddon.</span>
+          <span class="insight-figure__credit">Source · <a href="https://www.wbez.org/reset-with-sasha-ann-simons/2021/01/29/10-years-later-snowmageddon-is-still-fresh-in-chicagos-memory" target="_blank" rel="noopener noreferrer">wbez.org</a></span>
         </figcaption>
       </figure>
 
@@ -1283,13 +1279,13 @@
          Store under photos/blizzards/ (e.g. photos/blizzards/polar-vortex-2014.jpg).
          Margin anchor: 2014 temperature calendar. -->
     <section class="insight-block">
-      <figure class="insight-figure insight-figure--right" data-img-slot="2" aria-hidden="true">
+      <figure class="insight-figure insight-figure--right" data-img-slot="2">
         <div class="insight-figure__frame insight-figure__frame--portrait">
-          <span class="insight-figure__placeholder">photo 02 · polar vortex, January 2014</span>
+          <img src="assets/images/insights/blizzards_polar_vortex.jpg" alt="Chicago in the deep freeze of the January 2014 polar vortex" loading="lazy">
         </div>
         <figcaption class="insight-figure__caption">
-          <span class="insight-figure__cap-text">Caption to come.</span>
-          <span class="insight-figure__credit">Credit · TBD</span>
+          <span class="insight-figure__cap-text">Chicago during the January 2014 polar vortex, when wind chills fell below −40°.</span>
+          <span class="insight-figure__credit">Source · <a href="https://www.greenattic.com/blogs/chilling-tales-of-chicagos-historic-winter-weather-from-record-breakers-to-frosty-legends" target="_blank" rel="noopener noreferrer">greenattic.com</a></span>
         </figcaption>
       </figure>
 

@@ -2,6 +2,7 @@ import { loadJSON } from './data.js';
 import { renderLaquanChart } from './insights/laquan_chart.js';
 import { renderLaquanTimeline } from './insights/laquan_timeline.js';
 import { renderBlizzardsPrototypes } from './insights/blizzards_prototypes.js';
+import { renderCovidPrototypes } from './insights/covid_prototypes.js';
 
 const STORIES = ['covid', 'laquan', 'blizzards'];
 
@@ -94,6 +95,13 @@ function populateCovidDetail(d) {
   set('floyd-peak-date', fmtDate(d.floyd_peak_date));
   set('floyd-peak-n', fmtNum(d.floyd_peak_n));
   set('floyd-peak-pct', fmtPct(d.floyd_peak_pct));
+
+  Promise.all([
+    loadJSON('covid_by_type'),
+    loadJSON('covid_by_hour'),
+  ]).then(([byType, byHour]) => {
+    renderCovidPrototypes({ covid: d, byType, byHour });
+  }).catch(err => console.error('covid prototypes: data load failed', err));
 }
 
 function populateLaquanDetail(d) {

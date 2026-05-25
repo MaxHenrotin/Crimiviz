@@ -786,38 +786,198 @@
        #area-panel. The chart mount in each is an empty <div> labelled with a
        comment — D3 is wired up in a later pass. -->
 
-  <article id="insight-detail-covid" class="insight-detail" hidden aria-labelledby="insight-detail-covid-title">
+  <article id="insight-detail-covid" class="insight-detail insight-article" hidden aria-labelledby="insight-detail-covid-title">
     <button type="button" class="back-to-insights btn-ghost" data-back-to-insights>
       <span>← Back to Insights</span>
     </button>
-    <header class="insight-detail__head">
-      <span class="insight-detail__tag">Card 01 · COVID + Floyd</span>
+    <header class="insight-detail__head insight-article__head">
+      <span class="insight-detail__tag">Card 01 · A quiet year, briefly loud</span>
       <h2 id="insight-detail-covid-title">The city went <em>quiet</em>, then <em>erupted</em>.</h2>
-      <p class="insight-detail__deck">Spring 2020 collapsed Chicago's daily incident count well below the 2018 and 2019 baseline. The lockdown trough lasts roughly six weeks. A short spike follows in late May, driven by a different story.</p>
+      <p class="insight-detail__deck">Two stories braided into one year: a six-week stay-at-home trough and a three-day spike of unrest at the end of May.</p>
+      <p class="insight-article__byline">A reading of 8.5 million records · Chicago Data Portal</p>
     </header>
 
-    <!-- chart mount: COVID — daily 2020 series overlaid on the 2018/2019 baseline curve -->
-    <div class="insight-chart" id="insight-chart-covid" data-mount="covid">
-      <span class="chart-placeholder">Chart goes here · 2020 daily volume vs 2018–19 baseline (D3 wiring pending)</span>
+    <h3 class="insight-section-title"><span class="num">I</span>The city goes quiet</h3>
+
+    <!-- BLOCK A — lockdown intro. Slot 1 floats left.
+         image slot 1: empty Chicago street / quiet urban scene from spring 2020.
+         Wide 3:2. Store under photos/covid/ (e.g. photos/covid/quiet-loop-2020.jpg). -->
+    <section class="insight-block">
+      <figure class="insight-figure insight-figure--left" data-img-slot="1" aria-hidden="true">
+        <div class="insight-figure__frame">
+          <span class="insight-figure__placeholder">photo 01 · empty Chicago street, spring 2020</span>
+        </div>
+        <figcaption class="insight-figure__caption">
+          <span class="insight-figure__cap-text">Caption to come — set when the photograph is in place.</span>
+          <span class="insight-figure__credit">Credit · TBD</span>
+        </figcaption>
+      </figure>
+
+      <p class="insight-prose insight-prose--lede">On March 21, 2020, Illinois ordered residents to stay at home. By the end of the next week, the daily count of reported incidents in Chicago had fallen well below the typical level. For the six weeks of the order, the city averaged <span data-covid="lockdown-actual" class="num-accent">—</span> incidents a day, against <span data-covid="lockdown-baseline" class="num-accent">—</span> a day in the same calendar window across 2018 and 2019. A drop of <span data-covid="lockdown-drop" class="num-accent">—</span>.</p>
+
+      <p class="insight-prose">The mechanism is the same one that runs through the blizzards card. Routine activity needs people in the street: bus stops, parking lots, sidewalks, bars. Pull them indoors and most of what the city counts as crime quietly idles. Narcotics enforcement collapses hardest because it depends almost entirely on stops in public places. Theft, burglary, criminal damage all drop too, by smaller fractions.</p>
+
+      <p class="insight-prose">The chart below holds the whole year at a glance. The dark fill across April and May is the lockdown trough. The brief red column rising out of it at the end of May is something else. A different story hidden inside the same year. Press play to look closer.</p>
+    </section>
+    <aside class="insight-margin" aria-label="Sidebar: lockdown numbers and baseline definition">
+      <div class="insight-aside insight-aside--numbers">
+        <span class="aside-kicker">The lockdown · 6 weeks</span>
+        <div class="aside-row aside-row--stacked">
+          <span class="aside-lbl">Window</span>
+          <span class="aside-val"><span data-covid="lockdown-start">—</span> → <span data-covid="lockdown-end">—</span></span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-lbl">2020 daily avg</span>
+          <span class="aside-val" data-covid="lockdown-actual">—</span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-lbl">2018-19 daily avg</span>
+          <span class="aside-val" data-covid="lockdown-baseline">—</span>
+        </div>
+        <div class="aside-row">
+          <span class="aside-lbl">Drop</span>
+          <span class="aside-val" data-covid="lockdown-drop">—</span>
+        </div>
+      </div>
+      <div class="insight-aside insight-aside--definition">
+        <span class="aside-kicker">Baseline</span>
+        <p>Every percentage on this page is a contrast against the same calendar day in 2018 and 2019, averaged. A two-year, same-day mean controls for the season without leaning on a long-run average.</p>
+      </div>
+    </aside>
+
+    <!-- Chart A — animated zoom (wide view = the socle for the year) -->
+    <div class="insight-charts insight-charts--single">
+      <figure class="insight-chartcard">
+        <figcaption class="insight-chartcard__head">
+          <span class="insight-chartcard__kicker">Chart A · The year against itself</span>
+          <h4 class="insight-chartcard__title">Quiet, then loud</h4>
+          <p class="insight-chartcard__deck">2020 daily incidents against the 2018-19 same-day baseline. Dark fill below the dashed line is the lockdown trough; red above is the late-May spike. Press the play button to zoom into the peak day.</p>
+        </figcaption>
+        <div class="insight-chart" id="insight-chart-covid-floyd-zoom"></div>
+      </figure>
     </div>
 
-    <section class="beats">
-      <div class="beat">
-        <h4>Lead</h4>
-        <p>Between <span data-covid="lockdown-start">—</span> and <span data-covid="lockdown-end">—</span>, daily reported incidents in Chicago averaged <span data-covid="lockdown-actual">—</span> per day, against <span data-covid="lockdown-baseline">—</span> per day for the same calendar weeks in 2018 and 2019. That is a drop of <span data-covid="lockdown-drop" class="num-accent">—</span>.</p>
+    <h3 class="insight-section-title"><span class="num">II</span>Unrest after George Floyd's death</h3>
+
+    <!-- SUB-CARD: nested article-within-article for the Floyd window.
+         Visually distinct frame (paper-2 background + border + padding)
+         so the side-topic reads as a card inside the card. Contains its
+         own header, body block with image slot 2 + factual disclaimer
+         callout, margin numbers, and the composition-shift chart. -->
+    <section class="insight-subcard" aria-labelledby="covid-subcard-title">
+      <header class="insight-subcard__head">
+        <span class="insight-subcard__eyebrow">A spike inside the trough</span>
+        <h3 id="covid-subcard-title" class="insight-subcard__title">Eight days in <em>late May</em></h3>
+        <p class="insight-subcard__deck">May 25 → June 5, 2020. A brief surge in burglary, criminal damage and weapons charges sits inside the six weeks of lockdown.</p>
+      </header>
+
+      <!-- BLOCK — sub-card body. Slot 2 floats right.
+           image slot 2: contextual photo of downtown Chicago in late May 2020.
+           Portrait 4:5. NO recognizable people. Store under photos/covid/
+           (e.g. photos/covid/downtown-late-may-2020.jpg). -->
+      <section class="insight-block">
+        <figure class="insight-figure insight-figure--right" data-img-slot="2" aria-hidden="true">
+          <div class="insight-figure__frame insight-figure__frame--portrait">
+            <span class="insight-figure__placeholder">photo 02 · downtown Chicago, late May 2020</span>
+          </div>
+          <figcaption class="insight-figure__caption">
+            <span class="insight-figure__cap-text">Caption to come — kept short; see the disclaimer below for the data-framing note.</span>
+            <span class="insight-figure__credit">Credit · TBD</span>
+          </figcaption>
+        </figure>
+
+        <p class="insight-prose">George Floyd was killed by police in Minneapolis on May 25, 2020. Protests started there and reached every major American city within a week. Chicago's downtown marches escalated on the evening of May 30, and the city raised its bridges over the river. By the end of May 31 the daily incident count had reached <span data-covid="floyd-peak-n" class="num-accent">—</span>, the highest single-day total of the year and about <span data-covid="floyd-peak-pct" class="num-accent">—</span> above the surrounding two-week baseline. A 9 pm city-wide curfew began the next day. By June 3 the line was back inside the lockdown trough.</p>
+
+        <div class="insight-callout" role="note">
+          <span class="callout-kicker">A note on what the data does and does not show</span>
+          <p>Tens of thousands of people marched in Chicago and across the country in the days after George Floyd's death. Those protests were lawful and overwhelmingly peaceful. The chart shows a coincident rise in specific kinds of crime — burglary, criminal damage, weapons violations — during the same period of unrest. That is a correlation in time, not proof that the protests caused the crime, and protesting is not what is captured here.</p>
+        </div>
+
+        <p class="insight-prose">The chart above held the spike against a year of mostly empty streets. The chart below shows what was inside the spike. Burglary jumps from a typical 264 per week to 1,069 in eight days, the largest move on the page. Criminal damage rises about seventy percent, from roughly 655 to 1,115. Weapons violations and public peace offences climb sharply too, from small baselines. Everyday street crime, like theft and narcotics, falls hard during the same days, because the city was otherwise still under stay-at-home and the rest of the street had gone even quieter than baseline.</p>
+      </section>
+      <aside class="insight-margin" aria-label="Sidebar: Floyd window numbers">
+        <div class="insight-aside insight-aside--numbers">
+          <span class="aside-kicker">May 31 · peak day</span>
+          <div class="aside-row">
+            <span class="aside-lbl">Incidents</span>
+            <span class="aside-val" data-covid="floyd-peak-n">—</span>
+          </div>
+          <div class="aside-row">
+            <span class="aside-lbl">vs 2-week baseline</span>
+            <span class="aside-val" data-covid="floyd-peak-pct">—</span>
+          </div>
+        </div>
+        <div class="insight-aside insight-aside--numbers">
+          <span class="aside-kicker">8-day window · what moved most</span>
+          <div class="aside-row">
+            <span class="aside-lbl">Burglary</span>
+            <span class="aside-val">1,069 vs ~264</span>
+          </div>
+          <div class="aside-row">
+            <span class="aside-lbl">Criminal damage</span>
+            <span class="aside-val">1,115 vs ~655</span>
+          </div>
+          <div class="aside-row">
+            <span class="aside-lbl">Public peace viol.</span>
+            <span class="aside-val">455 vs ~34</span>
+          </div>
+          <div class="aside-row">
+            <span class="aside-lbl">Weapons viol.</span>
+            <span class="aside-val">338 vs ~123</span>
+          </div>
+          <div class="aside-row">
+            <span class="aside-lbl">Arson</span>
+            <span class="aside-val">72 vs ~12</span>
+          </div>
+          <div class="aside-row">
+            <span class="aside-lbl">Theft</span>
+            <span class="aside-val">784 vs ~1,527</span>
+          </div>
+          <div class="aside-row">
+            <span class="aside-lbl">Narcotics</span>
+            <span class="aside-val">85 vs ~301</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Chart B — Floyd composition (diverging bars; approved) -->
+      <div class="insight-charts insight-charts--single">
+        <figure class="insight-chartcard">
+          <figcaption class="insight-chartcard__head">
+            <span class="insight-chartcard__kicker">Chart B · By primary type</span>
+            <h4 class="insight-chartcard__title">What rose, what fell</h4>
+            <p class="insight-chartcard__deck">8-day Floyd window (May 29 → Jun 5) against the 2018-19 same-window mean. Property and order categories climb; everyday street crime drops. Raw counts in every row label so big multiples on small bases never appear bare.</p>
+          </figcaption>
+          <div class="insight-chart" id="insight-chart-covid-comp-floyd"></div>
+        </figure>
       </div>
-      <div class="beat">
-        <h4>Turn</h4>
-        <p>The trough is not a slow slide. The line steps down within a week of the Illinois stay-at-home order and holds there. By June the daily volume has rejoined the baseline curve.</p>
-      </div>
-      <div class="beat">
-        <h4>Context</h4>
-        <p>Riding inside the lockdown story, the peak day of the year arrives on <span data-covid="floyd-peak-date">—</span>: <span data-covid="floyd-peak-n">—</span> incidents recorded in a single day, <span data-covid="floyd-peak-pct" class="num-accent">—</span> above the surrounding two-week baseline. This is the Chicago response to George Floyd's killing in Minneapolis on May 25, 2020 — a three-day spike, then back to lockdown levels.</p>
-      </div>
-      <div class="beat">
-        <h4>So what</h4>
-        <p>Two effects happen at once in the same dataset: a structural, multi-week suppression of routine activity, and a sharp, isolated burst of property reports. The shape of 2020 is both at the same time.</p>
-      </div>
+    </section>
+    <!-- /SUB-CARD -->
+
+    <h3 class="insight-section-title"><span class="num">III</span>Each type's own year</h3>
+
+    <!-- Transition block — full width (no following margin), via :not(:has(+ .insight-margin)) -->
+    <section class="insight-block">
+      <p class="insight-prose">Step back from May for a moment. Each crime category has its own shape across 2020 — different magnitudes, different timing. Some collapse and stay low through summer. Some recover by autumn. Some barely move. The small multiples below put the eight robust types side by side, on the same weekly x-axis, against the 2018-19 baseline. The lockdown band and the Floyd week are drawn across every panel so the two reference events line up.</p>
+    </section>
+
+    <!-- Chart C — small multiples -->
+    <div class="insight-charts insight-charts--single">
+      <figure class="insight-chartcard">
+        <figcaption class="insight-chartcard__head">
+          <span class="insight-chartcard__kicker">Chart C · Weekly by type</span>
+          <h4 class="insight-chartcard__title">Eight trajectories</h4>
+          <p class="insight-chartcard__deck">Weekly counts, eight robust categories only (lockdown-window baseline ≥ ~180 per week). 2020 line over the faint 2018-19 baseline. Hover any panel for that week's count vs baseline. Toggle the y-axis: shared (magnitudes comparable) or per-panel (each shape fills its frame).</p>
+        </figcaption>
+        <div class="insight-chart" id="insight-chart-covid-small-multiples"></div>
+      </figure>
+    </div>
+
+    <!-- Closing block — full width, no intertitle (matches Laquan / blizzards). -->
+    <section class="insight-block">
+      <p class="insight-prose">The year is two stories braided into one chart. The dominant one is structural: a six-week ratchet downward when the city's routine activity stops. The brief one is reactive: a three-day spike of property crime and disorder when the streets fill again, this time for unrest. Both are real. Neither would be visible without the other.</p>
+
+      <p class="insight-prose">Crime in this dataset is mostly what happens when people are out. Empty the streets and the count falls. Fill them with something other than ordinary life and the count rises, briefly, in shapes the chart could not have predicted in advance.</p>
     </section>
   </article>
 

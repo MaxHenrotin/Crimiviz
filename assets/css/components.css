@@ -1782,3 +1782,198 @@ input[type="range"]:focus { outline: none; }
   height: auto;
   display: block;
 }
+
+/* ─────────── Segmented control (proto controls) ───────────
+   Both segments always fully visible, active = filled accent, inactive =
+   filled paper with a contrasting border so it stands out against the
+   .proto-mount paper-2 background. Min-width on each segment so labels
+   never clip. No overflow:hidden on the wrapper. */
+.proto-segmented{
+  display: inline-flex;
+  border: 1px solid var(--ink-3);
+  border-radius: 2px;
+  background: var(--paper);
+}
+.proto-segmented .proto-segmented__seg{
+  appearance: none;
+  border: none;
+  padding: 7px 16px;
+  min-width: 110px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.proto-segmented .proto-segmented__seg + .proto-segmented__seg{
+  border-left: 1px solid var(--ink-3);
+}
+.proto-segmented .proto-segmented__seg[aria-pressed="true"]{
+  background: var(--accent);
+  color: var(--paper);
+}
+.proto-segmented .proto-segmented__seg[aria-pressed="false"]{
+  background: var(--paper);
+  color: var(--ink);
+}
+.proto-segmented .proto-segmented__seg:hover[aria-pressed="false"]{
+  background: var(--paper-2);
+}
+.proto-segmented .proto-segmented__seg:focus-visible{
+  outline: 2px solid var(--accent-ring);
+  outline-offset: -2px;
+}
+
+/* ─────────── Sub-card (nested article-within-article) ───────────
+   A visually distinct container for a side-topic that lives inside a
+   main insight article. Uses the same two-column body/margin grid as
+   .insight-article so child .insight-block / .insight-margin / .insight-charts
+   elements behave the same way they do at top level. Has its own header
+   block (eyebrow + title + deck) and a paper-2 background + framing
+   border so it reads as "card inside card". */
+.insight-article > .insight-subcard{
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(200px, 22vw, 260px);
+  column-gap: clamp(32px, 4vw, 64px);
+  row-gap: clamp(28px, 3.5vw, 44px);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  padding: clamp(24px, 4vw, 48px);
+  margin: clamp(8px, 1.5vw, 24px) 0;
+}
+.insight-subcard > .insight-subcard__head{
+  grid-column: 1 / -1;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.insight-subcard__eyebrow{
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.insight-subcard__title{
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--ink);
+}
+.insight-subcard__title em{
+  font-style: italic;
+  color: var(--ink-2);
+}
+.insight-subcard__deck{
+  font-family: var(--serif);
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.4;
+  color: var(--ink-2);
+  margin: 4px 0 0;
+  max-width: 56ch;
+}
+.insight-subcard > .insight-block{ grid-column: 1; }
+.insight-subcard > .insight-margin{ grid-column: 2; }
+.insight-subcard > .insight-charts{ grid-column: 1 / -1; }
+.insight-subcard > .insight-block:not(:has(+ .insight-margin)){
+  grid-column: 1 / -1;
+}
+@media (max-width: 880px){
+  .insight-subcard{ grid-template-columns: 1fr; }
+  .insight-subcard > .insight-block,
+  .insight-subcard > .insight-margin{ grid-column: 1; }
+}
+
+/* ─────────── Callout (factual disclaimer inside prose) ───────────
+   A visually distinct in-flow note tied to a paragraph of body text.
+   Used here for the disclaimer that the data captures unrest, not the
+   act of protesting. Stronger than a margin aside (sits in the reading
+   column where it can't be missed) but not as heavy as a chart card. */
+.insight-callout{
+  border-left: 3px solid var(--accent);
+  background: var(--paper);
+  padding: 16px 20px;
+  margin: 8px 0;
+}
+.callout-kicker{
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.insight-callout p{
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+/* ─────────── COVID card · chart mount sizing ───────────
+   The COVID charts use the same controls+SVG (animated zoom, small
+   multiples) or single-SVG (diverging bars) pattern as the blizzards
+   scatter. The default .insight-chart `display: grid; place-items: center`
+   doesn't propagate width:100% to wrapped SVGs, so they render small and
+   top-anchored. Switch to block flow so the SVG fills the container width
+   like Laquan and blizzards. */
+#insight-chart-covid-floyd-zoom,
+#insight-chart-covid-small-multiples,
+#insight-chart-covid-comp-floyd{
+  display: block;
+  padding: 16px 14px 8px;
+  text-align: left;
+}
+#insight-chart-covid-floyd-zoom > *,
+#insight-chart-covid-small-multiples > *{
+  width: 100%;
+}
+#insight-chart-covid-floyd-zoom svg,
+#insight-chart-covid-small-multiples svg,
+#insight-chart-covid-comp-floyd svg{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─────────── COVID card · numbers-aside layout ───────────
+   The default .aside-val is 18px mono + nowrap, tuned for short magnitudes
+   like Laquan's "20.0%". COVID has longer values ("1,069 vs ~264" inline
+   raw counts; "March 21, 2020 → May 1, 2020" date range) that overflow
+   the 200-260px margin column at that size. Scope a slightly smaller
+   value font + stacked variant for the date range so nothing collides. */
+#insight-detail-covid .insight-aside--numbers .aside-row{ gap: 16px; }
+#insight-detail-covid .insight-aside--numbers .aside-val{
+  font-size: 14px;
+  text-align: right;
+}
+/* Stacked variant: label on its own line, value on the next line below.
+   Used for the lockdown window date range which is too wide for any inline
+   layout in a 200px margin. */
+.insight-aside--numbers .aside-row--stacked{
+  display: block;
+}
+.insight-aside--numbers .aside-row--stacked .aside-lbl{
+  display: block;
+  margin-bottom: 4px;
+}
+.insight-aside--numbers .aside-row--stacked .aside-val{
+  display: block;
+  white-space: normal;
+  text-align: left;
+  font-size: 14px;
+}

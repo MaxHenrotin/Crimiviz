@@ -10,7 +10,7 @@ Crimiviz lets you explore the 7.8 million reported incidents on file from the Ch
 
 - **Map** — a paper-themed map of Chicago with a focus-mode interaction. The 77 community areas are coloured by total volume under the current filter (category, hour, year); clicking an area zooms in and loads every reported incident on file for that neighbourhood. A decile-classified density layer paints the hotspots within the area; at high zoom each individual block centroid becomes a sized circle (number of crimes stacked there, with the count printed on top), and clicking a circle opens the underlying incident records.
 - **Trends** — seasonality, time-of-day rhythms, distribution by primary type, and arrest-rate disparities.
-- **Insights** — three storytelling deep-dives: pre/post COVID shift, election-period impact, and major Chicago events overlaid on crime volume.
+- **Insights** — three editorial deep-dives: the pre/post COVID shift, the Laquan McDonald accountability collapse (2014 → arrest-rate break), and how extreme Chicago winters empty the streets.
 
 Target audience: urban planners, public-safety researchers, city officials.
 
@@ -23,21 +23,24 @@ Target audience: urban planners, public-safety researchers, city officials.
 │   ├── css/                     main, components, viz
 │   └── js/
 │       ├── app.js               non-module: tabs, scroll, year-pill DOM
-│       ├── main.js              module: filter wiring, mounts the map
+│       ├── main.js              module: filter wiring, mounts the map and insights
 │       ├── data.js              fetch + cache helper
 │       ├── filters.js           shared filter state (type, hour, years)
+│       ├── insights.js          orchestrator for the three insight stories
+│       ├── insights/            D3 prototypes (covid, laquan, blizzards)
+│       ├── charts/              (empty) slot for the upcoming Trends charts
 │       └── map/map.js           MapLibre map + popup + density grid
 ├── data/
 │   ├── chicago_communities.topo.json
 │   ├── by_community_area.json
-│   ├── seasonality.json
-│   ├── time_of_day.json
-│   ├── crime_types.json
-│   ├── arrest_rates.json
-│   ├── covid_comparison.json
+│   ├── seasonality.json · time_of_day.json · crime_types.json · arrest_rates.json
+│   ├── covid_comparison.json · covid_by_type.json · covid_by_hour.json
+│   ├── insights_covid.json · insights_laquan.json · insights_blizzards.json
+│   ├── blizzards_by_type.json · blizzards_temperature.json · blizzards_wide.json
 │   ├── meta.json
 │   └── points/                  78 GeoJSON, one per community area + manifest
 ├── scripts/                     Python pipeline that produces data/
+├── notebooks/                   EDA notebook driving the Insights stories
 ├── data_exploration.ipynb       exploratory notebook (M1)
 ├── milestone1.pdf · milestone2.pdf · milestone3.pdf
 ├── process_book.md              narrative behind the project
@@ -76,6 +79,9 @@ pip install -r requirements.txt
 python fetch_and_build.py          # ~2 min · Socrata aggregates
 python build_topojson.py           # ~5 s · community-area boundaries
 python build_points_per_area.py    # ~10 min · 78 per-area GeoJSON + manifest
+python build_insights_data.py      # aggregates for the three insight stories
+python build_covid_extras.py       # COVID-specific by_type / by_hour deltas
+python build_blizzards_extras.py   # blizzard temperature series + wide pivot
 ```
 
 `fetch_and_build.py` and `build_topojson.py` hit the Chicago Data Portal directly (no raw download). `build_points_per_area.py` reads the local `chicago_crimes.csv` to emit one GeoJSON per community area, with the largest area (Austin / CA 25) split by year so every file stays under GitHub's 100 MB per-file ceiling. A small `data/points/_manifest.json` tells the front-end which files belong to which area.
@@ -87,7 +93,7 @@ The repository is linked to a Vercel project that auto-deploys `main`. There is 
 ## Stack
 
 - Vanilla HTML / CSS / JavaScript (ES modules + one non-module script, no bundler)
-- **MapLibre GL JS v4** for the WebGL map; **D3.js v7** + topojson-client for the upcoming Trends and Insights charts; both loaded via CDN through a native `<script type="importmap">`
+- **MapLibre GL JS v4** for the WebGL map; **D3.js v7** + topojson-client for the Insights story charts (and the Trends charts, work in progress); both loaded via CDN through a native `<script type="importmap">`
 - CARTO Light no-labels raster tiles for the basemap, OpenMapTiles glyph PBFs for symbol labels
 - Python 3 (`requests`, `tqdm`, `topojson`) for the data pipeline
 

@@ -32,6 +32,15 @@
         t.setAttribute('aria-selected', isActive ? 'true' : 'false');
       }
     });
+    requestAnimationFrame(() => {
+      const html = document.documentElement;
+      const prev = html.style.scrollBehavior;
+      html.style.scrollBehavior = 'auto';
+      window.scrollTo(0, 0);
+      html.scrollTop = 0;
+      document.body.scrollTop = 0;
+      html.style.scrollBehavior = prev;
+    });
     requestAnimationFrame(applyBleed);
   }
 

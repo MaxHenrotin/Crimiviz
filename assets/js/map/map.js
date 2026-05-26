@@ -312,9 +312,9 @@ function showSingleCrimePopup(coords, p) {
     .setLngLat(coords)
     .setHTML(`
       <div class="popup-tag">${escapeHtml(prettyType(p.primary_type))}</div>
-      <div class="popup-desc">${escapeHtml(p.description || '—')}</div>
+      <div class="popup-desc">${escapeHtml(p.description || '·')}</div>
       <div class="popup-row"><span>When</span><span>${escapeHtml(prettyDate(p.date))}</span></div>
-      <div class="popup-row"><span>Where</span><span>${escapeHtml(p.location || '—')}</span></div>
+      <div class="popup-row"><span>Where</span><span>${escapeHtml(p.location || '·')}</span></div>
       <div class="popup-row"><span>Arrest</span><span>${p.arrest === true || p.arrest === 'true' ? 'Yes' : 'No'}</span></div>
     `)
     .addTo(map);
@@ -326,14 +326,14 @@ function showStackPopup(coords, items) {
   let earliest = items[0].properties.date;
   let latest = items[0].properties.date;
   for (const f of items) {
-    const t = f.properties.primary_type || '—';
+    const t = f.properties.primary_type || '·';
     types.set(t, (types.get(t) || 0) + 1);
     if (f.properties.arrest === true || f.properties.arrest === 'true') arrests++;
     if (f.properties.date < earliest) earliest = f.properties.date;
     if (f.properties.date > latest) latest = f.properties.date;
   }
   const top = [...types.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
-  const location = items[0].properties.location || '—';
+  const location = items[0].properties.location || '·';
 
   const rows = top.map(([t, n]) =>
     `<div class="popup-row"><span>${escapeHtml(prettyType(t))}</span><span>${fmtNum(n)}</span></div>`

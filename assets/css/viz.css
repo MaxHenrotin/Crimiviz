@@ -239,7 +239,7 @@
   grid-template-columns: 1fr 2fr;
   gap: 48px;
   border-top: 1px solid var(--rule);
-  padding: clamp(40px, 6vw, 64px) 0 clamp(64px, 9vw, 120px);
+  padding: clamp(16px, 2.5vw, 28px) 0 clamp(32px, 5vw, 64px);
 }
 .about-title{
   font-family: var(--serif);
@@ -249,6 +249,34 @@
   letter-spacing: -0.015em;
 }
 .about-title em { font-style: italic; color: var(--ink-2); }
+.about-header{
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  min-height: 100%;
+}
+.about-source-link{
+  display: inline-flex;
+  align-self: center;
+  justify-self: start;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+  padding: 18px 28px;
+  gap: 14px;
+  font-size: 13px;
+  border-width: 2px;
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--paper-2);
+}
+.about-source-link:hover{
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
 .about-body{ display: grid; grid-template-columns: 1fr 1fr; gap: 28px 48px; }
 .about-row{ display: grid; gap: 6px; }
 .about-row dt{
@@ -415,8 +443,9 @@
 /* KPI bleeds removed */
 
 /* Drips are Home-only — Map/Trends/Insights stay clean */
-.drip{ display: none; }
-body[data-tab="home"] .drip{ display: block; }
+.drip, .drip-spat{ display: none; }
+body[data-tab="home"] .drip,
+body[data-tab="home"] .drip-spat{ display: block; }
 
 /* MapLibre map — fills #viz-map with a paper basemap inside the editorial frame */
 #viz-map{

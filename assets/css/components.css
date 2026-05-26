@@ -2,17 +2,16 @@
    HOME
    ───────────────────────────────────────────────────────────── */
 .hero{
-  padding: clamp(48px, 9vw, 120px) 0 clamp(40px, 6vw, 72px);
+  padding: clamp(28px, 5vw, 64px) 0 clamp(28px, 4vw, 52px);
   display: grid;
   grid-template-columns: 1fr;
   gap: 28px;
-  border-bottom: 1px solid var(--rule-soft);
 }
 .hero-eyebrow{ display: flex; gap: 14px; align-items: center; }
 .hero-headline{
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(56px, 10.5vw, 168px);
+  font-size: clamp(38px, 7vw, 108px);
   line-height: 0.92;
   letter-spacing: -0.025em;
   margin: 0;
@@ -39,12 +38,12 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 0;
-  margin: clamp(32px, 5vw, 56px) 0 clamp(48px, 7vw, 88px);
+  margin: clamp(8px, 1.5vw, 18px) 0 clamp(6px, 1vw, 12px);
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
 }
 .kpi{
-  padding: 28px 24px 28px 0;
+  padding: 12px 24px 12px 0;
   border-right: 1px solid var(--rule-soft);
   position: relative;
 }
@@ -71,7 +70,7 @@
 }
 
 .nav-section{
-  padding-bottom: clamp(64px, 9vw, 120px);
+  padding-bottom: clamp(24px, 4vw, 48px);
 }
 .section-head{
   display: grid;
@@ -79,7 +78,7 @@
   gap: 32px;
   align-items: end;
   margin-bottom: 36px;
-  padding-top: clamp(40px, 6vw, 80px);
+  padding-top: clamp(24px, 3.5vw, 48px);
 }
 .section-head h2{
   font-family: var(--serif);
@@ -934,7 +933,7 @@ input[type="range"]:focus { outline: none; }
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--ink-2);
-  margin-top: 4px;
+  margin-top: 14px;
   display: flex;
   justify-content: center;
   align-items: center;

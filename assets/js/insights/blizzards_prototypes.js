@@ -856,7 +856,7 @@ function renderByType(rootEl, byType) {
     .attr('fill', t.ink3)
     .attr('font-family', 'var(--mono)').attr('font-size', 10)
     .attr('letter-spacing', '0.08em')
-    .text('Average of three event deltas — Feb 2011 (Snowmageddon) · Jan 2014 (polar vortex) · Jan 2019 (polar vortex).');
+    .text('Average of three event deltas: Feb 2011 (Snowmageddon) · Jan 2014 (polar vortex) · Jan 2019 (polar vortex).');
   g.append('text')
     .attr('x', 0).attr('y', innerH + 46)
     .attr('fill', t.ink3)

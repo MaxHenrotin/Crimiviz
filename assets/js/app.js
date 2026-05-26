@@ -62,20 +62,21 @@
   const hourMaxEl = document.getElementById('filter-hour-max');
   const hourDispEl = document.getElementById('hour-display');
   const hourFillEl = document.getElementById('hour-range-fill');
-  const H_MIN = 0, H_MAX = 23, H_SPAN = H_MAX - H_MIN;
+  const H_MIN = 0, H_MAX = 24, H_SPAN = H_MAX - H_MIN;
 
-  function fmtHour(h){
+  function fmtHourStart(h){
     return String(parseInt(h, 10)).padStart(2, '0') + ':00';
+  }
+  function fmtHourEnd(h){
+    return String(parseInt(h, 10)).padStart(2, '0') + ':59';
   }
 
   function syncHourRange(){
     if (!hourMinEl || !hourMaxEl) return;
     let a = parseInt(hourMinEl.value, 10);
     let b = parseInt(hourMaxEl.value, 10);
-    if (a > b) { const t = a; a = b; b = t; }
     if (hourDispEl) {
-      hourDispEl.textContent = (a === H_MIN && b === H_MAX) ? 'All'
-        : (a === b ? fmtHour(a) : `${fmtHour(a)} — ${fmtHour(b)}`);
+      hourDispEl.textContent = `${fmtHourStart(a)} — ${fmtHourEnd(b - 1)}`;
     }
     if (hourFillEl) {
       hourFillEl.style.left = ((a - H_MIN) / H_SPAN * 100) + '%';
@@ -86,14 +87,20 @@
 
   if (hourMinEl && hourMaxEl) {
     hourMinEl.addEventListener('input', () => {
-      if (parseInt(hourMinEl.value, 10) > parseInt(hourMaxEl.value, 10)) {
-        hourMaxEl.value = hourMinEl.value;
+      const a = parseInt(hourMinEl.value, 10);
+      const b = parseInt(hourMaxEl.value, 10);
+      if (a >= b) {
+        if (a + 1 <= H_MAX) hourMaxEl.value = String(a + 1);
+        else hourMinEl.value = String(H_MAX - 1);
       }
       syncHourRange();
     });
     hourMaxEl.addEventListener('input', () => {
-      if (parseInt(hourMaxEl.value, 10) < parseInt(hourMinEl.value, 10)) {
-        hourMinEl.value = hourMaxEl.value;
+      const a = parseInt(hourMinEl.value, 10);
+      const b = parseInt(hourMaxEl.value, 10);
+      if (b <= a) {
+        if (b - 1 >= H_MIN) hourMinEl.value = String(b - 1);
+        else hourMaxEl.value = String(H_MIN + 1);
       }
       syncHourRange();
     });
@@ -104,14 +111,13 @@
   const yearMaxEl = document.getElementById('filter-year-max');
   const yearDispEl = document.getElementById('year-display');
   const yearFillEl = document.getElementById('year-range-fill');
-  const Y_MIN = 2002, Y_MAX = 2026, Y_SPAN = Y_MAX - Y_MIN;
+  const Y_MIN = 2002, Y_MAX = 2027, Y_SPAN = Y_MAX - Y_MIN;
 
   function syncYearRange(){
     if (!yearMinEl || !yearMaxEl) return;
     let a = parseInt(yearMinEl.value, 10);
     let b = parseInt(yearMaxEl.value, 10);
-    if (a > b) { const t = a; a = b; b = t; }
-    if (yearDispEl) yearDispEl.textContent = a === b ? String(a) : `${a} — ${b}`;
+    if (yearDispEl) yearDispEl.textContent = (b - 1 === a) ? String(a) : `${a} — ${b - 1}`;
     if (yearFillEl) {
       yearFillEl.style.left = ((a - Y_MIN) / Y_SPAN * 100) + '%';
       yearFillEl.style.right = ((Y_MAX - b) / Y_SPAN * 100) + '%';
@@ -121,14 +127,20 @@
 
   if (yearMinEl && yearMaxEl) {
     yearMinEl.addEventListener('input', () => {
-      if (parseInt(yearMinEl.value, 10) > parseInt(yearMaxEl.value, 10)) {
-        yearMaxEl.value = yearMinEl.value;
+      const a = parseInt(yearMinEl.value, 10);
+      const b = parseInt(yearMaxEl.value, 10);
+      if (a >= b) {
+        if (a + 1 <= Y_MAX) yearMaxEl.value = String(a + 1);
+        else yearMinEl.value = String(Y_MAX - 1);
       }
       syncYearRange();
     });
     yearMaxEl.addEventListener('input', () => {
-      if (parseInt(yearMaxEl.value, 10) < parseInt(yearMinEl.value, 10)) {
-        yearMinEl.value = yearMaxEl.value;
+      const a = parseInt(yearMinEl.value, 10);
+      const b = parseInt(yearMaxEl.value, 10);
+      if (b <= a) {
+        if (b - 1 >= Y_MIN) yearMinEl.value = String(b - 1);
+        else yearMaxEl.value = String(Y_MIN + 1);
       }
       syncYearRange();
     });
@@ -230,14 +242,14 @@
     const sync = target === 'year' ? syncYearRange : syncHourRange;
     let cur = lo;
     minEl.value = String(cur);
-    maxEl.value = String(cur);
+    maxEl.value = String(cur + 1);
     sync();
     animTarget = target;
     setPlayingButton(target, true);
     animTimer = setInterval(() => {
-      cur = cur >= hi ? lo : cur + 1;
+      cur = cur >= hi - 1 ? lo : cur + 1;
       minEl.value = String(cur);
-      maxEl.value = String(cur);
+      maxEl.value = String(cur + 1);
       sync();
     }, ANIM_STEP_MS);
   }

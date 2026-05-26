@@ -53,11 +53,10 @@ document.addEventListener('crimiviz:years-changed', () => {
   const minEl = document.getElementById('filter-year-min');
   const maxEl = document.getElementById('filter-year-max');
   if (!minEl || !maxEl) return;
-  let a = parseInt(minEl.value, 10);
-  let b = parseInt(maxEl.value, 10);
-  if (a > b) [a, b] = [b, a];
+  const a = parseInt(minEl.value, 10);
+  const b = parseInt(maxEl.value, 10);
   const active = new Set();
-  for (let y = a; y <= b; y++) active.add(y);
+  for (let y = a; y < b; y++) active.add(y);
   setYears(active);
 });
 
@@ -65,10 +64,9 @@ document.addEventListener('crimiviz:hours-changed', () => {
   const minEl = document.getElementById('filter-hour-min');
   const maxEl = document.getElementById('filter-hour-max');
   if (!minEl || !maxEl) return;
-  let a = parseInt(minEl.value, 10);
-  let b = parseInt(maxEl.value, 10);
-  if (a > b) [a, b] = [b, a];
-  setHour(a === 0 && b === 23 ? 'ALL' : { start: a, end: b });
+  const a = parseInt(minEl.value, 10);
+  const b = parseInt(maxEl.value, 10);
+  setHour(a === 0 && b === 24 ? 'ALL' : { start: a, end: b - 1 });
 });
 
 onChange(s => {

@@ -258,6 +258,46 @@ async function loadAreaPoints(caId) {
   return fcs.flatMap(fc => fc.features || []);
 }
 
+function updateFilterSummary(s) {
+  const box = document.getElementById('map-filter-summary');
+  if (!box) return;
+  const typeActive = s.type !== 'ALL';
+  const yearActive = s.years && s.years.size < FULL_YEARS_COUNT;
+  const hourActive = s.hour !== 'ALL';
+  if (!(typeActive || yearActive || hourActive)) {
+    box.hidden = true;
+    return;
+  }
+  box.hidden = false;
+
+  const typeRow = box.querySelector('[data-summary="type"]');
+  if (typeRow) {
+    typeRow.hidden = !typeActive;
+    if (typeActive) typeRow.querySelector('.v').textContent = prettyName(s.type);
+  }
+
+  const yearsRow = box.querySelector('[data-summary="years"]');
+  if (yearsRow) {
+    yearsRow.hidden = !yearActive;
+    if (yearActive) {
+      const ys = Array.from(s.years).sort((a, b) => a - b);
+      const lo = ys[0], hi = ys[ys.length - 1];
+      yearsRow.querySelector('.v').textContent = lo === hi ? String(lo) : `${lo} — ${hi}`;
+    }
+  }
+
+  const hoursRow = box.querySelector('[data-summary="hours"]');
+  if (hoursRow) {
+    hoursRow.hidden = !hourActive;
+    if (hourActive) {
+      const fmtStart = n => String(n).padStart(2, '0') + ':00';
+      const fmtEnd = n => String(n).padStart(2, '0') + ':59';
+      const h = s.hour;
+      hoursRow.querySelector('.v').textContent = `${fmtStart(h.start)} — ${fmtEnd(h.end)}`;
+    }
+  }
+}
+
 function setAreaPanelLoading(props) {
   const panel = document.getElementById('area-panel');
   if (panel) panel.removeAttribute('hidden');
@@ -643,6 +683,24 @@ export async function mountMap() {
   const backBtn = document.getElementById('back-to-chicago');
   if (backBtn) backBtn.addEventListener('click', clearSelection);
 
+  document.querySelectorAll('.filter-reset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const kind = btn.dataset.reset;
+      if (kind === 'type') {
+        const allLi = document.querySelector('#filter-type-menu li[data-value="ALL"]');
+        if (allLi) allLi.click();
+      } else if (kind === 'years' || kind === 'hours') {
+        const minEl = document.getElementById(`filter-${kind === 'years' ? 'year' : 'hour'}-min`);
+        const maxEl = document.getElementById(`filter-${kind === 'years' ? 'year' : 'hour'}-max`);
+        if (minEl && maxEl) {
+          minEl.value = minEl.min;
+          maxEl.value = maxEl.max;
+          minEl.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }
+    });
+  });
+
   // Dynamic ratio scale shown in the map's top-right meta line.
   const scaleEl = document.getElementById('map-scale');
   const scaleFmt = new Intl.NumberFormat('en-US');
@@ -660,9 +718,11 @@ export async function mountMap() {
 
   // Initial choropleth render + subscribe to filter changes
   recomputeChoropleth(state);
+  updateFilterSummary(state);
   onChange(s => {
     recomputeChoropleth(s);
     refreshSelectedAreaData(s);
+    updateFilterSummary(s);
   });
 
   // Initial view: center on Chicago at ~1:500,000 scale (overrides any default fitBounds)

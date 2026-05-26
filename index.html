@@ -612,8 +612,8 @@
             <div class="range-track">
               <div class="range-fill" id="year-range-fill"></div>
             </div>
-            <input id="filter-year-min" type="range" min="2002" max="2026" value="2002" step="1" aria-label="Start year" />
-            <input id="filter-year-max" type="range" min="2002" max="2026" value="2026" step="1" aria-label="End year" />
+            <input id="filter-year-min" type="range" min="2002" max="2027" value="2002" step="1" aria-label="Start year" />
+            <input id="filter-year-max" type="range" min="2002" max="2027" value="2027" step="1" aria-label="End year" />
             <div class="tick-row">
               <span>2002</span><span>2008</span><span>2014</span><span>2020</span><span>2026</span>
             </div>
@@ -635,8 +635,8 @@
             <div class="range-track">
               <div class="range-fill" id="hour-range-fill"></div>
             </div>
-            <input id="filter-hour-min" type="range" min="0" max="23" value="0" step="1" aria-label="Start hour" />
-            <input id="filter-hour-max" type="range" min="0" max="23" value="23" step="1" aria-label="End hour" />
+            <input id="filter-hour-min" type="range" min="0" max="24" value="0" step="1" aria-label="Start hour" />
+            <input id="filter-hour-max" type="range" min="0" max="24" value="24" step="1" aria-label="End hour" />
             <div class="tick-row">
               <span>00</span><span>06</span><span>12</span><span>18</span><span>23</span>
             </div>
@@ -648,6 +648,29 @@
 
     <div class="map-stage">
       <div class="map-corner"><span class="live-dot" aria-hidden="true"></span> Choropleth · <span id="map-corner-label">77 areas</span></div>
+      <div id="map-filter-summary" class="map-filter-summary" hidden>
+        <div class="filter-summary-row" data-summary="type" hidden>
+          <span class="k">Category</span>
+          <span class="v"></span>
+          <button class="filter-reset-btn" data-reset="type" type="button" aria-label="Reset category filter" title="Reset category filter">
+            <svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4 L11.5 4"/><path d="M5.5 2 L8.5 2"/><path d="M3.5 4 L4 12 L10 12 L10.5 4"/><path d="M6 6 L6 10"/><path d="M8 6 L8 10"/></svg>
+          </button>
+        </div>
+        <div class="filter-summary-row" data-summary="years" hidden>
+          <span class="k">Years</span>
+          <span class="v"></span>
+          <button class="filter-reset-btn" data-reset="years" type="button" aria-label="Reset years filter" title="Reset years filter">
+            <svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4 L11.5 4"/><path d="M5.5 2 L8.5 2"/><path d="M3.5 4 L4 12 L10 12 L10.5 4"/><path d="M6 6 L6 10"/><path d="M8 6 L8 10"/></svg>
+          </button>
+        </div>
+        <div class="filter-summary-row" data-summary="hours" hidden>
+          <span class="k">Hours</span>
+          <span class="v"></span>
+          <button class="filter-reset-btn" data-reset="hours" type="button" aria-label="Reset hours filter" title="Reset hours filter">
+            <svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4 L11.5 4"/><path d="M5.5 2 L8.5 2"/><path d="M3.5 4 L4 12 L10 12 L10.5 4"/><path d="M6 6 L6 10"/><path d="M8 6 L8 10"/></svg>
+          </button>
+        </div>
+      </div>
       <div class="map-meta" id="map-scale">N&nbsp;↑ · scale 1:·</div>
       <div id="viz-map" role="img" aria-label="Map of Chicago community areas">
         <div class="placeholder">

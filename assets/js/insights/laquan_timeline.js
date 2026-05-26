@@ -22,7 +22,7 @@ const EVENTS = [
   },
   {
     date: 'Nov 24, 2015',
-    title: 'Video released — officer charged',
+    title: 'Video released, officer charged',
     body: 'Hours before a court-ordered deadline, the Cook County State\'s Attorney charges Van Dyke with first-degree murder. The video is published the same day.',
     stat: '400 days after the shooting',
   },

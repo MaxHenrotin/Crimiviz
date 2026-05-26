@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Crimiviz — Twenty-five years of Chicago, indexed</title>
+<title>Crimiviz</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
 <body data-tab="home">
 
 <!-- ═══════════════════════════════════════════════════════════
-     SVG defs — blood filters & gradients
+     SVG defs, blood filters & gradients
      ═══════════════════════════════════════════════════════════ -->
 <svg class="blood-defs" aria-hidden="true" focusable="false">
   <defs>
@@ -79,7 +79,7 @@
 </svg>
 
 <!-- ═══════════════════════════════════════════════════════════
-     Bleed system — fixed drips that grow with scroll
+     Bleed system, fixed drips that grow with scroll
      ═══════════════════════════════════════════════════════════ -->
 <div class="bleed-system" aria-hidden="true">
   <div class="drip drip-left"  data-drip="L" style="left:0; top:120px; width:14px; --base:90px; --extra:1000px;  --neck-h:278px; --neck-angle:19deg;">
@@ -92,12 +92,12 @@
     <div class="drip-streak"></div>
     <div class="drip-tip" style="width:28px; height:34px;"></div>
   </div>
-  <!-- Slow trickle between center and right edge — only on Home -->
+  <!-- Slow trickle between center and right edge, only on Home -->
   <div class="drip drip-slow" data-drip="S" style="left:68%; top:-10px; width:7px; --base:18px; --extra:180px;">
     <div class="drip-streak"></div>
     <div class="drip-tip" style="width:15px; height:22px;"></div>
   </div>
-  <!-- Tiny center trickle — Home only, even smaller than the right one -->
+  <!-- Tiny center trickle, Home only, even smaller than the right one -->
   <div class="drip drip-mini" data-drip="M" style="left:49.5%; top:-6px; width:5px; --base:12px; --extra:110px;">
     <div class="drip-streak"></div>
     <div class="drip-tip" style="width:11px; height:16px;"></div>
@@ -110,18 +110,18 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
-     Masthead — The Chicago Crimiviz
+     Masthead, The Chicago Crimiviz
      ═══════════════════════════════════════════════════════════ -->
 <header class="masthead" role="banner">
   <div class="masthead-rule-top">
     <div class="left">
-      <span>Vol. XXV · No. 8,547,082</span>
+      <span>Vol. COM · No. 480</span>
       <span class="pipe" aria-hidden="true"></span>
-      <span>Late Edition · Saturday, May 9, 2026</span>
+      <span>Snapshot edition · April 30, 2026</span>
     </div>
     <div class="right">
       <span class="live-dot" aria-hidden="true"></span>
-      <span>Wire feed · ijzp-q8t2 · updated daily</span>
+      <span>Real data · Since 2001 · ijzp-q8t2</span>
       <span class="pipe" aria-hidden="true"></span>
       <span>50¢</span>
     </div>
@@ -189,23 +189,23 @@
 
   <div class="hero stagger">
     <div class="hero-eyebrow eyebrow">
-      <span class="dot" aria-hidden="true"></span>
+      <span class="live-dot" aria-hidden="true"></span>
       <span>Filed in Chicago · 41.88°N · 87.63°W</span>
     </div>
     <h1 class="hero-headline">
-      Twenty-five years<br />
-      of one city, <em>bleeding</em><br />
-      <span class="accent">into the record.</span>
+      Twenty-five years.<br />
+      Eight and a half <em>million</em> incidents.<br />
+      <span class="accent">One ledger, three readings.</span>
     </h1>
     <p class="hero-deck">
-      Eight and a half million incidents reported between 2001 and today across Chicago's seventy-seven community areas — Loop, Englewood, Lincoln Park, Austin, Auburn Gresham. <em>Crimiviz</em> turns that ledger into something you can read, scroll, and cross-examine.
+      Across Chicago's 77 community areas, the 2001-to-April-2026 police record is too big to read line by line. <em>Crimiviz</em> turns it into a focus-mode map, four trend charts, and three editorial deep-dives.
     </p>
 
     <!-- Hero blood splatter, gooey -->
     <div class="hero-splat hero-splat-1" aria-hidden="true">
       <svg viewBox="0 0 220 160">
         <g filter="url(#bloodSplat)" fill="url(#dropGrad)">
-          <!-- chaotic main blot — irregular cubic path, not a circle -->
+          <!-- chaotic main blot, irregular cubic path, not a circle -->
           <path d="M120 38 C 92 30 64 44 58 70 C 50 76 36 70 28 84 C 22 98 36 112 56 110 C 60 124 78 138 100 134 C 116 148 144 150 158 134 C 178 142 198 128 196 112 C 210 102 208 80 192 74 C 198 56 184 38 162 42 C 152 28 134 26 120 38 Z"/>
           <!-- thrown drops, irregular -->
           <path d="M14 28 C 10 32 8 40 16 44 C 22 44 26 38 22 32 C 20 28 16 26 14 28 Z"/>
@@ -255,8 +255,8 @@
       <span class="kpi-label">Mean arrest rate</span>
     </div>
     <div class="kpi">
-      <span class="kpi-num">~17,000</span>
-      <span class="kpi-label">Filed last month</span>
+      <span class="kpi-num">32</span>
+      <span class="kpi-label">Crime types catalogued</span>
     </div>
     </div>
   </dl>
@@ -264,14 +264,13 @@
   <div class="nav-section">
     <header class="section-head">
       <h2>Three ways<br /><em>into the data.</em></h2>
-      <p class="meta">Choose your reading. The map shows where; the trends show when; the insights ask why. Every view sits on the same dataset and respects the same filters.</p>
+      <p class="meta">Choose your reading. The map shows where; the trends tell when; the insights ask why.</p>
     </header>
 
     <div class="nav-grid stagger">
       <button class="nav-card" data-tab="map" aria-label="Open Map">
         <div class="ribbon">
           <span class="sect"><span class="num">A</span> Section A · Map</span>
-          <span class="pages">pp. 1–12</span>
         </div>
         <div class="photo" aria-hidden="true">
           <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice">
@@ -291,7 +290,7 @@
                 <path d="M260 12 L300 0 M260 30 L308 8 M256 50 L312 22 M254 75 L316 48 M252 100 L318 76 M252 125 L318 104 M254 150 L316 132 M258 175 L320 162 M268 210 L320 200"/>
               </g>
 
-              <!-- HAND-DRAWN AERIAL CITY MAP — visible at rest, fades on hover -->
+              <!-- HAND-DRAWN AERIAL CITY MAP, visible at rest, fades on hover -->
               <g class="cityMap">
                 <!-- park (Grant-Park-ish strip along the lake) -->
                 <rect x="212" y="86" width="22" height="86" fill="#2a1f12" fill-opacity="0.16" stroke="#2a1f12" stroke-width="0.4"/>
@@ -398,12 +397,11 @@
               <text x="0" y="-15" text-anchor="middle" font-family="ui-monospace, monospace" font-size="5.5" fill="#2a1f12" stroke="none">N</text>
             </g>
           </svg>
-          <span class="caption">Reported · last 24 h</span>
+          <span class="caption">The Map · Chicago, IL</span>
         </div>
         <div class="body">
-          <div class="byline"><span>By the Map Desk</span><span class="sep"></span><span>Chicago, IL</span></div>
           <h3>Where it <em>happens.</em></h3>
-          <p>An interactive choropleth across seventy-seven community areas, filtered by category and hour.</p>
+          <p>An interactive choropleth across community areas, with a click-through to every incident on the block. Toggle the desired filters.</p>
           <span class="arrow"><span class="line"></span> Open the map</span>
         </div>
       </button>
@@ -411,7 +409,6 @@
       <button class="nav-card" data-tab="trends" aria-label="Open Trends">
         <div class="ribbon">
           <span class="sect"><span class="num">B</span> Section B · Trends</span>
-          <span class="pages">pp. 1–9</span>
         </div>
         <div class="photo" aria-hidden="true">
           <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice">
@@ -457,12 +454,11 @@
               <text x="282" y="232">2026</text>
             </g>
           </svg>
-          <span class="caption">Quarter-century, indexed</span>
+          <span class="caption">The data · 2001–2026</span>
         </div>
         <div class="body">
-          <div class="byline"><span>By the Data Desk</span><span class="sep"></span><span>2001–2026</span></div>
           <h3>How it <em>moves.</em></h3>
-          <p>Quarter-century curves, daily rhythms, type distributions, arrest yields — four readings of the same numbers.</p>
+          <p>Seasonality, daily rhythm, crime types, arrest rates: four readings across twenty-five years.</p>
           <span class="arrow"><span class="line"></span> See the trends</span>
         </div>
       </button>
@@ -470,7 +466,6 @@
       <button class="nav-card" data-tab="insights" aria-label="Open Insights">
         <div class="ribbon">
           <span class="sect"><span class="num">C</span> Section C · Insights</span>
-          <span class="pages">pp. 1–16</span>
         </div>
         <div class="photo" aria-hidden="true">
           <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice">
@@ -518,9 +513,8 @@
           <span class="caption">Three essays · long-form</span>
         </div>
         <div class="body">
-          <div class="byline"><span>By the Editorial Desk</span><span class="sep"></span><span>3 features</span></div>
           <h3>What it <em>means.</em></h3>
-          <p>Three long-form essays on the pandemic, election cycles, and the city when the world is watching.</p>
+          <p>Three long-form essays on the pandemic, the Laquan McDonald case, and Chicago's hardest winters.</p>
           <span class="arrow"><span class="line"></span> Read the stories</span>
         </div>
       </button>
@@ -528,7 +522,16 @@
   </div>
 
   <section class="about">
-    <h2 class="about-title">About <em>the data.</em></h2>
+    <div class="about-header">
+      <h2 class="about-title">About <em>the data.</em></h2>
+      <a class="btn-ghost about-source-link"
+         href="https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2"
+         target="_blank" rel="noopener noreferrer"
+         onclick="window.open(this.href, '_blank', 'noopener,noreferrer'); return false;">
+        <span>View on Chicago Data Portal</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
     <dl class="about-body">
       <div class="about-row">
         <dt>Source</dt>
@@ -544,11 +547,11 @@
       </div>
       <div class="about-row">
         <dt>Coverage</dt>
-        <dd>Jan 2001 → <em>today</em></dd>
+        <dd>Since <em>January 2001</em></dd>
       </div>
       <div class="about-row">
-        <dt>Refresh cadence</dt>
-        <dd><em>Daily</em>, automated</dd>
+        <dt>Snapshot date</dt>
+        <dd><em>April 30</em>, 2026</dd>
       </div>
       <div class="about-row">
         <dt>Granularity</dt>
@@ -565,7 +568,7 @@
 
   <header class="tab-head">
     <h1>Where the <em>incidents</em> fall.</h1>
-    <p class="deck">Each polygon is one of Chicago's seventy-seven community areas, shaded by reported volume. Pick a category, scrub the hour of day, and watch the city redraw itself.</p>
+    <p class="deck">Each of Chicago's 77 community areas is shaded by total reported volume, click and zoom into any one to see every individual incident on file. Press play on the years or the hours to sweep through time, or set any combination of filters yourself</p>
   </header>
 
   <div class="map-layout">
@@ -573,10 +576,10 @@
       <div id="area-panel" class="control area-panel" hidden>
         <span class="control-label">
           <span>Selected area</span>
-          <span class="val" id="area-volume">—</span>
+          <span class="val" id="area-volume">·</span>
         </span>
-        <div class="area-name" id="area-name">—</div>
-        <div class="area-meta" id="area-meta">— incidents on file</div>
+        <div class="area-name" id="area-name">·</div>
+        <div class="area-meta" id="area-meta">· incidents on file</div>
         <button id="back-to-chicago" class="btn-ghost" aria-label="Back to all of Chicago">
           <span>← Back to Chicago</span>
         </button>
@@ -585,64 +588,67 @@
       <div class="control">
         <label class="control-label" for="filter-type">
           <span>Category</span>
-          <span class="val">34 types</span>
+          <span class="val">32 types</span>
         </label>
         <div class="select-wrap">
-          <select id="filter-type" aria-label="Filter by crime category">
-            <option value="ALL">All categories</option>
-            <option value="THEFT">Theft · 1,815,628</option>
-            <option value="BATTERY">Battery · 1,556,783</option>
-            <option value="CRIMINAL DAMAGE">Criminal damage · 971,405</option>
-            <option value="NARCOTICS">Narcotics · 767,335</option>
-            <option value="ASSAULT">Assault · 575,115</option>
-            <option value="OTHER OFFENSE">Other offense · 533,999</option>
-            <option value="BURGLARY">Burglary · 451,826</option>
-            <option value="MOTOR VEHICLE THEFT">Motor vehicle theft · 440,343</option>
-            <option value="DECEPTIVE PRACTICE">Deceptive practice · 396,550</option>
-            <option value="ROBBERY">Robbery · 317,003</option>
-            <option value="ARSON">Arson</option>
-            <option value="KIDNAPPING">Kidnapping</option>
-            <option value="HOMICIDE">Homicide</option>
-            <option value="GAMBLING">Gambling</option>
-            <option value="INTIMIDATION">Intimidation</option>
-          </select>
+          <button id="filter-type" type="button" class="select-trigger" data-value="ALL" aria-haspopup="listbox" aria-expanded="false" aria-label="Filter by crime category">
+            <span class="select-label">All categories</span>
+          </button>
+          <ul id="filter-type-menu" class="select-menu" role="listbox" hidden></ul>
         </div>
       </div>
 
       <div class="control">
         <label class="control-label">
           <span>Years</span>
-          <button id="years-all" class="years-all" type="button" aria-label="Toggle all years">All</button>
+          <span class="val"><span id="year-display">2002 — 2026</span></span>
         </label>
-        <div id="year-grid" class="year-grid" role="group" aria-label="Filter by year"></div>
-      </div>
-
-      <div class="control">
-        <label class="control-label" for="filter-hour">
-          <span>Hour of day</span>
-          <span class="val"><span id="hour-display">All</span></span>
-        </label>
-        <div class="slider-wrap">
-          <input id="filter-hour" type="range" min="0" max="23" value="12" aria-label="Filter by hour of day" />
-          <div class="tick-row">
-            <span>00</span><span>06</span><span>12</span><span>18</span><span>23</span>
+        <div class="range-row">
+          <button class="range-play" data-target="year" type="button" aria-label="Play or pause year animation">
+            <svg class="play-icon" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M2 1 L11 7 L2 13 Z" fill="currentColor"/></svg>
+            <svg class="pause-icon" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><rect x="1" y="1" width="3" height="12" fill="currentColor"/><rect x="8" y="1" width="3" height="12" fill="currentColor"/></svg>
+          </button>
+          <div class="range-wrap" role="group" aria-label="Filter by year range">
+            <div class="range-track">
+              <div class="range-fill" id="year-range-fill"></div>
+            </div>
+            <input id="filter-year-min" type="range" min="2002" max="2026" value="2002" step="1" aria-label="Start year" />
+            <input id="filter-year-max" type="range" min="2002" max="2026" value="2026" step="1" aria-label="End year" />
+            <div class="tick-row">
+              <span>2002</span><span>2008</span><span>2014</span><span>2020</span><span>2026</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <button id="filter-reset" class="btn-ghost" aria-label="Reset filters">
-        <span>Reset filters</span>
-        <span class="x" aria-hidden="true"></span>
-      </button>
-
-      <div class="control map-hint">
-        Click any community area on the map to zoom in and load every reported incident on file for that neighborhood.
+      <div class="control">
+        <label class="control-label">
+          <span>Hour of day</span>
+          <span class="val"><span id="hour-display">All</span></span>
+        </label>
+        <div class="range-row">
+          <button class="range-play" data-target="hour" type="button" aria-label="Play or pause hour animation">
+            <svg class="play-icon" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M2 1 L11 7 L2 13 Z" fill="currentColor"/></svg>
+            <svg class="pause-icon" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><rect x="1" y="1" width="3" height="12" fill="currentColor"/><rect x="8" y="1" width="3" height="12" fill="currentColor"/></svg>
+          </button>
+          <div class="range-wrap" role="group" aria-label="Filter by hour range">
+            <div class="range-track">
+              <div class="range-fill" id="hour-range-fill"></div>
+            </div>
+            <input id="filter-hour-min" type="range" min="0" max="23" value="0" step="1" aria-label="Start hour" />
+            <input id="filter-hour-max" type="range" min="0" max="23" value="23" step="1" aria-label="End hour" />
+            <div class="tick-row">
+              <span>00</span><span>06</span><span>12</span><span>18</span><span>23</span>
+            </div>
+          </div>
+        </div>
       </div>
+
     </aside>
 
     <div class="map-stage">
-      <div class="map-corner"><span class="live-dot" aria-hidden="true"></span> Choropleth · 77 areas</div>
-      <div class="map-meta" id="map-scale">N&nbsp;↑ · scale 1:—</div>
+      <div class="map-corner"><span class="live-dot" aria-hidden="true"></span> Choropleth · <span id="map-corner-label">77 areas</span></div>
+      <div class="map-meta" id="map-scale">N&nbsp;↑ · scale 1:·</div>
       <div id="viz-map" role="img" aria-label="Map of Chicago community areas">
         <div class="placeholder">
           <span class="title">Choropleth slot</span>
@@ -666,7 +672,7 @@
 
   <header class="tab-head">
     <h1>The shape <em>of a quarter</em> century.</h1>
-    <p class="deck">Four lenses on the same eight and a half million rows — by month, by hour, by category, by outcome.</p>
+    <p class="deck">Four lenses on the same eight and a half million rows, by month, by hour, by category, by outcome.</p>
   </header>
 
   <div class="charts stagger">
@@ -754,8 +760,8 @@
       <h3 class="insight-card__title">The city went quiet under lockdown, then erupted for three days.</h3>
       <p class="insight-card__teaser">Spring 2020 emptied out the daily count. A week later, late May, the same streets recorded their loudest stretch of the year.</p>
       <span class="insight-card__stat">
-        <span class="insight-card__statval" data-headline="covid">—</span>
-        <span class="insight-card__statlabel">vs 2018-19 baseline</span>
+        <span class="insight-card__statval" data-headline="covid">·</span>
+        <span class="insight-card__statlabel">vs 2018–19 baseline, lockdown window</span>
       </span>
       <span class="insight-card__cta">Read the card <span class="arr">→</span></span>
     </button>
@@ -768,7 +774,7 @@
       <h3 class="insight-card__title">After the video release, arrest rates dropped.</h3>
       <p class="insight-card__teaser">Through the mid-2010s, the monthly crime volume barely moves but the arrest rate falls and one case seems related to it.</p>
       <span class="insight-card__stat">
-        <span class="insight-card__statval" data-headline="laquan">—</span>
+        <span class="insight-card__statval" data-headline="laquan">·</span>
         <span class="insight-card__statlabel">arrest rate, 24 months before vs after the dashcam release</span>
       </span>
       <span class="insight-card__cta">Read the card <span class="arr">→</span></span>
@@ -782,7 +788,7 @@
       <h3 class="insight-card__title">When extreme cold empties the streets, crime follows.</h3>
       <p class="insight-card__teaser">Three extreme winter events, each measured against the same calendar window in adjacent years.</p>
       <span class="insight-card__stat">
-        <span class="insight-card__statval" data-headline="blizzards">—</span>
+        <span class="insight-card__statval" data-headline="blizzards">·</span>
         <span class="insight-card__statlabel">deepest single-day drop, 2011 Snowmageddon</span>
       </span>
       <span class="insight-card__cta">Read the card <span class="arr">→</span></span>
@@ -793,7 +799,7 @@
   <!-- ───────── Detail views (one per card) ─────────
        Shown by toggling the `hidden` attribute, same pattern as the Map's
        #area-panel. The chart mount in each is an empty <div> labelled with a
-       comment — D3 is wired up in a later pass. -->
+       comment, D3 is wired up in a later pass. -->
 
   <article id="insight-detail-covid" class="insight-detail insight-article" hidden aria-labelledby="insight-detail-covid-title">
     <button type="button" class="back-to-insights btn-ghost" data-back-to-insights>
@@ -808,7 +814,7 @@
 
     <h3 class="insight-section-title"><span class="num">I</span>The city goes quiet</h3>
 
-    <!-- BLOCK A — lockdown intro. Slot 1 floats left.
+    <!-- BLOCK A, lockdown intro. Slot 1 floats left.
          image slot 1: empty Chicago street / quiet urban scene from spring 2020.
          Wide 3:2. Store under photos/covid/ (e.g. photos/covid/quiet-loop-2020.jpg). -->
     <section class="insight-block">
@@ -833,19 +839,19 @@
         <span class="aside-kicker">The lockdown - 6 weeks</span>
         <div class="aside-row aside-row--stacked">
           <span class="aside-lbl">Window</span>
-          <span class="aside-val"><span data-covid="lockdown-start">—</span> → <span data-covid="lockdown-end">—</span></span>
+          <span class="aside-val"><span data-covid="lockdown-start">·</span> → <span data-covid="lockdown-end">·</span></span>
         </div>
         <div class="aside-row">
           <span class="aside-lbl">2020 daily avg</span>
-          <span class="aside-val" data-covid="lockdown-actual">—</span>
+          <span class="aside-val" data-covid="lockdown-actual">·</span>
         </div>
         <div class="aside-row">
           <span class="aside-lbl">2018-19 daily avg</span>
-          <span class="aside-val" data-covid="lockdown-baseline">—</span>
+          <span class="aside-val" data-covid="lockdown-baseline">·</span>
         </div>
         <div class="aside-row">
           <span class="aside-lbl">Drop</span>
-          <span class="aside-val" data-covid="lockdown-drop">—</span>
+          <span class="aside-val" data-covid="lockdown-drop">·</span>
         </div>
       </div>
       <div class="insight-aside insight-aside--definition">
@@ -854,7 +860,7 @@
       </div>
     </aside>
 
-    <!-- Chart A — animated zoom (wide view = the socle for the year) -->
+    <!-- Chart A, animated zoom (wide view = the socle for the year) -->
     <div class="insight-charts insight-charts--single">
       <figure class="insight-chartcard">
         <figcaption class="insight-chartcard__head">
@@ -880,7 +886,7 @@
         <p class="insight-subcard__deck">May 25 → June 5, 2020. A brief surge in burglary, criminal damage and weapons charges sits inside the six weeks of lockdown.</p>
       </header>
 
-      <!-- BLOCK — sub-card body. Slot 2 floats right.
+      <!-- BLOCK, sub-card body. Slot 2 floats right.
            image slot 2: contextual photo of downtown Chicago in late May 2020.
            Portrait 4:5. NO recognizable people. Store under photos/covid/
            (e.g. photos/covid/downtown-late-may-2020.jpg). -->
@@ -895,7 +901,7 @@
           </figcaption>
         </figure>
 
-        <p class="insight-prose">George Floyd was killed by police in Minneapolis on May 25, 2020. Protests started there and reached every major American city within a week. Chicago's downtown marches escalated on the evening of May 30, and the city raised its bridges over the river. By the end of May 31 the daily incident count had reached <span data-covid="floyd-peak-n" class="num-accent">—</span>, the highest single-day total of the year and about <span data-covid="floyd-peak-pct" class="num-accent">—</span> above the surrounding two-week baseline. A 9 pm city-wide curfew began the next day. By June 3 the line was back inside the lockdown trough.</p>
+        <p class="insight-prose">George Floyd was killed by police in Minneapolis on May 25, 2020. Protests started there and reached every major American city within a week. Chicago's downtown marches escalated on the evening of May 30, and the city raised its bridges over the river. By the end of May 31 the daily incident count had reached <span data-covid="floyd-peak-n" class="num-accent">·</span>, the highest single-day total of the year and about <span data-covid="floyd-peak-pct" class="num-accent">·</span> above the surrounding two-week baseline. A 9 pm city-wide curfew began the next day. By June 3 the line was back inside the lockdown trough.</p>
 
         <div class="insight-callout" role="note">
           <span class="callout-kicker">A note on what the data does and does not show</span>
@@ -909,11 +915,11 @@
           <span class="aside-kicker">May 31 : peak day</span>
           <div class="aside-row">
             <span class="aside-lbl">Incidents</span>
-            <span class="aside-val" data-covid="floyd-peak-n">—</span>
+            <span class="aside-val" data-covid="floyd-peak-n">·</span>
           </div>
           <div class="aside-row">
             <span class="aside-lbl">vs 2-week baseline</span>
-            <span class="aside-val" data-covid="floyd-peak-pct">—</span>
+            <span class="aside-val" data-covid="floyd-peak-pct">·</span>
           </div>
         </div>
         <div class="insight-aside insight-aside--numbers">
@@ -949,7 +955,7 @@
         </div>
       </aside>
 
-      <!-- Chart B — Floyd composition (diverging bars; approved) -->
+      <!-- Chart B, Floyd composition (diverging bars; approved) -->
       <div class="insight-charts insight-charts--single">
         <figure class="insight-chartcard">
           <figcaption class="insight-chartcard__head">
@@ -965,12 +971,12 @@
 
     <h3 class="insight-section-title"><span class="num">III</span>Each type's own year</h3>
 
-    <!-- Transition block — full width (no following margin), via :not(:has(+ .insight-margin)) -->
+    <!-- Transition block, full width (no following margin), via :not(:has(+ .insight-margin)) -->
     <section class="insight-block">
       <p class="insight-prose">We go back to the year 2020 bigger picture. Each crime category has its own shape across 2020. Some take more the pattern of lockdown and some peak more during the Floyd window.</p>
     </section>
 
-    <!-- Chart C — small multiples -->
+    <!-- Chart C, small multiples -->
     <div class="insight-charts insight-charts--single">
       <figure class="insight-chartcard">
         <figcaption class="insight-chartcard__head">
@@ -982,7 +988,7 @@
       </figure>
     </div>
 
-    <!-- Closing block — full width, no intertitle (matches Laquan / blizzards). -->
+    <!-- Closing block, full width, no intertitle (matches Laquan / blizzards). -->
     <section class="insight-block">
       <p class="insight-prose">The year ran two stories at once. The dominant one was structural: a six-week drop when the city's routine activity stopped. The brief one was reactive: a three-day spike of property crime and disorder when the streets filled again, this time for unrest.</p>
 
@@ -1003,7 +1009,7 @@
 
     <h3 class="insight-section-title"><span class="num">I</span>How the case unfolded</h3>
 
-    <!-- BLOCK A — opening narrative; floats two figures inside.
+    <!-- BLOCK A, opening narrative; floats two figures inside.
          image slot 1: archival news photograph from the Nov 24 2015 protests
          (Michigan Ave march or federal-courthouse rally). Wide 3:2. Store under
          photos/laquan/ (e.g. photos/laquan/protest-nov2015.jpg).
@@ -1040,7 +1046,7 @@
       <p class="insight-prose">The case was a scandal and the city went through a year of political fire over it. The question is whether anything changed in how the Chicago Police Department does its job.</p>
     </section>
 
-    <!-- chart A — zoomed dual-axis 2013–2018. Caption block removed; the four
+    <!-- chart A, zoomed dual-axis 2013–2018. Caption block removed; the four
          headline stats now live in the margin aside next to block B below. -->
     <div class="insight-charts insight-charts--single" id="insight-chart-laquan">
       <figure class="insight-chartcard">
@@ -1055,11 +1061,11 @@
 
     <h3 class="insight-section-title"><span class="num">II</span>The arrest rate broke</h3>
 
-    <!-- BLOCK B — reveal, de-policing analysis, cascade bridge.
+    <!-- BLOCK B, reveal, de-policing analysis, cascade bridge.
          Margin B anchors: the four headline stats (moved from chart caption),
          a de-policing definition, and a pull-quote. -->
     <section class="insight-block">
-      <p class="insight-prose">Yes, and sharply. The crime did not change. Across the 48 months centred on November 2015, the monthly volume of reported incidents drifts by only <span data-laquan="volume-change" class="num-accent">—</span>. The response did. In the 24 months before the marker, roughly <span data-laquan="rate-before" class="num-accent">—</span> of incidents ended in an arrest. In the 24 months after, <span data-laquan="rate-after" class="num-accent">—</span>. A gap of <span data-laquan="rate-drop" class="num-accent">—</span> opened in about a year, and the line settled into a new groove well below the old one. Same incidents. Different department.</p>
+      <p class="insight-prose">Yes, and sharply. The crime did not change. Across the 48 months centred on November 2015, the monthly volume of reported incidents drifts by only <span data-laquan="volume-change" class="num-accent">·</span>. The response did. In the 24 months before the marker, roughly <span data-laquan="rate-before" class="num-accent">·</span> of incidents ended in an arrest. In the 24 months after, <span data-laquan="rate-after" class="num-accent">·</span>. A gap of <span data-laquan="rate-drop" class="num-accent">·</span> opened in about a year, and the line settled into a new groove well below the old one. Same incidents. Different department.</p>
 
       <p class="insight-prose">Why the response changed is harder to say. The most-discussed explanation is de-policing, sometimes called the "Ferguson effect". It is the idea that after high-profile cases of police violence and the scrutiny that follows, officers pull back from proactive stops and arrests, whether to avoid risk or in response to lower morale. The mechanism is plausible, but it is hard to prove: a drop in arrests is consistent with de-policing, but also with other changes happening at the same time. One of those is concrete. In August 2015, the Chicago Police Department signed an agreement with the ACLU that required officers to file a detailed report for every investigative street stop. That added paperwork, and it changed how stops were recorded.</p>
 
@@ -1070,19 +1076,19 @@
         <span class="aside-kicker">The split · ±24 mo</span>
         <div class="aside-row">
           <span class="aside-lbl">Volume change</span>
-          <span class="aside-val" data-laquan="volume-change">—</span>
+          <span class="aside-val" data-laquan="volume-change">·</span>
         </div>
         <div class="aside-row">
           <span class="aside-lbl">Arrest rate · before</span>
-          <span class="aside-val" data-laquan="rate-before">—</span>
+          <span class="aside-val" data-laquan="rate-before">·</span>
         </div>
         <div class="aside-row">
           <span class="aside-lbl">Arrest rate · after</span>
-          <span class="aside-val" data-laquan="rate-after">—</span>
+          <span class="aside-val" data-laquan="rate-after">·</span>
         </div>
         <div class="aside-row">
           <span class="aside-lbl">Drop</span>
-          <span class="aside-val" data-laquan="rate-drop">—</span>
+          <span class="aside-val" data-laquan="rate-drop">·</span>
         </div>
       </div>
       <div class="insight-aside insight-aside--definition">
@@ -1091,7 +1097,7 @@
       </div>
     </aside>
 
-    <!-- TIMELINE viz — events are defined in assets/js/insights/laquan_timeline.js -->
+    <!-- TIMELINE viz, events are defined in assets/js/insights/laquan_timeline.js -->
     <section class="insight-timeline-section" aria-labelledby="laquan-timeline-title">
       <header class="insight-timeline-section__head">
         <span class="insight-chartcard__kicker">Timeline : 2014 → 2019</span>
@@ -1103,7 +1109,7 @@
 
     <h3 class="insight-section-title"><span class="num">III</span>Case to decree</h3>
 
-    <!-- BLOCK C — case-to-decree chain + bridge to chart B.
+    <!-- BLOCK C, case-to-decree chain + bridge to chart B.
          Margin C anchors: the consent-decree definition (moved out of body). -->
     <section class="insight-block">
       <p class="insight-prose">The case did not end there. The DOJ probe opened on December 7 became, by January 2017, a 164-page report finding a pattern of excessive force and constitutional violations by the Chicago Police Department. When the incoming Trump administration declined to pursue reforms, Illinois Attorney General Lisa Madigan sued the city in August 2017 to force them anyway. That suit produced a settlement and, on January 31, 2019, a federal consent decree.</p>
@@ -1117,7 +1123,7 @@
       </div>
     </aside>
 
-    <!-- chart B — full-range arrest rate with neutral milestones -->
+    <!-- chart B, full-range arrest rate with neutral milestones -->
     <div class="insight-charts insight-charts--single">
       <figure class="insight-chartcard">
         <figcaption class="insight-chartcard__head">
@@ -1132,14 +1138,14 @@
 
     <h3 class="insight-section-title"><span class="num">IV</span>It held</h3>
 
-    <!-- BLOCK D — persistence + decree analysis. Closes with an honesty
-         paragraph that flows as the article's ending — no subtitle on it,
+    <!-- BLOCK D, persistence + decree analysis. Closes with an honesty
+         paragraph that flows as the article's ending, no subtitle on it,
          intentionally, so the conclusion reads as conclusion.
          Margin D anchors: a pull-quote ("A step, not a dip."). -->
     <section class="insight-block">
       <p class="insight-prose">It held. A decade on, the line has not climbed back. The arrest rate fell off a cliff in late 2015 and stayed down.</p>
 
-      <p class="insight-prose">It is tempting to read the decree onto this picture — the reform that kept the new level in place. The dates make that hard. The drop began in late 2015. The decree was entered in January 2019, more than three years later. Whatever cemented the change was cemented before the decree existed. Reading any post-2019 decree effect is harder still: the pandemic arrives in 2020 and disrupts every series in Chicago's records for the years that follow. What the timing on this chart points to is the case itself — the moment something visible happened inside the department — not the legal mechanism that arrived years later. That is not a verdict on whether the decree worked. It is a reading of when the line moved.</p>
+      <p class="insight-prose">It is tempting to read the decree onto this picture: the reform that kept the new level in place. The dates make that hard. The drop began in late 2015. The decree was entered in January 2019, more than three years later. Whatever cemented the change was cemented before the decree existed. Reading any post-2019 decree effect is harder still: the pandemic arrives in 2020 and disrupts every series in Chicago's records for the years that follow. What the timing on this chart points to is the case itself (the moment something visible happened inside the department), not the legal mechanism that arrived years later. That is not a verdict on whether the decree worked. It is a reading of when the line moved.</p>
 
       <p class="insight-prose">The data on this page fixes the <em>when</em>, sharply. The <em>why</em> is contested, and this article does not try to settle it. Any of these threads from the case itself, de-policing, the stop-report paperwork, federal scrutiny can be pulled.</p>
     </section>
@@ -1164,7 +1170,7 @@
 
     <h3 class="insight-section-title"><span class="num">I</span>Three winters, the same drop</h3>
 
-    <!-- BLOCK A — opening / recurrence. Slot 1 floats left.
+    <!-- BLOCK A, opening / recurrence. Slot 1 floats left.
          image slot 1: archival photo of the 2011 Groundhog Day blizzard
          (Lake Shore Drive buried, cars abandoned, etc.). Wide 3:2.
          Store under photos/blizzards/ (e.g. photos/blizzards/snowmageddon-2011.jpg). -->
@@ -1186,7 +1192,7 @@
       <p class="insight-prose">The chart below puts all three side by side. It's the first thing to say about Chicago and extreme winter.</p>
     </section>
 
-    <!-- chart A — DUMBBELL: baseline vs lowest-day per event -->
+    <!-- chart A, DUMBBELL: baseline vs lowest-day per event -->
     <div class="insight-charts insight-charts--single">
       <figure class="insight-chartcard">
         <figcaption class="insight-chartcard__head">
@@ -1200,7 +1206,7 @@
 
     <h3 class="insight-section-title"><span class="num">II</span>Why the count falls</h3>
 
-    <!-- BLOCK B + margin B — MECHANISM.
+    <!-- BLOCK B + margin B, MECHANISM.
          Margin anchors: 2011 temperature calendar + baseline definition. -->
     <section class="insight-block">
       <p class="insight-prose">Cohen and Felson's 1979 routine activity theory of crime asks for three things to be in the same place at the same time: a motivated offender, a suitable target, and the absence of anyone who could intervene. The streets are where they meet and most of what the city counts as crime starts there.</p>
@@ -1220,7 +1226,7 @@
       </div>
     </aside>
 
-    <!-- chart B — SCATTER (animated, hover) -->
+    <!-- chart B, SCATTER (animated, hover) -->
     <div class="insight-charts insight-charts--single">
       <figure class="insight-chartcard">
         <figcaption class="insight-chartcard__head">
@@ -1245,7 +1251,7 @@
 
     <h3 class="insight-section-title"><span class="num">III</span>What goes, what holds</h3>
 
-    <!-- BLOCK C + margin C — GRANULARITY bridge.
+    <!-- BLOCK C + margin C, GRANULARITY bridge.
          Margin anchor: 2019 temperature calendar. -->
     <section class="insight-block">
       <p class="insight-prose">Not every kind of crime drops by the same amount. The outdoor categories fall hardest: narcotics deals, theft, the stops that turn into other charges. Battery and assault, which often happen between people who already live together or stay indoors together drops less.</p>
@@ -1259,7 +1265,7 @@
       </div>
     </aside>
 
-    <!-- chart C — BY-TYPE slope -->
+    <!-- chart C, BY-TYPE slope -->
     <div class="insight-charts insight-charts--single">
       <figure class="insight-chartcard">
         <figcaption class="insight-chartcard__head">
@@ -1273,7 +1279,7 @@
 
     <h3 class="insight-section-title"><span class="num">IV</span>After the city reopens</h3>
 
-    <!-- BLOCK D + margin D — NUANCE. Slot 2 floats right.
+    <!-- BLOCK D + margin D, NUANCE. Slot 2 floats right.
          image slot 2: archival photo of the 2014 polar vortex (steam over
          the lake, frozen lakefront, breath visible, etc.). Portrait 4:5.
          Store under photos/blizzards/ (e.g. photos/blizzards/polar-vortex-2014.jpg).
@@ -1300,7 +1306,7 @@
       </div>
     </aside>
 
-    <!-- chart D — SNAP-BACK small multiples -->
+    <!-- chart D, SNAP-BACK small multiples -->
     <div class="insight-charts insight-charts--single">
       <figure class="insight-chartcard">
         <figcaption class="insight-chartcard__head">
@@ -1312,7 +1318,7 @@
       </figure>
     </div>
 
-    <!-- BLOCK E — close. No margin → spans both columns via :not(:has(+ .insight-margin)). -->
+    <!-- BLOCK E, close. No margin → spans both columns via :not(:has(+ .insight-margin)). -->
     <section class="insight-block">
       <p class="insight-prose">Crime in the dataset is mostly opportunity. Opportunity needs contact, and contact needs people outside. Take the outside away and the count falls. Take it away in three different winters across two decades and it falls the same way each time.</p>
 
@@ -1329,9 +1335,9 @@
      ═══════════════════════════════════════════════════════════ -->
 <footer>
   <div>
-    Data: Chicago Data Portal · Crimes 2001 to Present · ijzp-q8t2 · updated daily.
+    Data: Chicago Data Portal · Crimes since 2001 · ijzp-q8t2 · snapshot 2026-04-30.
   </div>
-  <div class="colophon">— Crimiviz, an editorial atlas.</div>
+  <div class="colophon">Crimiviz, an editorial atlas.</div>
 </footer>
 
 <script src="assets/js/app.js" defer></script>

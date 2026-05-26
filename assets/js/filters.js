@@ -1,4 +1,4 @@
-const ALL_YEARS = Array.from({ length: 26 }, (_, i) => 2001 + i);
+const ALL_YEARS = Array.from({ length: 25 }, (_, i) => 2002 + i);
 
 export const state = {
   type: 'ALL',
@@ -34,8 +34,12 @@ export function setType(value) {
 export function setHour(value) {
   if (value === null || value === undefined || value === '' || value === 'ALL') {
     state.hour = 'ALL';
+  } else if (typeof value === 'object' && value.start !== undefined && value.end !== undefined) {
+    if (value.start === 0 && value.end === 23) state.hour = 'ALL';
+    else state.hour = { start: value.start, end: value.end };
   } else {
-    state.hour = parseInt(value, 10);
+    const n = parseInt(value, 10);
+    state.hour = isNaN(n) ? 'ALL' : { start: n, end: n };
   }
   emit();
 }

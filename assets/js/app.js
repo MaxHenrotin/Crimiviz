@@ -1,5 +1,5 @@
 (function(){
-  const tabs   = Array.from(document.querySelectorAll('[data-tab]'));
+  const tabs   = Array.from(document.querySelectorAll('button[data-tab]'));
   const links  = Array.from(document.querySelectorAll('[data-tab-link]'));
   const panels = {
     home:     document.getElementById('panel-home'),
@@ -58,56 +58,87 @@
     });
   });
 
-  const hour = document.getElementById('filter-hour');
-  const hourDisp = document.getElementById('hour-display');
+  const hourMinEl = document.getElementById('filter-hour-min');
+  const hourMaxEl = document.getElementById('filter-hour-max');
+  const hourDispEl = document.getElementById('hour-display');
+  const hourFillEl = document.getElementById('hour-range-fill');
+  const H_MIN = 0, H_MAX = 23, H_SPAN = H_MAX - H_MIN;
+
   function fmtHour(h){
     return String(parseInt(h, 10)).padStart(2, '0') + ':00';
   }
-  if (hour && hourDisp) {
-    hour.addEventListener('input', () => { hourDisp.textContent = fmtHour(hour.value); });
-    hourDisp.textContent = fmtHour(hour.value);
+
+  function syncHourRange(){
+    if (!hourMinEl || !hourMaxEl) return;
+    let a = parseInt(hourMinEl.value, 10);
+    let b = parseInt(hourMaxEl.value, 10);
+    if (a > b) { const t = a; a = b; b = t; }
+    if (hourDispEl) {
+      hourDispEl.textContent = (a === H_MIN && b === H_MAX) ? 'All'
+        : (a === b ? fmtHour(a) : `${fmtHour(a)} — ${fmtHour(b)}`);
+    }
+    if (hourFillEl) {
+      hourFillEl.style.left = ((a - H_MIN) / H_SPAN * 100) + '%';
+      hourFillEl.style.right = ((H_MAX - b) / H_SPAN * 100) + '%';
+    }
+    document.dispatchEvent(new CustomEvent('crimiviz:hours-changed'));
   }
 
-  const resetBtn = document.getElementById('filter-reset');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      const typeEl = document.getElementById('filter-type');
-      if (typeEl) typeEl.value = 'ALL';
-      if (hour) hour.value = 12;
-      if (hourDisp) hourDisp.textContent = 'All';
-      document.querySelectorAll('.year-pill').forEach(p => p.classList.add('active'));
+  if (hourMinEl && hourMaxEl) {
+    hourMinEl.addEventListener('input', () => {
+      if (parseInt(hourMinEl.value, 10) > parseInt(hourMaxEl.value, 10)) {
+        hourMaxEl.value = hourMinEl.value;
+      }
+      syncHourRange();
     });
+    hourMaxEl.addEventListener('input', () => {
+      if (parseInt(hourMaxEl.value, 10) < parseInt(hourMinEl.value, 10)) {
+        hourMinEl.value = hourMaxEl.value;
+      }
+      syncHourRange();
+    });
+    syncHourRange();
+  }
+
+  const yearMinEl = document.getElementById('filter-year-min');
+  const yearMaxEl = document.getElementById('filter-year-max');
+  const yearDispEl = document.getElementById('year-display');
+  const yearFillEl = document.getElementById('year-range-fill');
+  const Y_MIN = 2002, Y_MAX = 2026, Y_SPAN = Y_MAX - Y_MIN;
+
+  function syncYearRange(){
+    if (!yearMinEl || !yearMaxEl) return;
+    let a = parseInt(yearMinEl.value, 10);
+    let b = parseInt(yearMaxEl.value, 10);
+    if (a > b) { const t = a; a = b; b = t; }
+    if (yearDispEl) yearDispEl.textContent = a === b ? String(a) : `${a} — ${b}`;
+    if (yearFillEl) {
+      yearFillEl.style.left = ((a - Y_MIN) / Y_SPAN * 100) + '%';
+      yearFillEl.style.right = ((Y_MAX - b) / Y_SPAN * 100) + '%';
+    }
+    document.dispatchEvent(new CustomEvent('crimiviz:years-changed'));
+  }
+
+  if (yearMinEl && yearMaxEl) {
+    yearMinEl.addEventListener('input', () => {
+      if (parseInt(yearMinEl.value, 10) > parseInt(yearMaxEl.value, 10)) {
+        yearMaxEl.value = yearMinEl.value;
+      }
+      syncYearRange();
+    });
+    yearMaxEl.addEventListener('input', () => {
+      if (parseInt(yearMaxEl.value, 10) < parseInt(yearMinEl.value, 10)) {
+        yearMinEl.value = yearMaxEl.value;
+      }
+      syncYearRange();
+    });
+    syncYearRange();
   }
 
   const tip = document.getElementById('map-tooltip');
   if (tip) {
     tip.style.display = 'none';
     tip.setAttribute('aria-hidden', 'true');
-  }
-
-  const yearGrid = document.getElementById('year-grid');
-  const yearsAllBtn = document.getElementById('years-all');
-  if (yearGrid) {
-    for (let y = 2001; y <= 2026; y++) {
-      const btn = document.createElement('button');
-      btn.className = 'year-pill active';
-      btn.type = 'button';
-      btn.dataset.year = String(y);
-      btn.textContent = String(y);
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        document.dispatchEvent(new CustomEvent('crimiviz:years-changed'));
-      });
-      yearGrid.appendChild(btn);
-    }
-  }
-  if (yearsAllBtn) {
-    yearsAllBtn.addEventListener('click', () => {
-      const pills = document.querySelectorAll('.year-pill');
-      const anyInactive = Array.from(pills).some(p => !p.classList.contains('active'));
-      pills.forEach(p => p.classList.toggle('active', anyInactive));
-      document.dispatchEvent(new CustomEvent('crimiviz:years-changed'));
-    });
   }
 
   const drips = Array.from(document.querySelectorAll('.drip'));
@@ -172,4 +203,55 @@
   window.Crimiviz = window.Crimiviz || {};
   window.Crimiviz.selectTab = selectTab;
   window.Crimiviz.applyBleed = applyBleed;
+
+  // ─── Year / Hour sweep animation ───
+  const ANIM_STEP_MS = 500;
+  let animTimer = null;
+  let animTarget = null;
+
+  function setPlayingButton(target, playing){
+    const btn = document.querySelector(`.range-play[data-target="${target}"]`);
+    if (btn) btn.classList.toggle('is-playing', playing);
+  }
+
+  function stopAnimation(){
+    if (animTimer !== null) { clearInterval(animTimer); animTimer = null; }
+    if (animTarget) setPlayingButton(animTarget, false);
+    animTarget = null;
+  }
+
+  function startAnimation(target){
+    stopAnimation();
+    const minEl = document.getElementById(`filter-${target}-min`);
+    const maxEl = document.getElementById(`filter-${target}-max`);
+    if (!minEl || !maxEl) return;
+    const lo = parseInt(minEl.min, 10);
+    const hi = parseInt(minEl.max, 10);
+    const sync = target === 'year' ? syncYearRange : syncHourRange;
+    let cur = lo;
+    minEl.value = String(cur);
+    maxEl.value = String(cur);
+    sync();
+    animTarget = target;
+    setPlayingButton(target, true);
+    animTimer = setInterval(() => {
+      cur = cur >= hi ? lo : cur + 1;
+      minEl.value = String(cur);
+      maxEl.value = String(cur);
+      sync();
+    }, ANIM_STEP_MS);
+  }
+
+  document.querySelectorAll('.range-play').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target;
+      if (animTarget === target) stopAnimation();
+      else startAnimation(target);
+    });
+  });
+
+  ['filter-year-min', 'filter-year-max', 'filter-hour-min', 'filter-hour-max'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('pointerdown', () => { if (animTarget) stopAnimation(); });
+  });
 })();

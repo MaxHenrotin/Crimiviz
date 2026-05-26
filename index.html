@@ -255,7 +255,7 @@
       <span class="kpi-label">Mean arrest rate</span>
     </div>
     <div class="kpi">
-      <span class="kpi-num">34</span>
+      <span class="kpi-num">32</span>
       <span class="kpi-label">Crime types catalogued</span>
     </div>
     </div>
@@ -264,7 +264,7 @@
   <div class="nav-section">
     <header class="section-head">
       <h2>Three ways<br /><em>into the data.</em></h2>
-      <p class="meta">Choose your reading. The map shows where; the trends show when; the insights ask why.</p>
+      <p class="meta">Choose your reading. The map shows where; the trends tell when; the insights ask why.</p>
     </header>
 
     <div class="nav-grid stagger">
@@ -401,7 +401,7 @@
         </div>
         <div class="body">
           <h3>Where it <em>happens.</em></h3>
-          <p>An interactive choropleth across community areas, with a click-through to every incident on the block.</p>
+          <p>An interactive choropleth across community areas, with a click-through to every incident on the block. Toggle the desired filters.</p>
           <span class="arrow"><span class="line"></span> Open the map</span>
         </div>
       </button>
@@ -568,7 +568,7 @@
 
   <header class="tab-head">
     <h1>Where the <em>incidents</em> fall.</h1>
-    <p class="deck">Each polygon is one of Chicago's seventy-seven community areas, shaded by reported volume. Pick a category, scrub the hour of day, and watch the city redraw itself.</p>
+    <p class="deck">Each of Chicago's 77 community areas is shaded by total reported volume, click and zoom into any one to see every individual incident on file. Press play on the years or the hours to sweep through time, or set any combination of filters yourself</p>
   </header>
 
   <div class="map-layout">
@@ -588,63 +588,66 @@
       <div class="control">
         <label class="control-label" for="filter-type">
           <span>Category</span>
-          <span class="val">34 types</span>
+          <span class="val">32 types</span>
         </label>
         <div class="select-wrap">
-          <select id="filter-type" aria-label="Filter by crime category">
-            <option value="ALL">All categories</option>
-            <option value="THEFT">Theft · 1,815,628</option>
-            <option value="BATTERY">Battery · 1,556,783</option>
-            <option value="CRIMINAL DAMAGE">Criminal damage · 971,405</option>
-            <option value="NARCOTICS">Narcotics · 767,335</option>
-            <option value="ASSAULT">Assault · 575,115</option>
-            <option value="OTHER OFFENSE">Other offense · 533,999</option>
-            <option value="BURGLARY">Burglary · 451,826</option>
-            <option value="MOTOR VEHICLE THEFT">Motor vehicle theft · 440,343</option>
-            <option value="DECEPTIVE PRACTICE">Deceptive practice · 396,550</option>
-            <option value="ROBBERY">Robbery · 317,003</option>
-            <option value="ARSON">Arson</option>
-            <option value="KIDNAPPING">Kidnapping</option>
-            <option value="HOMICIDE">Homicide</option>
-            <option value="GAMBLING">Gambling</option>
-            <option value="INTIMIDATION">Intimidation</option>
-          </select>
+          <button id="filter-type" type="button" class="select-trigger" data-value="ALL" aria-haspopup="listbox" aria-expanded="false" aria-label="Filter by crime category">
+            <span class="select-label">All categories</span>
+          </button>
+          <ul id="filter-type-menu" class="select-menu" role="listbox" hidden></ul>
         </div>
       </div>
 
       <div class="control">
         <label class="control-label">
           <span>Years</span>
-          <button id="years-all" class="years-all" type="button" aria-label="Toggle all years">All</button>
+          <span class="val"><span id="year-display">2002 — 2026</span></span>
         </label>
-        <div id="year-grid" class="year-grid" role="group" aria-label="Filter by year"></div>
-      </div>
-
-      <div class="control">
-        <label class="control-label" for="filter-hour">
-          <span>Hour of day</span>
-          <span class="val"><span id="hour-display">All</span></span>
-        </label>
-        <div class="slider-wrap">
-          <input id="filter-hour" type="range" min="0" max="23" value="12" aria-label="Filter by hour of day" />
-          <div class="tick-row">
-            <span>00</span><span>06</span><span>12</span><span>18</span><span>23</span>
+        <div class="range-row">
+          <button class="range-play" data-target="year" type="button" aria-label="Play or pause year animation">
+            <svg class="play-icon" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M2 1 L11 7 L2 13 Z" fill="currentColor"/></svg>
+            <svg class="pause-icon" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><rect x="1" y="1" width="3" height="12" fill="currentColor"/><rect x="8" y="1" width="3" height="12" fill="currentColor"/></svg>
+          </button>
+          <div class="range-wrap" role="group" aria-label="Filter by year range">
+            <div class="range-track">
+              <div class="range-fill" id="year-range-fill"></div>
+            </div>
+            <input id="filter-year-min" type="range" min="2002" max="2026" value="2002" step="1" aria-label="Start year" />
+            <input id="filter-year-max" type="range" min="2002" max="2026" value="2026" step="1" aria-label="End year" />
+            <div class="tick-row">
+              <span>2002</span><span>2008</span><span>2014</span><span>2020</span><span>2026</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <button id="filter-reset" class="btn-ghost" aria-label="Reset filters">
-        <span>Reset filters</span>
-        <span class="x" aria-hidden="true"></span>
-      </button>
-
-      <div class="control map-hint">
-        Click any community area on the map to zoom in and load every reported incident on file for that neighborhood.
+      <div class="control">
+        <label class="control-label">
+          <span>Hour of day</span>
+          <span class="val"><span id="hour-display">All</span></span>
+        </label>
+        <div class="range-row">
+          <button class="range-play" data-target="hour" type="button" aria-label="Play or pause hour animation">
+            <svg class="play-icon" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M2 1 L11 7 L2 13 Z" fill="currentColor"/></svg>
+            <svg class="pause-icon" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><rect x="1" y="1" width="3" height="12" fill="currentColor"/><rect x="8" y="1" width="3" height="12" fill="currentColor"/></svg>
+          </button>
+          <div class="range-wrap" role="group" aria-label="Filter by hour range">
+            <div class="range-track">
+              <div class="range-fill" id="hour-range-fill"></div>
+            </div>
+            <input id="filter-hour-min" type="range" min="0" max="23" value="0" step="1" aria-label="Start hour" />
+            <input id="filter-hour-max" type="range" min="0" max="23" value="23" step="1" aria-label="End hour" />
+            <div class="tick-row">
+              <span>00</span><span>06</span><span>12</span><span>18</span><span>23</span>
+            </div>
+          </div>
+        </div>
       </div>
+
     </aside>
 
     <div class="map-stage">
-      <div class="map-corner"><span class="live-dot" aria-hidden="true"></span> Choropleth · 77 areas</div>
+      <div class="map-corner"><span class="live-dot" aria-hidden="true"></span> Choropleth · <span id="map-corner-label">77 areas</span></div>
       <div class="map-meta" id="map-scale">N&nbsp;↑ · scale 1:·</div>
       <div id="viz-map" role="img" aria-label="Map of Chicago community areas">
         <div class="placeholder">

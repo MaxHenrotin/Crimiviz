@@ -75,12 +75,21 @@ function prettyName(n) {
 
 const fmtNum = new Intl.NumberFormat('en-US').format;
 
+const TYPE_ALIASES = {
+  'CRIMINAL SEXUAL ASSAULT': new Set(['CRIMINAL SEXUAL ASSAULT', 'CRIM SEXUAL ASSAULT']),
+};
+function matchesType(filterType, recordType) {
+  if (filterType === 'ALL') return true;
+  const accepted = TYPE_ALIASES[filterType];
+  return accepted ? accepted.has(recordType) : recordType === filterType;
+}
+
 function totalsFiltered(rows, filter) {
   const yearFilterActive = filter.years && filter.years.size < FULL_YEARS_COUNT;
   const totals = new Map();
   for (const r of rows) {
-    if (filter.type !== 'ALL' && r.type !== filter.type) continue;
-    if (filter.hour !== 'ALL' && r.hour !== filter.hour) continue;
+    if (!matchesType(filter.type, r.type)) continue;
+    if (filter.hour !== 'ALL' && (r.hour < filter.hour.start || r.hour > filter.hour.end)) continue;
     if (yearFilterActive && !filter.years.has(r.year)) continue;
     totals.set(r.ca, (totals.get(r.ca) || 0) + r.n);
   }
@@ -97,15 +106,18 @@ function parseHour(date) {
   return h;
 }
 
-const FULL_YEARS_COUNT = 26;
+const FULL_YEARS_COUNT = 25;
 
 function filterFeatures(features, filter) {
   const yearFilterActive = filter.years && filter.years.size < FULL_YEARS_COUNT;
   if (filter.type === 'ALL' && filter.hour === 'ALL' && !yearFilterActive) return features;
   return features.filter(f => {
     const p = f.properties;
-    if (filter.type !== 'ALL' && p.primary_type !== filter.type) return false;
-    if (filter.hour !== 'ALL' && parseHour(p.date) !== filter.hour) return false;
+    if (!matchesType(filter.type, p.primary_type)) return false;
+    if (filter.hour !== 'ALL') {
+      const h = parseHour(p.date);
+      if (h === null || h < filter.hour.start || h > filter.hour.end) return false;
+    }
     if (yearFilterActive) {
       const year = parseInt(p.date.slice(6, 10), 10);
       if (!filter.years.has(year)) return false;
@@ -252,9 +264,11 @@ function setAreaPanelLoading(props) {
   const nameEl = document.getElementById('area-name');
   const metaEl = document.getElementById('area-meta');
   const volEl = document.getElementById('area-volume');
+  const cornerEl = document.getElementById('map-corner-label');
   if (nameEl) nameEl.textContent = prettyName(props.name);
   if (metaEl) metaEl.textContent = 'Loading incidents…';
   if (volEl) volEl.textContent = fmtNum(props.total || 0);
+  if (cornerEl) cornerEl.textContent = prettyName(props.name);
 }
 
 function setAreaPanelLoaded(featuresCount) {
@@ -265,6 +279,8 @@ function setAreaPanelLoaded(featuresCount) {
 function hideAreaPanel() {
   const panel = document.getElementById('area-panel');
   if (panel) panel.setAttribute('hidden', '');
+  const cornerEl = document.getElementById('map-corner-label');
+  if (cornerEl) cornerEl.textContent = '77 areas';
 }
 
 function selectArea(feature) {
@@ -502,9 +518,9 @@ export async function mountMap() {
       'circle-opacity': [
         'interpolate', ['linear'], ['zoom'],
         11, 0.55,
-        15, 0.55,
-        16, 0.4,
-        17, 0,
+        16, 0.55,
+        17, 0.4,
+        18, 0,
       ],
       'circle-stroke-width': 0,
     },
@@ -516,11 +532,11 @@ export async function mountMap() {
     id: 'crimes-points',
     type: 'circle',
     source: 'crimes',
-    minzoom: 14,
+    minzoom: 15,
     paint: {
       'circle-radius': [
         'interpolate', ['linear'], ['zoom'],
-        14, ['interpolate', ['linear'], ['get', 'count'], 1, 2,  10, 5,  100, 12, 1000, 24],
+        15, ['interpolate', ['linear'], ['get', 'count'], 1, 2,  10, 5,  100, 12, 1000, 24],
         17, ['interpolate', ['linear'], ['get', 'count'], 1, 5,  10, 12, 100, 28, 1000, 54],
         19, ['interpolate', ['linear'], ['get', 'count'], 1, 8,  10, 18, 100, 38, 1000, 70],
         22, ['interpolate', ['linear'], ['get', 'count'], 1, 14, 10, 30, 100, 60, 1000, 110],
@@ -535,9 +551,9 @@ export async function mountMap() {
       'circle-stroke-width': 0.6,
       'circle-opacity': [
         'interpolate', ['linear'], ['zoom'],
-        14, 0,
-        15, 0.55,
-        16, 0.92,
+        15, 0,
+        16, 0.55,
+        17, 0.92,
       ],
     },
   });
@@ -548,7 +564,7 @@ export async function mountMap() {
     id: 'crimes-count-label',
     type: 'symbol',
     source: 'crimes',
-    minzoom: 17,
+    minzoom: 18,
     filter: ['>', ['get', 'count'], 1],
     layout: {
       'text-field': [
@@ -557,7 +573,7 @@ export async function mountMap() {
       ],
       'text-size': [
         'interpolate', ['linear'], ['zoom'],
-        17, ['interpolate', ['linear'], ['get', 'count'], 1, 8,  100, 14, 1000, 22],
+        18, ['interpolate', ['linear'], ['get', 'count'], 1, 8,  100, 14, 1000, 22],
         19, ['interpolate', ['linear'], ['get', 'count'], 1, 11, 100, 20, 1000, 32],
         22, ['interpolate', ['linear'], ['get', 'count'], 1, 16, 100, 32, 1000, 52],
       ],
@@ -649,8 +665,8 @@ export async function mountMap() {
     refreshSelectedAreaData(s);
   });
 
-  // Initial fit
-  map.fitBounds(chicagoBounds, { padding: 24, duration: 0 });
+  // Initial view: center on Chicago at ~1:500,000 scale (overrides any default fitBounds)
+  map.jumpTo({ center: [-87.65, 41.83], zoom: 9.8 });
 
   // Resize when the panel becomes visible (lazy reveal)
   const panel = document.getElementById('panel-map');

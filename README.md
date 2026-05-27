@@ -9,7 +9,7 @@ Live: **https://chicagocrime.vercel.app/**
 Crimiviz lets you explore the 7.8 million reported incidents on file from the Chicago Police Department through three lenses:
 
 - **Map** — a paper-themed map of Chicago with a focus-mode interaction. The 77 community areas are coloured by total volume under the current filter (category, hour, year); clicking an area zooms in and loads every reported incident on file for that neighbourhood. A decile-classified density layer paints the hotspots within the area; at high zoom each individual block centroid becomes a sized circle (number of crimes stacked there, with the count printed on top), and clicking a circle opens the underlying incident records.
-- **Trends** — seasonality, time-of-day rhythms, distribution by primary type, and arrest-rate disparities.
+- **Trends** *(work in progress)* — seasonality, time-of-day rhythms, distribution by primary type, and arrest-rate disparities.
 - **Insights** — three editorial deep-dives: the pre/post COVID shift, the Laquan McDonald accountability collapse (2014 → arrest-rate break), and how extreme Chicago winters empty the streets.
 
 Target audience: urban planners, public-safety researchers, city officials.
@@ -28,7 +28,7 @@ Target audience: urban planners, public-safety researchers, city officials.
 │       ├── filters.js           shared filter state (type, hour, years)
 │       ├── insights.js          orchestrator for the three insight stories
 │       ├── insights/            D3 prototypes (covid, laquan, blizzards)
-│       ├── charts/              (empty) slot for the upcoming Trends charts
+│       ├── trends/              D3 modules for the four Trends charts (WIP)
 │       └── map/map.js           MapLibre map + popup + density grid
 ├── data/
 │   ├── chicago_communities.topo.json
@@ -38,7 +38,7 @@ Target audience: urban planners, public-safety researchers, city officials.
 │   ├── insights_covid.json · insights_laquan.json · insights_blizzards.json
 │   ├── blizzards_by_type.json · blizzards_temperature.json · blizzards_wide.json
 │   ├── meta.json
-│   └── points/                  78 GeoJSON, one per community area + manifest
+│   └── points/                  77 community areas → 78 GeoJSON (Austin / CA 25 split in two to stay under GitHub's 100 MB ceiling) + manifest
 ├── scripts/                     Python pipeline that produces data/
 ├── notebooks/                   EDA notebook driving the Insights stories
 ├── data_exploration.ipynb       exploratory notebook (M1)
@@ -47,7 +47,7 @@ Target audience: urban planners, public-safety researchers, city officials.
 └── process_book.pdf             exported process book (final deliverable)
 ```
 
-The raw `chicago_crimes.csv` (1.9 GB) is gitignored. Either download it from the Kaggle mirror or, if you only need the aggregate JSONs, rely on the live Chicago Data Portal API used by `fetch_and_build.py`.
+The raw `chicago_crimes.csv` (1.9 GB) is gitignored. `fetch_and_build.py` and `build_topojson.py` hit the Chicago Data Portal directly and don't need it; rebuilding the per-area points (`build_points_per_area.py`) requires the CSV — grab it from the Kaggle mirror.
 
 ## Technical setup
 

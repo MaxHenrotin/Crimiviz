@@ -9,7 +9,7 @@ export function initOutcomesChart(data, containerSelector) {
     const cfg = {
         w: 760,
         h: 400,
-        margin: { top: 25, right: 35, bottom: 40, left: 160 },
+        margin: { top: 25, right: 35, bottom: 40, left: 190 }, // Comfortable margin for titles
         baseline: 0.251,
         colorAbove: "#7a1010",
         colorBelow: "#2a1f12",
@@ -20,18 +20,55 @@ export function initOutcomesChart(data, containerSelector) {
     cfg.innerWidth = cfg.w - cfg.margin.left - cfg.margin.right;
     cfg.innerHeight = cfg.h - cfg.margin.top - cfg.margin.bottom;
 
-    // MATCHING LOGIC: Uses d.type and d.rate from arrest_rates.json
-    let dataset = data.map(d => ({
-        category: d.type || d.primary_type || d.category || d.key,
-        arrestRate: d.rate !== undefined ? +d.rate : (+d.arrest_rate || 0)
-    })).filter(d => d.category !== undefined && d.category !== null);
+    // ─── STAGE 1: MAP-REDUCE TO MERGE DUPLICATES & REMOVE OUTLIERS ─────────
+    const consolidatedMap = new Map();
 
+    data.forEach(d => {
+        let type = (d.type || d.primary_type || d.category || d.key || "").toUpperCase().trim();
+        
+        if (type === 'DOMESTIC VIOLENCE') return; // Wipe out outlier
+        if (type === 'CRIM SEXUAL ASSAULT') type = 'CRIMINAL SEXUAL ASSAULT'; // Merge categories
+
+        // Extract raw numbers safely from your JSON properties
+        const totalIncidents = +d.total || +d.count || 0;
+        const totalArrests = +d.arrests || 0;
+
+        if (!consolidatedMap.has(type)) {
+            consolidatedMap.set(type, { total: 0, arrests: 0 });
+        }
+
+        const current = consolidatedMap.get(type);
+        current.total += totalIncidents;
+        current.arrests += totalArrests;
+    });
+
+    // ─── STAGE 2: COMPUTE UNIFIED ARREST RATES ──────────────────────────────
+    let dataset = [];
+    consolidatedMap.forEach((metrics, type) => {
+        // If your dataset file already has a pre-calculated 'rate' field and total is 0, fall back to it
+        let rate = metrics.total > 0 ? (metrics.arrests / metrics.total) : 0;
+        
+        // Failsafe: if rates are handled as standalone items in the input, grab them directly
+        const rawMatch = data.find(x => (x.type || x.primary_type || x.category || x.key || "").toUpperCase().trim() === type);
+        if (metrics.total === 0 && rawMatch) {
+            rate = rawMatch.rate !== undefined ? +rawMatch.rate : (+rawMatch.arrest_rate || 0);
+        }
+
+        dataset.push({
+            category: type,
+            arrestRate: rate
+        });
+    });
+
+    // Normalize down if data rates are accidentally scaled up out of 100
     if (d3.max(dataset, cfg.x) > 1.0) {
         dataset.forEach(d => { d.arrestRate = d.arrestRate / 100; });
     }
 
+    // Sort descending so the highest tracking outcomes sit cleanly at the top
     dataset.sort((a, b) => b.arrestRate - a.arrestRate);
 
+    // ─── STAGE 3: SVG CANVAS CONSTRUCTION ──────────────────────────────────
     const svg = container.append("svg")
         .attr("viewBox", `0 0 ${cfg.w} ${cfg.h}`)
         .style("width", "100%")
@@ -43,6 +80,7 @@ export function initOutcomesChart(data, containerSelector) {
     const xScale = d3.scaleLinear().domain([0, Math.max(d3.max(dataset, cfg.x) || 0, cfg.baseline) * 1.05]).range([0, cfg.innerWidth]);
     const yScale = d3.scaleBand().domain(dataset.map(cfg.y)).range([0, cfg.innerHeight]).padding(0.4);
 
+    // Row guide tracks
     svg.append("g")
         .selectAll("line")
         .data(dataset).enter().append("line")
@@ -50,6 +88,7 @@ export function initOutcomesChart(data, containerSelector) {
         .attr("y1", d => yScale(cfg.y(d)) + yScale.bandwidth() / 2).attr("y2", d => yScale(cfg.y(d)) + yScale.bandwidth() / 2)
         .attr("stroke", cfg.colorBelow).attr("stroke-width", 0.3).attr("opacity", 0.15);
 
+    // Baseline marker column rules
     const baselineX = xScale(cfg.baseline);
     svg.append("line")
         .attr("x1", baselineX).attr("x2", baselineX).attr("y1", 0).attr("y2", cfg.innerHeight)
@@ -59,6 +98,7 @@ export function initOutcomesChart(data, containerSelector) {
         .attr("x", baselineX + 6).attr("y", -6).attr("fill", cfg.colorBelow).attr("opacity", 0.7).attr("font-family", "var(--mono, monospace)").attr("font-size", "10px").attr("font-weight", "500")
         .text(`Baseline (${d3.format(".1%")(cfg.baseline)})`);
 
+    // X Axis Setup
     svg.append("g")
         .attr("class", "x-axis")
         .attr("transform", `translate(0, ${cfg.innerHeight})`)
@@ -66,6 +106,7 @@ export function initOutcomesChart(data, containerSelector) {
         .call(g => g.select(".domain").attr("stroke", cfg.colorBelow).attr("stroke-width", 0.8).attr("opacity", 0.4))
         .call(g => g.selectAll(".tick text").attr("fill", cfg.colorBelow).attr("font-family", "var(--mono, monospace)").attr("font-size", "11px").attr("dy", "10px"));
 
+    // Y Axis Setup (Clean Editorial Typography formatting)
     svg.append("g")
         .attr("class", "y-axis")
         .call(d3.axisLeft(yScale).tickSize(0))
@@ -78,6 +119,7 @@ export function initOutcomesChart(data, containerSelector) {
             })
         );
 
+    // Plotting Points
     const dotGroups = svg.selectAll(".dot-group").data(dataset).enter().append("g").attr("class", "dot-group");
 
     dotGroups.append("circle")

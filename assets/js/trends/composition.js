@@ -36,7 +36,7 @@ export function initCompositionChart(data, containerSelector) {
 
     if (tailRecords.length > 0) {
         dataset.push({
-            category: "OTHER (LONG TAIL)",
+            category: "OTHERS",
             count: d3.sum(tailRecords, d => d.count),
             share: d3.sum(tailRecords, d => d.share)
         });

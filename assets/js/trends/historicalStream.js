@@ -95,7 +95,7 @@ export function initHistoricalStreamChart(data, containerSelector) {
         .style("border-radius", "4px")
         .style("cursor", "pointer");
 
-    selector.append("option").attr("value", "TOTAL_ALL_CRIMES").text("All Crimes Combined (Macro Volume)");
+    selector.append("option").attr("value", "TOTAL_ALL_CRIMES").text("All Crimes Combined");
     majorCategories.forEach(cat => {
         selector.append("option")
             .attr("value", cat)

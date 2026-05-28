@@ -2,7 +2,9 @@
 
 Interactive visualisation of Chicago crime patterns from 2001 to today, built for the EPFL Data Visualization course by Julien Erbland, Mathis Richard and Max Henrotin.
 
-Live: **https://chicagocrime.vercel.app/**
+Website: **https://chicagocrime.vercel.app/**
+
+Presentation video: **https://www.youtube.com/watch?v=UxZBNNk3OMc**
 
 ## What it does
 

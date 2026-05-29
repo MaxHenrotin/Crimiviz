@@ -6,7 +6,6 @@ Website: **https://chicagocrime.vercel.app/**
 
 Presentation video: **https://www.youtube.com/watch?v=UxZBNNk3OMc**
 
-Presentation video: **https://www.youtube.com/watch?v=UxZBNNk3OMc**
 
 ## What it does
 
@@ -22,7 +21,7 @@ Target audience: urban planners, public-safety researchers, city officials but m
 
 ```
 .
-├── index.html                   single-page entry, 4 tabs
+├── index.html                   single-page entry, home page + 3 tabs
 ├── assets/
 │   ├── css/                     main, components, viz
 │   └── js/

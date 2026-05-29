@@ -81,7 +81,9 @@ python build_covid_extras.py       # COVID-specific by_type / by_hour deltas
 python build_blizzards_extras.py   # blizzard temperature series + wide pivot
 ```
 
-`fetch_and_build.py` and `build_topojson.py` hit the Chicago Data Portal directly (no raw download). `build_points_per_area.py` reads the local `chicago_crimes.csv` to emit one GeoJSON per community area, with the largest area (Austin / CA 25) split by year so every file stays under GitHub's 100 MB per-file ceiling. A small `data/points/_manifest.json` tells the front-end which files belong to which area.
+`fetch_and_build.py` and `build_topojson.py` hit the Chicago Data Portal directly (no raw download). `build_points_per_area.py` reads the local `chicago_crimes.csv` to emit one GeoJSON per community area, with the largest area (Austin / CA 25) split by year so every file stays under GitHub's file limit. A small `data/points/_manifest.json` tells the front-end which files belong to which area.
+
+> **Note on the map points.** `fetch_and_build.py` and `build_topojson.py` pull fresh data straight from Socrata, so the choropleth and the Trends charts are updated to the current date. The individual map points, however, are built from a local CSV. For a fresher points snapshot, download an up-to-date export and place it at the repository root as `chicago_crimes.csv` before running `build_points_per_area.py` — either the [Kaggle mirror](https://www.kaggle.com/datasets/aliafzal9323/chicago-crime-dataset-2024-2026) or a fresh CSV export from the [Chicago Data Portal](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2).
 
 ### Deployment
 

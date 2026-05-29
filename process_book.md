@@ -123,7 +123,7 @@ The split is large but not arbitrary: `main.css` rarely changes, `components.css
 
 ### Inline SVG defs that have to stay
 
-The blood filters and gradients (`#bloodRough`, `#bloodGoo`, `#bloodSplat`, `#bloodWet`, `#bloodGrad`, `#dropGrad`, `#tipGrad`) are declared inside an inline `<svg class="blood-defs">` at the top of the body. They cannot live in a separate file because CSS references them via `filter: url(#bloodRough)` — those URLs are document-local. Moving the defs out would silently strip every editorial motif.
+Thdis me blood filters and gradients (`#bloodRough`, `#bloodGoo`, `#bloodSplat`, `#bloodWet`, `#bloodGrad`, `#dropGrad`, `#tipGrad`) are declared inside an inline `<svg class="blood-defs">` at the top of the body. They cannot live in a separate file because CSS references them via `filter: url(#bloodRough)` — those URLs are document-local. Moving the defs out would silently strip every editorial motif.
 
 ### State and module boundaries
 

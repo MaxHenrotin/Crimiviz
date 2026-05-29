@@ -1,3 +1,5 @@
 requests>=2.31
 tqdm>=4.66
 topojson>=1.7
+numpy>=1.24
+pandas>=2.0

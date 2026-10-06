@@ -10,9 +10,9 @@ const CARTO_PAPER = {
     'carto-paper': {
       type: 'raster',
       tiles: [
-        'https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png',
-        'https://b.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png',
-        'https://c.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png',
+        'https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png?key=cb1_4bg7_1_57b4fa89acf72946161aa87b',
+        'https://b.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png?key=cb1_4bg7_1_57b4fa89acf72946161aa87b',
+        'https://c.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png?key=cb1_4bg7_1_57b4fa89acf72946161aa87b',
       ],
       tileSize: 256,
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>',
@@ -21,9 +21,9 @@ const CARTO_PAPER = {
     'carto-labels': {
       type: 'raster',
       tiles: [
-        'https://a.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}@2x.png',
-        'https://b.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}@2x.png',
-        'https://c.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}@2x.png',
+        'https://a.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}@2x.png?key=cb1_4bg7_1_57b4fa89acf72946161aa87b',
+        'https://b.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}@2x.png?key=cb1_4bg7_1_57b4fa89acf72946161aa87b',
+        'https://c.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}@2x.png?key=cb1_4bg7_1_57b4fa89acf72946161aa87b',
       ],
       tileSize: 256,
       maxzoom: 19,
